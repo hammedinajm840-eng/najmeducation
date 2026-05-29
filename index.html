@@ -1,0 +1,604 @@
+```html
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>نجم الدين همادي - منصة تعليمية</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+font-family:'Cairo',sans-serif;
+box-sizing:border-box;
+}
+
+body{
+background:#eef3ff;
+}
+
+.card{
+transition:.3s;
+}
+
+.card:hover{
+transform:translateY(-6px);
+}
+
+.hidden-scroll::-webkit-scrollbar{
+display:none;
+}
+
+</style>
+
+</head>
+
+<body class="p-4">
+
+<div class="max-w-7xl mx-auto bg-[#edf5f3] rounded-[35px] shadow-2xl overflow-hidden">
+
+<div class="grid lg:grid-cols-[250px_1fr]">
+
+<!-- SIDEBAR -->
+
+<aside class="bg-[#f5f1de] p-5 border-l">
+
+<div class="bg-white rounded-[30px] p-5 shadow-lg text-center">
+
+<div class="w-40 h-40 mx-auto rounded-full overflow-hidden border-[8px] border-yellow-300 shadow-lg">
+
+<img
+src="https://cdn-icons-png.flaticon.com/512/4712/4712109.png"
+class="w-full h-full object-cover"
+>
+
+</div>
+
+<h1 class="text-4xl font-black text-blue-700 mt-5">
+نجم الدين همادي
+</h1>
+
+<p class="text-red-500 font-bold mt-3">
+التعليم هو مفتاح المستقبل
+</p>
+
+</div>
+
+<div class="mt-6 space-y-4">
+
+<button
+class="w-full bg-blue-600 text-white py-4 rounded-2xl font-black text-xl shadow-lg">
+🏠 الرئيسية
+</button>
+
+<button
+class="w-full bg-green-600 text-white py-4 rounded-2xl font-black text-xl shadow-lg">
+📚 المواد
+</button>
+
+</div>
+
+</aside>
+
+<!-- MAIN -->
+
+<main class="p-6">
+
+<h1
+id="level-title"
+class="text-center text-6xl font-black text-green-700 mb-8">
+✨ السنة الأولى ✨
+</h1>
+
+<!-- SEARCH -->
+
+<div class="bg-white rounded-[30px] shadow-lg p-4 mb-8">
+
+<input
+id="search-input"
+type="text"
+placeholder="🔍 ابحث عن مادة..."
+class="w-full border-2 border-blue-200 rounded-2xl px-5 py-4 text-xl outline-none font-bold"
+/>
+
+</div>
+
+<!-- LEVEL BUTTONS -->
+
+<div class="flex gap-4 overflow-x-auto hidden-scroll mb-10 pb-2">
+
+<button onclick="renderSubjects('السنة الأولى')" class="bg-green-600 text-white px-7 py-4 rounded-2xl font-black whitespace-nowrap">
+السنة الأولى
+</button>
+
+<button onclick="renderSubjects('السنة الثانية')" class="bg-white shadow px-7 py-4 rounded-2xl font-black whitespace-nowrap">
+السنة الثانية
+</button>
+
+<button onclick="renderSubjects('السنة الثالثة')" class="bg-white shadow px-7 py-4 rounded-2xl font-black whitespace-nowrap">
+السنة الثالثة
+</button>
+
+<button onclick="renderSubjects('السنة الرابعة')" class="bg-white shadow px-7 py-4 rounded-2xl font-black whitespace-nowrap">
+السنة الرابعة
+</button>
+
+<button onclick="renderSubjects('السنة الخامسة')" class="bg-white shadow px-7 py-4 rounded-2xl font-black whitespace-nowrap">
+السنة الخامسة
+</button>
+
+<button onclick="renderSubjects('السنة السادسة')" class="bg-white shadow px-7 py-4 rounded-2xl font-black whitespace-nowrap">
+السنة السادسة
+</button>
+
+</div>
+
+<!-- SUBJECTS -->
+
+<div
+id="subjects-container"
+class="grid md:grid-cols-2 xl:grid-cols-3 gap-8">
+</div>
+
+</main>
+
+</div>
+
+</div>
+
+<script type="module">
+
+import { createClient }
+from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+
+/* =========================
+SUPABASE
+========================= */
+
+const SUPABASE_URL =
+'https://wsrwidfvcrmppayfbqel.supabase.co';
+
+const SUPABASE_KEY =
+'sb_publishable_ujQvwUEUXp7_-enFhO2awQ_hoJHa6Mg';
+
+const BUCKET = 'school-files';
+
+const supabase =
+createClient(
+SUPABASE_URL,
+SUPABASE_KEY
+);
+
+/* =========================
+ELEMENTS
+========================= */
+
+const subjectsContainer =
+document.getElementById('subjects-container');
+
+const levelTitle =
+document.getElementById('level-title');
+
+const searchInput =
+document.getElementById('search-input');
+
+/* =========================
+SUBJECTS
+========================= */
+
+const subjectsByLevel = {
+
+'السنة الأولى':[
+'الرياضيات',
+'اللغة العربية',
+'الإيقاظ العلمي'
+],
+
+'السنة الثانية':[
+'الرياضيات',
+'اللغة العربية',
+'الإيقاظ العلمي'
+],
+
+'السنة الثالثة':[
+'الرياضيات',
+'اللغة العربية',
+'الفرنسية',
+'الإيقاظ العلمي'
+],
+
+'السنة الرابعة':[
+'الرياضيات',
+'اللغة العربية',
+'الفرنسية',
+'الإيقاظ العلمي'
+],
+
+'السنة الخامسة':[
+'الرياضيات',
+'اللغة العربية',
+'الفرنسية',
+'الإيقاظ العلمي'
+],
+
+'السنة السادسة':[
+'الرياضيات',
+'اللغة العربية',
+'الفرنسية',
+'الإيقاظ العلمي'
+]
+
+};
+
+/* =========================
+CLEAN TEXT
+========================= */
+
+function cleanText(text){
+
+return text
+.normalize("NFD")
+.replace(/[\u0300-\u036f]/g,'')
+.replace(/[^\w\s-]/g,'')
+.replace(/\s+/g,'-')
+.toLowerCase()
+.trim();
+
+}
+
+/* =========================
+CARD
+========================= */
+
+function createCard(subject,color){
+
+return `
+
+<div class="card bg-white rounded-[30px] p-6 shadow-xl">
+
+<h2 class="text-5xl font-black ${color} mb-6">
+${subject}
+</h2>
+
+<div class="space-y-4">
+
+${createSection('الدروس','blue')}
+${createSection('التمارين','yellow')}
+${createSection('الاختبارات','red')}
+
+</div>
+
+</div>
+
+`;
+
+}
+
+function createSection(title,color){
+
+return `
+
+<div class="bg-${color}-50 rounded-2xl p-4">
+
+<div class="flex justify-between items-center">
+
+<h3 class="font-black text-${color}-700 text-xl">
+${title}
+</h3>
+
+<button
+class="upload-btn bg-${color}-700 text-white px-5 py-3 rounded-xl font-bold">
+رفع
+</button>
+
+</div>
+
+<div class="files-box mt-4 space-y-3"></div>
+
+</div>
+
+`;
+
+}
+
+/* =========================
+LOAD FILES
+========================= */
+
+async function loadFiles(){
+
+const cards =
+document.querySelectorAll('.card');
+
+for(const card of cards){
+
+const subjectName =
+card.querySelector('h2')
+.textContent
+.trim();
+
+const sections =
+card.querySelectorAll('.space-y-4 > div');
+
+for(const section of sections){
+
+const folderName =
+section.querySelector('h3')
+.textContent
+.trim();
+
+const filesBox =
+section.querySelector('.files-box');
+
+filesBox.innerHTML = '';
+
+const level =
+levelTitle.innerText
+.replaceAll('✨','')
+.trim();
+
+const path =
+`${cleanText(level)}/${cleanText(subjectName)}/${cleanText(folderName)}`;
+
+const { data,error } =
+await supabase.storage
+.from(BUCKET)
+.list(path);
+
+if(error){
+console.error(error);
+continue;
+}
+
+(data || []).forEach(file=>{
+
+const filePath =
+`${path}/${file.name}`;
+
+const { data:urlData } =
+supabase.storage
+.from(BUCKET)
+.getPublicUrl(filePath);
+
+filesBox.innerHTML += `
+
+<div class="bg-white border rounded-2xl p-3 flex justify-between items-center">
+
+<p class="font-bold text-blue-700 text-sm overflow-hidden whitespace-nowrap text-ellipsis max-w-[140px]">
+${file.name}
+</p>
+
+<div class="flex gap-2">
+
+<a
+href="${urlData.publicUrl}"
+target="_blank"
+class="bg-blue-600 text-white px-3 py-2 rounded-xl text-sm font-bold">
+فتح
+</a>
+
+<a
+href="${urlData.publicUrl}"
+download
+class="bg-green-600 text-white px-3 py-2 rounded-xl text-sm font-bold">
+تحميل
+</a>
+
+</div>
+
+</div>
+
+`;
+
+});
+
+}
+
+}
+
+}
+
+/* =========================
+UPLOAD
+========================= */
+
+function attachUploadEvents(){
+
+document
+.querySelectorAll('.upload-btn')
+.forEach(button=>{
+
+button.onclick = null;
+
+button.addEventListener('click',()=>{
+
+const input =
+document.createElement('input');
+
+input.type = 'file';
+
+input.accept =
+'.pdf,.doc,.docx,.png,.jpg,.jpeg,.mp4';
+
+input.onchange = async(e)=>{
+
+const file =
+e.target.files[0];
+
+if(!file) return;
+
+button.disabled = true;
+button.innerText = 'جاري الرفع...';
+
+try{
+
+const subjectName =
+button.closest('.card')
+.querySelector('h2')
+.textContent
+.trim();
+
+const folderName =
+button.parentElement
+.querySelector('h3')
+.textContent
+.trim();
+
+const level =
+levelTitle.innerText
+.replaceAll('✨','')
+.trim();
+
+const path =
+`${cleanText(level)}/${cleanText(subjectName)}/${cleanText(folderName)}/${Date.now()}-${file.name.replace(/[^\w.-]/g,'_')}`;
+
+const { error } =
+await supabase.storage
+.from(BUCKET)
+.upload(path,file,{
+upsert:true,
+contentType:file.type
+});
+
+if(error){
+
+console.error(error);
+
+alert(error.message);
+
+button.disabled = false;
+button.innerText = 'رفع';
+
+return;
+
+}
+
+alert('تم رفع الملف بنجاح');
+
+button.disabled = false;
+button.innerText = 'رفع';
+
+loadFiles();
+
+}
+catch(err){
+
+console.error(err);
+
+alert('فشل رفع الملف');
+
+button.disabled = false;
+button.innerText = 'رفع';
+
+}
+
+};
+
+input.click();
+
+});
+
+});
+
+}
+
+/* =========================
+RENDER
+========================= */
+
+window.renderSubjects = function(level){
+
+level = String(level).trim();
+
+levelTitle.innerText =
+`✨ ${level} ✨`;
+
+subjectsContainer.innerHTML = '';
+
+const search =
+searchInput.value.trim();
+
+const subjects =
+(subjectsByLevel[level] || [])
+.filter(subject =>
+subject.includes(search)
+);
+
+if(subjects.length === 0){
+
+subjectsContainer.innerHTML = `
+<div class="col-span-full text-center">
+<h2 class="text-4xl font-black text-red-500">
+لا توجد مواد
+</h2>
+</div>
+`;
+
+return;
+
+}
+
+subjects.forEach(subject=>{
+
+let color = 'text-blue-700';
+
+if(subject === 'الرياضيات'){
+color = 'text-indigo-700';
+}
+
+if(subject === 'اللغة العربية'){
+color = 'text-green-700';
+}
+
+if(subject === 'الإيقاظ العلمي'){
+color = 'text-orange-700';
+}
+
+if(subject === 'الفرنسية'){
+color = 'text-pink-700';
+}
+
+subjectsContainer.innerHTML +=
+createCard(subject,color);
+
+});
+
+attachUploadEvents();
+
+loadFiles();
+
+}
+
+/* =========================
+SEARCH
+========================= */
+
+searchInput.addEventListener('input',()=>{
+
+const level =
+levelTitle.innerText
+.replaceAll('✨','')
+.trim();
+
+renderSubjects(level);
+
+});
+
+/* =========================
+START
+========================= */
+
+renderSubjects('السنة الأولى');
+
+</script>
+
+</body>
+</html>
+```
