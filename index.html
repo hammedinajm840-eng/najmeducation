@@ -269,9 +269,9 @@ ${subject}
 
 <div class="space-y-4">
 
-${createSection('الدروس','blue')}
-${createSection('التمارين','yellow')}
-${createSection('الاختبارات','red')}
+${createSection('الدروس','blue','lessons')}
+${createSection('التمارين','yellow','exercises')}
+${createSection('الاختبارات','red','exams')}
 
 </div>
 
@@ -281,33 +281,33 @@ ${createSection('الاختبارات','red')}
 
 }
 
-function createSection(title,color){
+function createSection(title,color,folder){
+
+let style = {
+blue:{bg:'bg-blue-50',text:'text-blue-700',btn:'bg-blue-700'},
+yellow:{bg:'bg-yellow-50',text:'text-yellow-700',btn:'bg-yellow-700'},
+red:{bg:'bg-red-50',text:'text-red-700',btn:'bg-red-700'}
+}[color];
 
 return `
-
-<div class="bg-${color}-50 rounded-2xl p-4">
+<div class="${style.bg} rounded-2xl p-4" data-folder="${folder}">
 
 <div class="flex justify-between items-center">
 
-<h3 class="font-black text-${color}-700 text-xl">
+<h3 class="font-black ${style.text} text-xl">
 ${title}
 </h3>
 
-<button
-class="upload-btn bg-${color}-700 text-white px-5 py-3 rounded-xl font-bold">
+<button class="upload-btn ${style.btn} text-white px-5 py-3 rounded-xl font-bold">
 رفع
 </button>
 
 </div>
 
-<div class="files-box mt-4 space-y-3"></div>
+<div class="files-box mt-3 space-y-2"></div>
 
-</div>
-
-`;
-
+</div>`;
 }
-
 /* =========================
 LOAD FILES
 ========================= */
@@ -325,15 +325,12 @@ card.querySelector('h2')
 .trim();
 
 const sections =
-card.querySelectorAll('.space-y-4 > div');
+card.querySelectorAll('[data-folder]');
 
 for(const section of sections){
 
 const folderName =
-section.previousElementSibling
-.querySelector('h3')
-.textContent
-.trim();
+section.dataset.folder;
 
 const filesBox =
 section.querySelector('.files-box');
@@ -346,7 +343,7 @@ levelTitle.innerText
 .trim();
 
 const path =
-`${cleanText(level)}/${cleanText(subjectName)}/${cleanText(folderName)}`;
+`${cleanText(level)}/${cleanText(subjectName)}/${folderName}`;
 const { data, error } =
 await supabase.storage
 .from(BUCKET)
