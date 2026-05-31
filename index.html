@@ -195,44 +195,43 @@ SUBJECTS
 
 const subjectsByLevel = {
 
-'السنة الأولى':[
-'الرياضيات',
-'اللغة العربية',
-'الإيقاظ العلمي'
+Level1:'السنة الأولى':[
+{title:'الرياضيات',id:'math'},
+{title:'اللغة العربية',id:'arabic'},
+{title:'الإيقاظ العلمي',id:'science'}
 ],
 
-'السنة الثانية':[
-'الرياضيات',
-'اللغة العربية',
-'الإيقاظ العلمي'
+Level2:'السنة الثانية':[
+{title:'الرياضيات',id:'math'},
+{title:'اللغة العربية',id:'arabic'},
+{title:'الإيقاظ العلمي',id:'science'}
 ],
 
-'السنة الثالثة':[
-'الرياضيات',
-'اللغة العربية',
-'الفرنسية',
-'الإيقاظ العلمي'
+Level3:'السنة الثالثة':[
+{title:'الرياضيات',id:'math'},
+{title:'اللغة العربية',id:'arabic'},
+{title:'الفرنسية',id:'french'},
+{title:'الإيقاظ العلمي',id:'science'}
+],
+Level4:'السنة الرابعة':[
+{title:'الرياضيات',id:'math'},
+{title:'اللغة العربية',id:'arabic'},
+{title:'الفرنسية',id:'french'},
+{title:'الإيقاظ العلمي',id:'science'}'
 ],
 
-'السنة الرابعة':[
-'الرياضيات',
-'اللغة العربية',
-'الفرنسية',
-'الإيقاظ العلمي'
+Level5:'السنة الخامسة':[
+{title:'الرياضيات',id:'math'},
+{title:'اللغة العربية',id:'arabic'},
+{title:'الفرنسية',id:'french'},
+{title:'الإيقاظ العلمي',id:'science'}
 ],
 
-'السنة الخامسة':[
-'الرياضيات',
-'اللغة العربية',
-'الفرنسية',
-'الإيقاظ العلمي'
-],
-
-'السنة السادسة':[
-'الرياضيات',
-'اللغة العربية',
-'الفرنسية',
-'الإيقاظ العلمي'
+Level6:'السنة السادسة':[
+{title:'الرياضيات',id:'math'},
+{title:'اللغة العربية',id:'arabic'},
+{title:'الفرنسية',id:'french'},
+{title:'الإيقاظ العلمي',id:'science'}
 ]
 
 };
@@ -257,7 +256,7 @@ return text
 CARD
 ========================= */
 
-function createCard(subject,color){
+function createCard(subject,color,subjectId)
 
 return `
 
@@ -319,10 +318,8 @@ document.querySelectorAll('.card');
 
 for(const card of cards){
 
-const subjectName =
-card.querySelector('h2')
-.textContent
-.trim();
+const subject =
+card.querySelector('h2').dataset.subject;
 
 const sections =
 card.querySelectorAll('[data-folder]');
@@ -574,11 +571,16 @@ if(subject === 'الفرنسية'){
 color = 'text-pink-700';
 }
 
+subjects.forEach(subject=>{
+
 subjectsContainer.innerHTML +=
-createCard(subject,color);
+createCard(
+subject.title,
+'text-blue-700',
+subject.id
+);
 
 });
-
 attachUploadEvents();
 
 loadFiles();
