@@ -330,7 +330,8 @@ card.querySelectorAll('.space-y-4 > div');
 for(const section of sections){
 
 const folderName =
-section.querySelector('h3')
+section.previousElementSibling
+.querySelector('h3')
 .textContent
 .trim();
 
@@ -346,7 +347,6 @@ levelTitle.innerText
 
 const path =
 `${cleanText(level)}/${cleanText(subjectName)}/${cleanText(folderName)}`;
-
 const { data,error } =
 await supabase.storage
 .from(BUCKET)
