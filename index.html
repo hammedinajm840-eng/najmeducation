@@ -347,10 +347,20 @@ levelTitle.innerText
 
 const path =
 `${cleanText(level)}/${cleanText(subjectName)}/${cleanText(folderName)}`;
-const { data,error } =
+const { data, error } =
 await supabase.storage
 .from(BUCKET)
-.list(path);
+.list(path, {
+limit: 100,
+offset: 0,
+sortBy: {
+column: 'name',
+order: 'asc'
+}
+});
+
+console.log('PATH:', path);
+console.log('FILES:', data);
 
 if(error){
 console.error(error);
@@ -466,6 +476,8 @@ await supabase.storage
 upsert:true,
 contentType:file.type
 });
+
+console.log('UPLOADED:', path);
 
 if(error){
 
