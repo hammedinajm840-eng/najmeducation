@@ -350,7 +350,7 @@ const level =
 card.dataset.level;
 
 const path =
-`${level}/${subject}/${folder}`
+`${cleanText(level)}/${subject}/${folder}`;
 
 const { data, error } =
 await supabase.storage
