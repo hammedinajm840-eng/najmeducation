@@ -719,6 +719,8 @@ renderSubjects('السنة الأولى');
 
 /* CHECK USER */
 
+/* CHECK USER */
+
 async function checkUser(){
 
 const { data } =
@@ -727,6 +729,8 @@ await supabase.auth.getSession();
 if(data.session){
 
 isAdmin = true;
+
+}
 
 }
 
