@@ -194,8 +194,6 @@ SUBJECTS
 
 const subjectsByLevel = {
 
-const subjectsByLevel = {
-
 'السنة الأولى':[
 {title:'الرياضيات',id:'math'},
 {title:'اللغة العربية',id:'arabic'},
@@ -237,7 +235,6 @@ const subjectsByLevel = {
 ]
 
 };
-
 /* =========================
 CLEAN TEXT
 ========================= */
@@ -519,102 +516,6 @@ input.click();
 /* =========================
 RENDER
 ========================= */
-
-window.renderSubjects = function(level){
-
-level = String(level).trim();
-
-levelTitle.innerText =
-`✨ ${level} ✨`;
-
-subjectsContainer.innerHTML = '';
-
-const search =
-searchInput.value.trim();
-
-const subjects =
-(subjectsByLevel[level] || [])
-.filter(subject =>
-subject.title.includes(search)
-);
-
-if(subjects.length === 0){
-
-subjectsContainer.innerHTML = `
-<div class="col-span-full text-center">
-<h2 class="text-4xl font-black text-red-500">
-لا توجد مواد
-</h2>
-</div>
-`;
-
-return;
-
-}
-
-window.renderSubjects = function(level){
-
-level = String(level).trim();
-
-levelTitle.innerText =
-`✨ ${level} ✨`;
-
-subjectsContainer.innerHTML = '';
-
-const search =
-searchInput.value.trim();
-
-const subjects =
-(subjectsByLevel[level] || [])
-.filter(subject =>
-subject.title.includes(search)
-);
-
-if(subjects.length === 0){
-
-subjectsContainer.innerHTML = `
-<div class="col-span-full text-center">
-<h2 class="text-4xl font-black text-red-500">
-لا توجد مواد
-</h2>
-</div>
-`;
-
-return;
-
-}
-
-window.renderSubjects = function(level){
-
-level = String(level).trim();
-
-levelTitle.innerText =
-`✨ ${level} ✨`;
-
-subjectsContainer.innerHTML = '';
-
-const search =
-searchInput.value.trim();
-
-const subjects =
-(subjectsByLevel[level] || [])
-.filter(subject =>
-subject.title.includes(search)
-);
-
-if(subjects.length === 0){
-
-subjectsContainer.innerHTML = `
-<div class="col-span-full text-center">
-<h2 class="text-4xl font-black text-red-500">
-لا توجد مواد
-</h2>
-</div>
-`;
-
-return;
-
-}
 
 window.renderSubjects = function(level){
 
