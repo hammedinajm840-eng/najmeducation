@@ -459,7 +459,8 @@ input.onchange = async(e)=>{
 
 const file =
 e.target.files[0];
-
+const safeFileName =
+file.name;
 if(!file) return;
 
 button.disabled = true;
@@ -481,8 +482,11 @@ button
 .closest('.card')
 .dataset.level;
 
+const safeFileName =
+file.name;
+
 const path =
-`${level}/${subject}/${folder}/${Date.now()}-${file.name.replace(/[^\w.-]/g,'_')}`;
+`${level}/${subject}/${folder}/${Date.now()}-${safeFileName}`;
 
 const { error } =
 await supabase.storage
