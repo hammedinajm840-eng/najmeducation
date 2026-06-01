@@ -235,7 +235,16 @@ const subjectsByLevel = {
 ]
 
 };
+const levelMap = {
 
+'السنة الأولى':'level1',
+'السنة الثانية':'level2',
+'السنة الثالثة':'level3',
+'السنة الرابعة':'level4',
+'السنة الخامسة':'level5',
+'السنة السادسة':'level6'
+
+};
 /* =========================
 CLEAN TEXT
 ========================= */
@@ -296,7 +305,7 @@ return `
 
 <div
 class="card bg-white rounded-[30px] p-6 shadow-xl"
-data-level="${level}"
+data-level="${levelMap[level]}"
 >
 
 <h2
