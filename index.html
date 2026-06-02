@@ -368,11 +368,12 @@ const path =
 `${level}/${subject}/${folder}`;
 
 const { data, error } =
-await supabase.storage
-.from(BUCKET)
-.list(path,{
-limit:100
-});
+await supabase
+.from('files')
+.select('*')
+.eq('level', level)
+.eq('subject', subject)
+.eq('folder', folder);
 
 if(error){
 console.error(error);
@@ -381,13 +382,39 @@ continue;
 
 (data || []).forEach(file=>{
 
-const filePath =
-`${path}/${file.name}`;
+(data || []).forEach(file=>{
 
-const { data:urlData } =
-supabase.storage
-.from(BUCKET)
-.getPublicUrl(filePath);
+filesBox.innerHTML += `
+
+<div class="bg-white border rounded-2xl p-3 flex justify-between items-center">
+
+<p class="font-bold text-blue-700 text-sm overflow-hidden whitespace-nowrap text-ellipsis max-w-[150px]">
+${file.name}
+</p>
+
+<div class="flex gap-2">
+
+<a
+href="${file.url}"
+target="_blank"
+class="bg-blue-600 text-white px-3 py-2 rounded-xl text-sm font-bold">
+فتح
+</a>
+
+<a
+href="${file.url}"
+target="_blank"
+class="bg-green-600 text-white px-3 py-2 rounded-xl text-sm font-bold">
+تحميل
+</a>
+
+</div>
+
+</div>
+
+`;
+
+});
 
 filesBox.innerHTML += `
 
