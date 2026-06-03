@@ -3,306 +3,291 @@
 
 <head>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>نجم الدين همادي - منصة تعليمية</title>
+    <title>نجم الدين همادي - منصة تعليمية</title>
 
-<script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
 
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
 
-<style>
+    <style>
+        * {
+            font-family: 'Cairo', sans-serif;
+            box-sizing: border-box;
+        }
 
-*{
-font-family:'Cairo',sans-serif;
-box-sizing:border-box;
-}
+        body {
+            background: #eef3ff;
+        }
 
-body{
-background:#eef3ff;
-}
+        .card {
+            transition: .3s;
+        }
 
-.card{
-transition:.3s;
-}
+        .card:hover {
+            transform: translateY(-6px);
+        }
 
-.card:hover{
-transform:translateY(-6px);
-}
-
-.hidden-scroll::-webkit-scrollbar{
-display:none;
-}
-
-</style>
+        .hidden-scroll::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
 
 </head>
 
 <body>
 
-<div class="w-full min-h-screen bg-[#edf5f3] shadow-2xl overflow-hidden">
+    <div class="w-full min-h-screen bg-[#edf5f3] shadow-2xl overflow-hidden">
 
-<div class="grid lg:grid-cols-[280px_1fr] min-h-screen">
+        <div class="grid lg:grid-cols-[280px_1fr] min-h-screen">
 
-<!-- SIDEBAR -->
+            <!-- SIDEBAR -->
 
-<aside class="bg-[#f5f1de] p-5 border-l">
+            <aside class="bg-[#f5f1de] p-5 border-l">
 
-<div class="bg-white rounded-[30px] p-5 shadow-lg text-center">
+                <div class="bg-white rounded-[30px] p-5 shadow-lg text-center">
 
-<div class="w-40 h-40 mx-auto rounded-full overflow-hidden border-[8px] border-yellow-300 shadow-lg">
+                    <div
+                        class="w-40 h-40 mx-auto rounded-full overflow-hidden border-[8px] border-yellow-300 shadow-lg">
 
-<img
-src="./images/logo.png.png"
-class="w-full h-full object-contain">
+                        <img src="./images/logo.png.png" class="w-full h-full object-contain">
 
 
-</div>
+                    </div>
 
-<h1 class="text-4xl font-black text-blue-700 mt-5">
-نجم الدين همادي
-</h1>
+                    <h1 class="text-4xl font-black text-blue-700 mt-5">
+                        نجم الدين همادي
+                    </h1>
 
-<p class="text-red-500 font-bold mt-3">
-التعليم هو مفتاح المستقبل
-</p>
+                    <p class="text-red-500 font-bold mt-3">
+                        التعليم هو مفتاح المستقبل
+                    </p>
 
-</div>
+                </div>
 
-<div class="mt-6 space-y-4">
+                <div class="mt-6 space-y-4">
 
-<button
-onclick="openAboutPage()"
-class="w-full bg-blue-600 text-white py-4 rounded-2xl font-black text-xl shadow-lg">
-🏠 الرئيسية
-</button>
-<button
-onclick="openLogin()"
-class="w-full bg-purple-600 text-white py-4 rounded-2xl font-black text-xl shadow-lg">
-🔐 تسجيل الدخول
-</button>
-  <button
-id="logout-btn"
-onclick="logout()"
-class="hidden w-full bg-red-600 text-white py-4 rounded-2xl font-black text-xl shadow-lg">
-🚪 تسجيل الخروج
-</button>
+                    <button onclick="openAboutPage()"
+                        class="w-full bg-blue-600 text-white py-4 rounded-2xl font-black text-xl shadow-lg">
+                        🏠 الرئيسية
+                    </button>
+                    <button onclick="openLogin()"
+                        class="w-full bg-purple-600 text-white py-4 rounded-2xl font-black text-xl shadow-lg">
+                        🔐 تسجيل الدخول
+                    </button>
+                    <button id="logout-btn" onclick="logout()"
+                        class="hidden w-full bg-red-600 text-white py-4 rounded-2xl font-black text-xl shadow-lg">
+                        🚪 تسجيل الخروج
+                    </button>
 
-<!-- زر الخلفية -->
+                    <!-- زر الخلفية -->
 
-<div
-id="bg-btn-container"
-class="hidden mt-4">
+                    <div id="bg-btn-container" class="hidden mt-4">
 
-<button
-id="changeBgBtn"
-class="w-full bg-blue-600 text-white py-4 rounded-2xl font-black text-xl shadow-lg">
+                        <button id="changeBgBtn"
+                            class="w-full bg-blue-600 text-white py-4 rounded-2xl font-black text-xl shadow-lg">
 
-🎨 تغيير الخلفية
+                            🎨 تغيير الخلفية
 
-</button>
+                        </button>
 
-<input
-type="file"
-id="bgInput"
-accept="image/*"
-hidden>
+                        <input type="file" id="bgInput" accept="image/*" hidden>
 
-</div>
+                    </div>
 
-</div>
+                </div>
 
-</aside>
+            </aside>
 
-<!-- MAIN -->
+            <!-- MAIN -->
 
-<main class="p-6">
+            <main class="p-6">
 
-<h1
-id="level-title"
-class="text-center text-6xl font-black text-green-700 mb-8">
-✨ السنة الأولى ✨
-</h1>
+                <h1 id="level-title" class="text-center text-6xl font-black text-green-700 mb-8">
+                    ✨ السنة الأولى ✨
+                </h1>
 
-<!-- SEARCH -->
+                <!-- SEARCH -->
 
-<div class="bg-white rounded-[30px] shadow-lg p-4 mb-8">
+                <div class="bg-white rounded-[30px] shadow-lg p-4 mb-8">
 
-<input
-id="search-input"
-type="text"
-placeholder="🔍 ابحث عن مادة..."
-class="w-full border-2 border-blue-200 rounded-2xl px-5 py-4 text-xl outline-none font-bold"
-/>
+                    <input id="search-input" type="text" placeholder="🔍 ابحث عن مادة..."
+                        class="w-full border-2 border-blue-200 rounded-2xl px-5 py-4 text-xl outline-none font-bold" />
 
-</div>
+                </div>
 
-<!-- LEVEL BUTTONS -->
+                <!-- LEVEL BUTTONS -->
 
-<div class="flex gap-4 overflow-x-auto hidden-scroll mb-10 pb-2">
+                <div class="flex gap-4 overflow-x-auto hidden-scroll mb-10 pb-2">
 
-<button onclick="renderSubjects('السنة الأولى',this)" class="level-btn bg-green-600 text-white px-7 py-4 rounded-2xl font-black whitespace-nowrap">
-السنة الأولى
-</button>
+                    <button onclick="renderSubjects('السنة الأولى',this)"
+                        class="level-btn bg-green-600 text-white px-7 py-4 rounded-2xl font-black whitespace-nowrap">
+                        السنة الأولى
+                    </button>
 
-<button onclick="renderSubjects('السنة الثانية',this)" class="level-btn bg-white shadow px-7 py-4 rounded-2xl font-black whitespace-nowrap">
-السنة الثانية
-</button>
+                    <button onclick="renderSubjects('السنة الثانية',this)"
+                        class="level-btn bg-white shadow px-7 py-4 rounded-2xl font-black whitespace-nowrap">
+                        السنة الثانية
+                    </button>
 
-<button onclick="renderSubjects('السنة الثالثة',this)" class="level-btn bg-white shadow px-7 py-4 rounded-2xl font-black whitespace-nowrap">
-السنة الثالثة
-</button>
+                    <button onclick="renderSubjects('السنة الثالثة',this)"
+                        class="level-btn bg-white shadow px-7 py-4 rounded-2xl font-black whitespace-nowrap">
+                        السنة الثالثة
+                    </button>
 
-<button onclick="renderSubjects('السنة الرابعة',this)" class="level-btn bg-white shadow px-7 py-4 rounded-2xl font-black whitespace-nowrap">
-السنة الرابعة
-</button>
+                    <button onclick="renderSubjects('السنة الرابعة',this)"
+                        class="level-btn bg-white shadow px-7 py-4 rounded-2xl font-black whitespace-nowrap">
+                        السنة الرابعة
+                    </button>
 
-<button onclick="renderSubjects('السنة الخامسة',this)" class="level-btn bg-white shadow px-7 py-4 rounded-2xl font-black whitespace-nowrap">
-السنة الخامسة
-</button>
+                    <button onclick="renderSubjects('السنة الخامسة',this)"
+                        class="level-btn bg-white shadow px-7 py-4 rounded-2xl font-black whitespace-nowrap">
+                        السنة الخامسة
+                    </button>
 
-<button onclick="renderSubjects('السنة السادسة',this)" class="level-btn bg-white shadow px-7 py-4 rounded-2xl font-black whitespace-nowrap">
-السنة السادسة
-</button>
+                    <button onclick="renderSubjects('السنة السادسة',this)"
+                        class="level-btn bg-white shadow px-7 py-4 rounded-2xl font-black whitespace-nowrap">
+                        السنة السادسة
+                    </button>
 
-</div>
+                </div>
 
-<!-- SUBJECTS -->
+                <!-- SUBJECTS -->
 
-<div
-id="subjects-container"
-class="grid md:grid-cols-2 xl:grid-cols-3 gap-8 transition-all duration-500">
-</div>
+                <div id="subjects-container"
+                    class="grid md:grid-cols-2 xl:grid-cols-3 gap-8 transition-all duration-500">
+                </div>
 
-</main>
+            </main>
+
+        </div>
 
-</div>
+    </div>
 
-</div>
+    <script type="module">
 
-<script type="module">
+        import { createClient }
+            from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+
+        /* =========================
+        SUPABASE
+        ========================= */
+
+        const SUPABASE_URL =
+            'https://wsrwidfvcrmppayfbqel.supabase.co';
+
+        const SUPABASE_KEY =
+            'sb_publishable_ujQvwUEUXp7_-enFhO2awQ_hoJHa6Mg';
+
+        const BUCKET = 'school-files';
 
-import { createClient }
-from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
-
-/* =========================
-SUPABASE
-========================= */
-
-const SUPABASE_URL =
-'https://wsrwidfvcrmppayfbqel.supabase.co';
-
-const SUPABASE_KEY =
-'sb_publishable_ujQvwUEUXp7_-enFhO2awQ_hoJHa6Mg';
-
-const BUCKET = 'school-files';
-
-const supabase =
-createClient(
-SUPABASE_URL,
-SUPABASE_KEY
-);
-
-/* =========================
-ELEMENTS
-========================= */
-
-const subjectsContainer =
-document.getElementById('subjects-container');
-
-const levelTitle =
-document.getElementById('level-title');
-
-const searchInput =
-document.getElementById('search-input');
-
-/* =========================
-SUBJECTS
-========================= */
-
-const subjectsByLevel = {
-
-'السنة الأولى':[
-{title:'الرياضيات',id:'math'},
-{title:'اللغة العربية',id:'arabic'},
-{title:'الإيقاظ العلمي',id:'science'}
-],
-
-'السنة الثانية':[
-{title:'الرياضيات',id:'math'},
-{title:'اللغة العربية',id:'arabic'},
-{title:'الإيقاظ العلمي',id:'science'}
-],
-
-'السنة الثالثة':[
-{title:'الرياضيات',id:'math'},
-{title:'اللغة العربية',id:'arabic'},
-{title:'الفرنسية',id:'french'},
-{title:'الإيقاظ العلمي',id:'science'}
-],
-
-'السنة الرابعة':[
-{title:'الرياضيات',id:'math'},
-{title:'اللغة العربية',id:'arabic'},
-{title:'الفرنسية',id:'french'},
-{title:'الإيقاظ العلمي',id:'science'}
-],
-
-'السنة الخامسة':[
-{title:'الرياضيات',id:'math'},
-{title:'اللغة العربية',id:'arabic'},
-{title:'الفرنسية',id:'french'},
-{title:'الإيقاظ العلمي',id:'science'}
-],
-
-'السنة السادسة':[
-{title:'الرياضيات',id:'math'},
-{title:'اللغة العربية',id:'arabic'},
-{title:'الفرنسية',id:'french'},
-{title:'الإيقاظ العلمي',id:'science'}
-]
-
-};
-const levelMap = {
-
-'السنة الأولى':'level1',
-'السنة الثانية':'level2',
-'السنة الثالثة':'level3',
-'السنة الرابعة':'level4',
-'السنة الخامسة':'level5',
-'السنة السادسة':'level6'
-
-};
-/* =========================
-CLEAN TEXT
-========================= */
-
-function cleanText(text){
-
-return text
-.normalize("NFD")
-.replace(/[\u0300-\u036f]/g,'')
-.replace(/[^\w\s-]/g,'')
-.replace(/\s+/g,'-')
-.toLowerCase()
-.trim();
-
-}
-
-/* =========================
-SECTION
-========================= */
-
-function createSection(title,color,folder){
-
-let style = {
-blue:{bg:'bg-blue-50',text:'text-blue-700',btn:'bg-blue-700'},
-yellow:{bg:'bg-yellow-50',text:'text-yellow-700',btn:'bg-yellow-700'},
-red:{bg:'bg-red-50',text:'text-red-700',btn:'bg-red-700'}
-}[color];
-
-return `
+        const supabase =
+            createClient(
+                SUPABASE_URL,
+                SUPABASE_KEY
+            );
+
+        /* =========================
+        ELEMENTS
+        ========================= */
+
+        const subjectsContainer =
+            document.getElementById('subjects-container');
+
+        const levelTitle =
+            document.getElementById('level-title');
+
+        const searchInput =
+            document.getElementById('search-input');
+
+        /* =========================
+        SUBJECTS
+        ========================= */
+
+        const subjectsByLevel = {
+
+            'السنة الأولى': [
+                { title: 'الرياضيات', id: 'math' },
+                { title: 'اللغة العربية', id: 'arabic' },
+                { title: 'الإيقاظ العلمي', id: 'science' }
+            ],
+
+            'السنة الثانية': [
+                { title: 'الرياضيات', id: 'math' },
+                { title: 'اللغة العربية', id: 'arabic' },
+                { title: 'الإيقاظ العلمي', id: 'science' }
+            ],
+
+            'السنة الثالثة': [
+                { title: 'الرياضيات', id: 'math' },
+                { title: 'اللغة العربية', id: 'arabic' },
+                { title: 'الفرنسية', id: 'french' },
+                { title: 'الإيقاظ العلمي', id: 'science' }
+            ],
+
+            'السنة الرابعة': [
+                { title: 'الرياضيات', id: 'math' },
+                { title: 'اللغة العربية', id: 'arabic' },
+                { title: 'الفرنسية', id: 'french' },
+                { title: 'الإيقاظ العلمي', id: 'science' }
+            ],
+
+            'السنة الخامسة': [
+                { title: 'الرياضيات', id: 'math' },
+                { title: 'اللغة العربية', id: 'arabic' },
+                { title: 'الفرنسية', id: 'french' },
+                { title: 'الإيقاظ العلمي', id: 'science' }
+            ],
+
+            'السنة السادسة': [
+                { title: 'الرياضيات', id: 'math' },
+                { title: 'اللغة العربية', id: 'arabic' },
+                { title: 'الفرنسية', id: 'french' },
+                { title: 'الإيقاظ العلمي', id: 'science' }
+            ]
+
+        };
+        const levelMap = {
+
+            'السنة الأولى': 'level1',
+            'السنة الثانية': 'level2',
+            'السنة الثالثة': 'level3',
+            'السنة الرابعة': 'level4',
+            'السنة الخامسة': 'level5',
+            'السنة السادسة': 'level6'
+
+        };
+        /* =========================
+        CLEAN TEXT
+        ========================= */
+
+        function cleanText(text) {
+
+            return text
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, '')
+                .replace(/[^\w\s-]/g, '')
+                .replace(/\s+/g, '-')
+                .toLowerCase()
+                .trim();
+
+        }
+
+        /* =========================
+        SECTION
+        ========================= */
+
+        function createSection(title, color, folder) {
+
+            let style = {
+                blue: { bg: 'bg-blue-50', text: 'text-blue-700', btn: 'bg-blue-700' },
+                yellow: { bg: 'bg-yellow-50', text: 'text-yellow-700', btn: 'bg-yellow-700' },
+                red: { bg: 'bg-red-50', text: 'text-red-700', btn: 'bg-red-700' }
+            }[color];
+
+            return `
 <div class="${style.bg} rounded-2xl p-4" data-folder="${folder}">
 
 <div class="flex justify-between items-center">
@@ -322,15 +307,15 @@ ${title}
 </div>
 `;
 
-}
+        }
 
-/* =========================
-CARD
-========================= */
+        /* =========================
+        CARD
+        ========================= */
 
-function createCard(subject,color,subjectId,level){
+        function createCard(subject, color, subjectId, level) {
 
-return `
+            return `
 
 <div
 class="card bg-white rounded-[30px] p-6 shadow-xl"
@@ -345,9 +330,9 @@ ${subject}
 
 <div class="space-y-4">
 
-${createSection('الدروس','blue','lessons')}
-${createSection('التمارين','yellow','exercises')}
-${createSection('الاختبارات','red','exams')}
+${createSection('الدروس', 'blue', 'lessons')}
+${createSection('التمارين', 'yellow', 'exercises')}
+${createSection('الاختبارات', 'red', 'exams')}
 
 </div>
 
@@ -355,58 +340,58 @@ ${createSection('الاختبارات','red','exams')}
 
 `;
 
-}
+        }
 
-/* =========================
-LOAD FILES
-========================= */
+        /* =========================
+        LOAD FILES
+        ========================= */
 
-async function loadFiles(){
+        async function loadFiles() {
 
-const cards =
-document.querySelectorAll('.card');
+            const cards =
+                document.querySelectorAll('.card');
 
-for(const card of cards){
+            for (const card of cards) {
 
-const subject =
-card.querySelector('h2').dataset.subject;
+                const subject =
+                    card.querySelector('h2').dataset.subject;
 
-const sections =
-card.querySelectorAll('[data-folder]');
+                const sections =
+                    card.querySelectorAll('[data-folder]');
 
-for(const section of sections){
+                for (const section of sections) {
 
-const folder =
-section.dataset.folder;
+                    const folder =
+                        section.dataset.folder;
 
-const filesBox =
-section.querySelector('.files-box');
+                    const filesBox =
+                        section.querySelector('.files-box');
 
-filesBox.innerHTML = '';
+                    filesBox.innerHTML = '';
 
-const level =
-card.dataset.level;
+                    const level =
+                        card.dataset.level;
 
-const path =
-`${level}/${subject}/${folder}`;
+                    const path =
+                        `${level}/${subject}/${folder}`;
 
-const { data, error } =
-await supabase
-.from('files')
-.select('*')
-.eq('level', level)
-.eq('subject', subject)
-.eq('folder', folder);
+                    const { data, error } =
+                        await supabase
+                            .from('files')
+                            .select('*')
+                            .eq('level', level)
+                            .eq('subject', subject)
+                            .eq('folder', folder);
 
-if(error){
-console.error(error);
-continue;
-}
+                    if (error) {
+                        console.error(error);
+                        continue;
+                    }
 
-(data || []).forEach(file=>{
+                    (data || []).forEach(file => {
 
 
-filesBox.innerHTML += `
+                        filesBox.innerHTML += `
 
 <div class="bg-white border rounded-2xl p-3 flex justify-between items-center">
 
@@ -436,159 +421,171 @@ class="bg-green-600 text-white px-3 py-2 rounded-xl text-sm font-bold">
 
 `;
 
-});
+                    });
 
-}
+                }
 
-}
+            }
 
-}
-/* =========================
-UPLOAD
-========================= */
+        }
+        /* =========================
+        UPLOAD
+        ========================= */
 
-function attachUploadEvents(){
+        function attachUploadEvents() {
 
-document
-.querySelectorAll('.upload-btn')
-.forEach(button=>{
+            document
+                .querySelectorAll('.upload-btn')
+                .forEach(button => {
 
-button.onclick = null;
+                    button.onclick = null;
 
-button.addEventListener('click',()=>{
+                    button.addEventListener('click', () => {
 
-const input =
-document.createElement('input');
+                        const input =
+                            document.createElement('input');
 
-input.type = 'file';
+                        input.type = 'file';
 
-input.accept =
-'.pdf,.doc,.docx,.png,.jpg,.jpeg,.mp4';
+                        input.accept =
+                            '.pdf,.doc,.docx,.png,.jpg,.jpeg,.mp4';
 
-input.onchange = async(e)=>{
+                        input.onchange = async (e) => {
 
-const file =
-e.target.files[0];
-const safeFileName =
-file.name;
-if(!file) return;
+                            const file =
+                                e.target.files[0];
+                            const file = e.target.files[0];
 
-button.disabled = true;
-button.innerText = 'جاري الرفع...';
+                            if (!file) return;
 
-try{
+                            const safeFileName = file.name;
 
-const subject =
-button.closest('.card')
-.querySelector('h2')
-.dataset.subject;
+                            button.disabled = true;
+                            button.innerText = 'جاري الرفع...';
 
-const folder =
-button.closest('[data-folder]')
-.dataset.folder;
+                            try {
 
-const level =
-button
-.closest('.card')
-.dataset.level;
+                                const subject =
+                                    button.closest('.card')
+                                        .querySelector('h2')
+                                        .dataset.subject;
 
-const safeFileName =
-file.name;
+                                const folder =
+                                    button.closest('[data-folder]')
+                                        .dataset.folder;
 
-const path =
-`${level}/${subject}/${folder}/${Date.now()}-${safeFileName}`;
+                                const level =
+                                    button
+                                        .closest('.card')
+                                        .dataset.level;
 
-const { error } =
-await supabase.storage
-.from(BUCKET)
-.upload(path,file,{
-upsert:true,
-contentType:file.type
-});
+                                const safeFileName =
+                                    file.name;
 
-if(error){
+                                const path =
+                                    `${level}/${subject}/${folder}/${Date.now()}-${safeFileName}`;
 
-console.error(error);
+                                const { data: uploadData, error } =
+                                    await supabase.storage
+                                        .from(BUCKET)
+                                        .upload(path, file, {
+                                            upsert: true,
+                                            contentType: file.type
+                                        });
 
-alert(error.message);
+                                if (error) {
+                                    console.error(error);
+                                    alert(error.message);
+                                    button.disabled = false;
+                                    button.innerText = 'رفع';
+                                    return;
+                                }
 
-button.disabled = false;
-button.innerText = 'رفع';
+                                const { data: publicUrlData } =
+                                    supabase.storage
+                                        .from(BUCKET)
+                                        .getPublicUrl(path);
 
-return;
+                                await supabase
+                                    .from('files')
+                                    .insert([{
+                                        name: file.name,
+                                        url: publicUrlData.publicUrl,
+                                        level,
+                                        subject,
+                                        folder
+                                    }]);
 
-}
+                                alert('تم رفع الملف بنجاح');
 
-alert('تم رفع الملف بنجاح');
+                                button.disabled = false;
+                                button.innerText = 'رفع';
 
-button.disabled = false;
-button.innerText = 'رفع';
+                                loadFiles();
 
-loadFiles();
+                            }
+                            catch (err) {
 
-}
-catch(err){
+                                console.error(err);
 
-console.error(err);
+                                alert('فشل رفع الملف');
 
-alert('فشل رفع الملف');
+                                button.disabled = false;
+                                button.innerText = 'رفع';
 
-button.disabled = false;
-button.innerText = 'رفع';
+                            }
 
-}
+                        };
 
-};
+                        input.click();
 
-input.click();
+                    });
 
-});
+                });
 
-});
+        }
 
-}
+        /* =========================
+        RENDER
+        ========================= */
+        /* =========================
+        DELETE FILE
+        ========================= */
 
-/* =========================
-RENDER
-========================= */
-/* =========================
-DELETE FILE
-========================= */
+        window.deleteFile = async function (filePath) {
 
-window.deleteFile = async function(filePath){
+            const confirmDelete =
+                confirm('هل تريد حذف الملف؟');
 
-const confirmDelete =
-confirm('هل تريد حذف الملف؟');
+            if (!confirmDelete) return;
 
-if(!confirmDelete) return;
+            const { error } =
+                await supabase.storage
+                    .from(BUCKET)
+                    .remove([filePath]);
 
-const { error } =
-await supabase.storage
-.from(BUCKET)
-.remove([filePath]);
+            if (error) {
 
-if(error){
+                console.error(error);
 
-console.error(error);
+                alert('فشل حذف الملف');
 
-alert('فشل حذف الملف');
+                return;
 
-return;
+            }
 
-}
+            alert('تم حذف الملف بنجاح');
 
-alert('تم حذف الملف بنجاح');
+            loadFiles();
 
-loadFiles();
+        }
+        /* =========================
+      ABOUT PAGE
+      ========================= */
 
-}
-  /* =========================
-ABOUT PAGE
-========================= */
+        window.openAboutPage = function () {
 
-window.openAboutPage = function(){
-
-subjectsContainer.innerHTML = `
+            subjectsContainer.innerHTML = `
 
 <div class="col-span-full">
 
@@ -648,19 +645,19 @@ class="w-56 h-56 mx-auto mb-6 object-contain"
 
 `;
 
-levelTitle.innerText =
-'✨ مرحبًا بكم ✨';
+            levelTitle.innerText =
+                '✨ مرحبًا بكم ✨';
 
-}
-  /* =========================
-AUTH
-========================= */
+        }
+        /* =========================
+      AUTH
+      ========================= */
 
-let isAdmin = false;
+        let isAdmin = false;
 
-window.openLogin = function(){
+        window.openLogin = function () {
 
-subjectsContainer.innerHTML = `
+            subjectsContainer.innerHTML = `
 
 <div class="col-span-full flex justify-center">
 
@@ -696,128 +693,128 @@ class="w-full bg-green-600 text-white py-4 rounded-2xl font-black text-xl">
 
 `;
 
-}
+        }
 
-/* LOGIN */
+        /* LOGIN */
 
-window.login = async function(){
+        window.login = async function () {
 
-const email =
-document.getElementById('email').value;
+            const email =
+                document.getElementById('email').value;
 
-const password =
-document.getElementById('password').value;
+            const password =
+                document.getElementById('password').value;
 
-const { error } =
-await supabase.auth.signInWithPassword({
-email,
-password
-});
+            const { error } =
+                await supabase.auth.signInWithPassword({
+                    email,
+                    password
+                });
 
-if(error){
+            if (error) {
 
-alert(error.message);
-return;
+                alert(error.message);
+                return;
 
-}
+            }
 
-isAdmin = true;
-document
-.getElementById('logout-btn')
-.classList.remove('hidden');
-    document
-.getElementById('bg-btn-container')
-.classList.remove('hidden');
-alert('تم تسجيل الدخول');
+            isAdmin = true;
+            document
+                .getElementById('logout-btn')
+                .classList.remove('hidden');
+            document
+                .getElementById('bg-btn-container')
+                .classList.remove('hidden');
+            alert('تم تسجيل الدخول');
 
-renderSubjects('السنة الأولى');
+            renderSubjects('السنة الأولى');
 
-}
+        }
 
-/* CHECK USER */
+        /* CHECK USER */
 
-/* CHECK USER */
+        /* CHECK USER */
 
-async function checkUser(){
+        async function checkUser() {
 
-const { data } =
-await supabase.auth.getSession();
+            const { data } =
+                await supabase.auth.getSession();
 
-if(data.session){
+            if (data.session) {
 
-isAdmin = true;
+                isAdmin = true;
 
-}
+            }
 
-}
+        }
 
-  /* LOGOUT */
+        /* LOGOUT */
 
-window.logout = async function(){
+        window.logout = async function () {
 
-await supabase.auth.signOut();
+            await supabase.auth.signOut();
 
-isAdmin = false;
+            isAdmin = false;
 
-document
-.getElementById('logout-btn')
-.classList.add('hidden');
-document
-.getElementById('bg-btn-container')
-.classList.add('hidden');
-alert('تم تسجيل الخروج');
+            document
+                .getElementById('logout-btn')
+                .classList.add('hidden');
+            document
+                .getElementById('bg-btn-container')
+                .classList.add('hidden');
+            alert('تم تسجيل الخروج');
 
-renderSubjects('السنة الأولى');
+            renderSubjects('السنة الأولى');
 
-}
-window.renderSubjects = function(level,btn=null){
+        }
+        window.renderSubjects = function (level, btn = null) {
 
-level =
-String(level).trim();
+            level =
+                String(level).trim();
 
-levelTitle.innerText =
-`✨ ${level} ✨`;
+            levelTitle.innerText =
+                `✨ ${level} ✨`;
 
-subjectsContainer.innerHTML = '';
+            subjectsContainer.innerHTML = '';
 
-document
-.querySelectorAll('.level-btn')
-.forEach(b=>{
+            document
+                .querySelectorAll('.level-btn')
+                .forEach(b => {
 
-b.classList.remove(
-'bg-green-600',
-'text-white'
-);
+                    b.classList.remove(
+                        'bg-green-600',
+                        'text-white'
+                    );
 
-b.classList.add(
-'bg-white'
-);
+                    b.classList.add(
+                        'bg-white'
+                    );
 
-});
+                });
 
-if(btn){
+            if (btn) {
 
-btn.classList.remove('bg-white');
+                btn.classList.remove('bg-white');
 
-btn.classList.add(
-'bg-green-600',
-'text-white'
-);
+                btn.classList.add(
+                    'bg-green-600',
+                    'text-white'
+                );
 
-}
+            }
 
-const search =
-searchInput.value.trim();
+            const search =
+                searchInput.value.trim();
 
-const subjects =
-(subjectsByLevel[level] || [])
-.filter(subject =>
-subject.title.includes(search)
-);
+            const subjects =
+                (subjectsByLevel[level] || [])
+                    .filter(subject =>
+                        subject.title.includes(search)
+                    );
 
-if(subjects.length === 0){
+            if (subjects.length === 0) {
 
-subjectsContainer.innerHTML = `
+                subjectsContainer.innerHTML = `
 <div class="col-span-full text-center">
 <h2 class="text-4xl font-black text-red-500">
 لا توجد مواد
@@ -825,159 +822,156 @@ subjectsContainer.innerHTML = `
 </div>
 `;
 
-return;
+                return;
 
-}
+            }
 
-subjects.forEach(subject=>{
+            subjects.forEach(subject => {
 
-let color = 'text-blue-700';
+                let color = 'text-blue-700';
 
-if(subject.id === 'math'){
-color = 'text-indigo-700';
-}
+                if (subject.id === 'math') {
+                    color = 'text-indigo-700';
+                }
 
-if(subject.id === 'arabic'){
-color = 'text-green-700';
-}
+                if (subject.id === 'arabic') {
+                    color = 'text-green-700';
+                }
 
-if(subject.id === 'science'){
-color = 'text-orange-700';
-}
+                if (subject.id === 'science') {
+                    color = 'text-orange-700';
+                }
 
-if(subject.id === 'french'){
-color = 'text-pink-700';
-}
+                if (subject.id === 'french') {
+                    color = 'text-pink-700';
+                }
 
-subjectsContainer.innerHTML +=
-createCard(
-subject.title,
-color,
-subject.id,
-level
-);
+                subjectsContainer.innerHTML +=
+                    createCard(
+                        subject.title,
+                        color,
+                        subject.id,
+                        level
+                    );
 
-});
+            });
 
-attachUploadEvents();
-if(isAdmin){
+            attachUploadEvents();
+            if (isAdmin) {
 
-document
-.querySelectorAll('.upload-btn')
-.forEach(btn=>{
+                document
+                    .querySelectorAll('.upload-btn')
+                    .forEach(btn => {
 
-btn.classList.remove('hidden');
+                        btn.classList.remove('hidden');
 
-});
+                    });
 
-}
-loadFiles();
+            }
+            loadFiles();
 
-}
+        }
 
-/* =========================
-SEARCH
-========================= */
+        /* =========================
+        SEARCH
+        ========================= */
 
-searchInput.addEventListener('input',()=>{
+        searchInput.addEventListener('input', () => {
 
-const level =
-levelTitle.innerText
-.replaceAll('✨','')
-.trim();
+            const level =
+                levelTitle.innerText
+                    .replaceAll('✨', '')
+                    .trim();
 
-renderSubjects(level);
+            renderSubjects(level);
 
-});
+        });
 
-/* =========================
-START
-========================= */
+        /* =========================
+        START
+        ========================= */
 
-async function startApp(){
-document.body.style.backgroundImage =
-  "url('./images/backgrounds/bg1.jpg')";
+        async function startApp() {
+            document.body.style.backgroundImage =
+                "url('./images/backgrounds/bg1.jpg')";
 
-document.body.style.backgroundSize = "cover";
-document.body.style.backgroundPosition = "center";
-await checkUser();
+            document.body.style.backgroundSize = "cover";
+            document.body.style.backgroundPosition = "center";
+            await checkUser();
 
-if(isAdmin){
+            if (isAdmin) {
 
-document
-.getElementById('logout-btn')
-.classList.remove('hidden');
-document
-.getElementById('bg-btn-container')
-.classList.remove('hidden');
-}
+                document
+                    .getElementById('logout-btn')
+                    .classList.remove('hidden');
+                document
+                    .getElementById('bg-btn-container')
+                    .classList.remove('hidden');
+            }
 
-renderSubjects('السنة الأولى');
+            renderSubjects('السنة الأولى');
 
-}
+        }
 
-startApp();
+        startApp();
 
-</script><script>
-const changeBgBtn = document.getElementById("changeBgBtn");
-const bgInput = document.getElementById("bgInput");
+    </script>
+    <script>
+        const changeBgBtn = document.getElementById("changeBgBtn");
+        const bgInput = document.getElementById("bgInput");
 
-/* عند الضغط على الزر */
-changeBgBtn.addEventListener("click", () => {
-    bgInput.click();
-});
+        /* عند الضغط على الزر */
+        changeBgBtn.addEventListener("click", () => {
+            bgInput.click();
+        });
 
-/* عند اختيار صورة */
-bgInput.addEventListener("change", (e) => {
+        /* عند اختيار صورة */
+        bgInput.addEventListener("change", (e) => {
 
-    const file = e.target.files[0];
+            const file = e.target.files[0];
 
-    if (!file) return;
+            if (!file) return;
 
-    const reader = new FileReader();
+            const reader = new FileReader();
 
-    reader.onload = function(event) {
+            reader.onload = function (event) {
 
-        document.body.style.backgroundImage =
-            `url('${event.target.result}')`;
+                document.body.style.backgroundImage =
+                    `url('${event.target.result}')`;
 
-        document.body.style.backgroundSize = "cover";
-        document.body.style.backgroundPosition = "center";
-        document.body.style.backgroundAttachment = "fixed";
+                document.body.style.backgroundSize = "cover";
+                document.body.style.backgroundPosition = "center";
+                document.body.style.backgroundAttachment = "fixed";
 
-        /* حفظ الخلفية */
-        localStorage.setItem(
-            "siteBackground",
-            event.target.result
-        );
-    };
+                /* حفظ الخلفية */
+                localStorage.setItem(
+                    "siteBackground",
+                    event.target.result
+                );
+            };
 
-    reader.readAsDataURL(file);
-});
+            reader.readAsDataURL(file);
+        });
 
-/* استرجاع الخلفية بعد تحديث الصفحة */
-window.addEventListener("load", () => {
+        /* استرجاع الخلفية بعد تحديث الصفحة */
+        window.addEventListener("load", () => {
 
-    const savedBg =
-        localStorage.getItem("siteBackground");
+            const savedBg =
+                localStorage.getItem("siteBackground");
 
-    if(savedBg){
+            if (savedBg) {
 
-        document.body.style.backgroundImage =
-            `url('${savedBg}')`;
+                document.body.style.backgroundImage =
+                    `url('${savedBg}')`;
 
-        document.body.style.backgroundSize = "cover";
-        document.body.style.backgroundPosition = "center";
-        document.body.style.backgroundAttachment = "fixed";
-    }
-});
-</script>
+                document.body.style.backgroundSize = "cover";
+                document.body.style.backgroundPosition = "center";
+                document.body.style.backgroundAttachment = "fixed";
+            }
+        });
+    </script>
 
-  <div class="fixed top-4 left-4 z-50">
-  <button onclick="changeBackground()"
-    class="bg-blue-600 text-white px-4 py-2 rounded-xl shadow-lg font-bold">
-    🎨 تغيير الخلفية
-  </button>
-</div>
+    
 </body>
+
 </html>
