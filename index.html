@@ -133,7 +133,7 @@ hidden>
 <img
 src="./images/logo.png.png"
 class="w-full h-full object-contain">
->
+
 
 </div>
 
@@ -190,7 +190,7 @@ hidden>
 
 </div>
 
-</aside>>
+</aside>
 
 <!-- MAIN -->
 
@@ -482,7 +482,6 @@ continue;
 
 (data || []).forEach(file=>{
 
-(data || []).forEach(file=>{
 
 filesBox.innerHTML += `
 
@@ -516,37 +515,31 @@ class="bg-green-600 text-white px-3 py-2 rounded-xl text-sm font-bold">
 
 });
 
-filesBox.innerHTML += `
+    filesBox.innerHTML += `
 
 <div class="bg-white border rounded-2xl p-3 flex justify-between items-center">
 
-<p class="font-bold text-blue-700 text-sm overflow-hidden whitespace-nowrap text-ellipsis max-w-[150px]">
-${file.name}
-</p>
+  <p class="font-bold text-blue-700 text-sm overflow-hidden whitespace-nowrap text-ellipsis max-w-[150px]">
+    ${file.name}
+  </p>
 
-<div class="flex gap-2">
+  <div class="flex gap-2">
 
-<a
-href="${urlData.publicUrl}"
-target="_blank"
-class="bg-blue-600 text-white px-3 py-2 rounded-xl text-sm font-bold">
-فتح
-</a>
+    <a
+      href="${file.url}"
+      target="_blank"
+      class="bg-blue-600 text-white px-3 py-2 rounded-xl text-sm font-bold">
+      فتح
+    </a>
 
-<a
-href="${urlData.publicUrl}"
-download
-class="bg-green-600 text-white px-3 py-2 rounded-xl text-sm font-bold">
-تحميل
-</a>
-${isAdmin ? `
-<button
-onclick="deleteFile('${filePath}')"
-class="bg-red-600 text-white px-3 py-2 rounded-xl text-sm font-bold">
-حذف
-</button>
-` : ''}
-</div>
+    <a
+      href="${file.url}"
+      download
+      class="bg-green-600 text-white px-3 py-2 rounded-xl text-sm font-bold">
+      تحميل
+    </a>
+
+  </div>
 
 </div>
 
@@ -1089,11 +1082,12 @@ window.addEventListener("load", () => {
     }
 });
 </script>
-</body>
+
   <div class="fixed top-4 left-4 z-50">
   <button onclick="changeBackground()"
     class="bg-blue-600 text-white px-4 py-2 rounded-xl shadow-lg font-bold">
     🎨 تغيير الخلفية
   </button>
 </div>
+</body>
 </html>
