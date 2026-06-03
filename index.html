@@ -38,64 +38,7 @@ display:none;
 </style>
 
 </head>
-<script>
 
-function changeBackground(){
-
-    document.getElementById("bgInput").click();
-
-}
-
-const bgInput =
-document.getElementById("bgInput");
-
-bgInput.addEventListener("change", function(e){
-
-    const file = e.target.files[0];
-
-    if(!file) return;
-
-    const reader = new FileReader();
-
-    reader.onload = function(event){
-
-        document.body.style.backgroundImage =
-        `url('${event.target.result}')`;
-
-        document.body.style.backgroundSize = "cover";
-        document.body.style.backgroundPosition = "center";
-        document.body.style.backgroundAttachment = "fixed";
-
-        localStorage.setItem(
-            "siteBackground",
-            event.target.result
-        );
-    };
-
-    reader.readAsDataURL(file);
-
-});
-
-/* استرجاع الخلفية بعد تحديث الصفحة */
-
-window.onload = function(){
-
-    const savedBg =
-    localStorage.getItem("siteBackground");
-
-    if(savedBg){
-
-        document.body.style.backgroundImage =
-        `url('${savedBg}')`;
-
-        document.body.style.backgroundSize = "cover";
-        document.body.style.backgroundPosition = "center";
-        document.body.style.backgroundAttachment = "fixed";
-    }
-
-};
-
-</script>
 <body>
 
 <div
