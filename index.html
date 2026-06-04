@@ -111,6 +111,7 @@
         .section-card:nth-child(3){animation-delay:.25s}
 
         @keyframes cardIn { from{opacity:0;transform:translateY(24px) scale(.95)} to{opacity:1;transform:translateY(0) scale(1)} }
+        @keyframes featureCardIn { from{opacity:0;transform:translateY(30px) scale(.9)} to{opacity:1;transform:translateY(0) scale(1)} }
         .subject-card { animation: cardIn 0.45s cubic-bezier(.34,1.56,.64,1) both; }
         .subject-card:nth-child(1){animation-delay:.03s}
         .subject-card:nth-child(2){animation-delay:.1s}
@@ -197,13 +198,25 @@
 
 
 
-                    <!-- زر مكتبة القصص -->
-                    <div class="mb-8">
+                    <!-- أزرار القصص والألعاب والبحوث -->
+                    <div class="mb-8 grid grid-cols-3 gap-3">
                         <button onclick="handleOpenStoriesPage()"
-                            class="w-full bg-gradient-to-r from-purple-600 to-pink-500 text-white py-5 rounded-[25px] font-black text-2xl shadow-xl flex items-center justify-center gap-4 transition-transform hover:scale-[1.02] active:scale-[0.98]">
-                            <span class="text-4xl">📖</span>
-                            <span>مكتبة القصص</span>
-                            <span class="bg-white/20 px-3 py-1 rounded-xl text-base" id="stories-level-badge">السنة الأولى</span>
+                            class="w-full bg-gradient-to-r from-purple-600 to-pink-500 text-white py-4 rounded-[25px] font-black text-base shadow-xl flex flex-col items-center justify-center gap-2 transition-transform hover:scale-[1.02] active:scale-[0.98]">
+                            <span class="text-3xl">📖</span>
+                            <span>القصص</span>
+                            <span class="bg-white/20 px-2 py-0.5 rounded-lg text-xs font-bold" id="stories-level-badge">السنة الأولى</span>
+                        </button>
+                        <button onclick="handleOpenGamesPage()"
+                            class="w-full bg-gradient-to-r from-yellow-500 to-orange-500 text-white py-4 rounded-[25px] font-black text-base shadow-xl flex flex-col items-center justify-center gap-2 transition-transform hover:scale-[1.02] active:scale-[0.98]">
+                            <span class="text-3xl">🎮</span>
+                            <span>الألعاب</span>
+                            <span class="bg-white/20 px-2 py-0.5 rounded-lg text-xs font-bold" id="games-level-badge">السنة الأولى</span>
+                        </button>
+                        <button onclick="handleOpenResearchPage()"
+                            class="w-full bg-gradient-to-r from-red-600 to-rose-500 text-white py-4 rounded-[25px] font-black text-base shadow-xl flex flex-col items-center justify-center gap-2 transition-transform hover:scale-[1.02] active:scale-[0.98]">
+                            <span class="text-3xl">🔬</span>
+                            <span>البحوث</span>
+                            <span class="bg-white/20 px-2 py-0.5 rounded-lg text-xs font-bold" id="research-level-badge">السنة الأولى</span>
                         </button>
                     </div>
 
@@ -231,6 +244,58 @@
 
                     <div class="bg-white/10 border border-white/15 rounded-2xl p-5 shadow-lg">
                         <div id="stories-files-box" class="space-y-3">
+                            <p class="text-white/40 font-bold text-center py-6 text-lg">⏳ جاري التحميل...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ═══ GAMES PAGE ═══ -->
+                <div id="games-page"
+                     style="position:absolute;top:0;left:0;width:100%;transform:translateY(60%) scale(0.92);opacity:0;filter:blur(5px);transition:transform 0.6s cubic-bezier(.86,0,.07,1),opacity 0.5s ease,filter 0.5s ease;pointer-events:none;">
+
+                    <div class="flex items-center gap-4 mb-6 flex-wrap">
+                        <button onclick="goBackFromGames()"
+                            class="flex items-center gap-2 bg-white border-2 border-yellow-300 text-yellow-700 px-5 py-2 rounded-xl font-black text-base shadow-md transition-transform hover:scale-105">
+                            ➜ رجوع
+                        </button>
+                        <div class="flex items-center gap-3">
+                            <span class="text-5xl">🎮</span>
+                            <div>
+                                <p id="games-level-label" class="text-yellow-300 font-bold text-sm"></p>
+                                <h2 class="text-3xl font-black text-white">ألعاب تعليمية</h2>
+                            </div>
+                        </div>
+                        <button id="games-upload-btn" onclick="handleGamesUpload()" class="hidden mr-auto bg-yellow-500 text-white px-4 py-2 rounded-xl font-bold text-sm">⬆ رفع لعبة</button>
+                    </div>
+
+                    <div class="bg-white/10 border border-white/15 rounded-2xl p-5 shadow-lg">
+                        <div id="games-files-box" class="space-y-3">
+                            <p class="text-white/40 font-bold text-center py-6 text-lg">⏳ جاري التحميل...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ═══ RESEARCH PAGE ═══ -->
+                <div id="research-page"
+                     style="position:absolute;top:0;left:0;width:100%;transform:translateY(60%) scale(0.92);opacity:0;filter:blur(5px);transition:transform 0.6s cubic-bezier(.86,0,.07,1),opacity 0.5s ease,filter 0.5s ease;pointer-events:none;">
+
+                    <div class="flex items-center gap-4 mb-6 flex-wrap">
+                        <button onclick="goBackFromResearch()"
+                            class="flex items-center gap-2 bg-white border-2 border-red-300 text-red-700 px-5 py-2 rounded-xl font-black text-base shadow-md transition-transform hover:scale-105">
+                            ➜ رجوع
+                        </button>
+                        <div class="flex items-center gap-3">
+                            <span class="text-5xl">🔬</span>
+                            <div>
+                                <p id="research-level-label" class="text-red-300 font-bold text-sm"></p>
+                                <h2 class="text-3xl font-black text-white">البحوث المدرسية</h2>
+                            </div>
+                        </div>
+                        <button id="research-upload-btn" onclick="handleResearchUpload()" class="hidden mr-auto bg-red-600 text-white px-4 py-2 rounded-xl font-bold text-sm">⬆ رفع بحث</button>
+                    </div>
+
+                    <div class="bg-white/10 border border-white/15 rounded-2xl p-5 shadow-lg">
+                        <div id="research-files-box" class="space-y-3">
                             <p class="text-white/40 font-bold text-center py-6 text-lg">⏳ جاري التحميل...</p>
                         </div>
                     </div>
@@ -300,22 +365,32 @@
 <nav id="mobile-nav" class="fixed bottom-0 left-0 right-0 z-50 flex items-center justify-around px-2 py-2 border-t"
      style="background:#1a0930;border-color:#3b1a6e;display:none;">
     <button onclick="window._setMobActive && window._setMobActive('mob-home-btn'); handleOpenAboutPage()" id="mob-home-btn"
-        class="mob-nav-btn flex flex-col items-center gap-1 px-4 py-2 rounded-2xl text-white/60 transition-all">
+        class="mob-nav-btn flex flex-col items-center gap-1 px-3 py-2 rounded-2xl text-white/60 transition-all">
         <span class="text-2xl">🏠</span>
         <span class="text-xs font-bold">الرئيسية</span>
     </button>
     <button onclick="window._setMobActive && window._setMobActive('mob-levels-btn'); handleOpenLevelsPage()" id="mob-levels-btn"
-        class="mob-nav-btn flex flex-col items-center gap-1 px-4 py-2 rounded-2xl text-white/60 transition-all">
+        class="mob-nav-btn flex flex-col items-center gap-1 px-3 py-2 rounded-2xl text-white/60 transition-all">
         <span class="text-2xl" id="mob-level-icon">✨</span>
         <span class="text-xs font-bold">المستوى</span>
     </button>
     <button onclick="window._setMobActive && window._setMobActive('mob-stories-btn'); handleOpenStoriesPage()" id="mob-stories-btn"
-        class="mob-nav-btn flex flex-col items-center gap-1 px-4 py-2 rounded-2xl text-white/60 transition-all">
+        class="mob-nav-btn flex flex-col items-center gap-1 px-3 py-2 rounded-2xl text-white/60 transition-all">
         <span class="text-2xl">📖</span>
         <span class="text-xs font-bold">القصص</span>
     </button>
+    <button onclick="window._setMobActive && window._setMobActive('mob-games-btn'); handleOpenGamesPage()" id="mob-games-btn"
+        class="mob-nav-btn flex flex-col items-center gap-1 px-3 py-2 rounded-2xl text-white/60 transition-all">
+        <span class="text-2xl">🎮</span>
+        <span class="text-xs font-bold">ألعاب</span>
+    </button>
+    <button onclick="window._setMobActive && window._setMobActive('mob-research-btn'); handleOpenResearchPage()" id="mob-research-btn"
+        class="mob-nav-btn flex flex-col items-center gap-1 px-3 py-2 rounded-2xl text-white/60 transition-all">
+        <span class="text-2xl">🔬</span>
+        <span class="text-xs font-bold">البحوث</span>
+    </button>
     <button onclick="window._setMobActive && window._setMobActive('mob-login-btn'); handleOpenLogin()" id="mob-login-btn"
-        class="mob-nav-btn flex flex-col items-center gap-1 px-4 py-2 rounded-2xl text-white/60 transition-all">
+        class="mob-nav-btn flex flex-col items-center gap-1 px-3 py-2 rounded-2xl text-white/60 transition-all">
         <span class="text-2xl">🔐</span>
         <span class="text-xs font-bold">دخول</span>
     </button>
@@ -578,6 +653,10 @@
         // update stories badge
         const badge = document.getElementById('stories-level-badge');
         if (badge) badge.textContent = level;
+        const gamesBadge = document.getElementById('games-level-badge');
+        if (gamesBadge) gamesBadge.textContent = level;
+        const researchBadge = document.getElementById('research-level-badge');
+        if (researchBadge) researchBadge.textContent = level;
 
         document.querySelectorAll('.level-btn').forEach(b => {
             b.classList.remove('bg-green-600','text-white');
@@ -757,6 +836,12 @@
         if (currentStoriesLevel) {
             goBackFromStories();
             setTimeout(callback, 650);
+        } else if (currentGamesLevel) {
+            goBackFromGames();
+            setTimeout(callback, 650);
+        } else if (currentResearchLevel) {
+            goBackFromResearch();
+            setTimeout(callback, 650);
         } else if (currentSubject) {
             goBack();
             setTimeout(callback, 650);
@@ -764,6 +849,220 @@
             setTimeout(callback, delay);
         }
     }
+
+    /* ══════════════════════════════
+       صفحة الألعاب التعليمية
+    ══════════════════════════════ */
+    const gamesPage = document.getElementById('games-page');
+    let currentGamesLevel = null;
+
+    window.handleOpenGamesPage = function() {
+        currentGamesLevel = { level: currentLevel, levelId: levelMap[currentLevel] };
+        document.getElementById('games-level-label').textContent = currentLevel;
+        triggerFlash();
+        homePage.classList.add('slide-out-right');
+        gamesPage.style.pointerEvents = 'all';
+        gamesPage.style.transform = 'translateY(0) scale(1)';
+        gamesPage.style.opacity = '1';
+        gamesPage.style.filter = 'blur(0px)';
+        if (isAdmin) document.getElementById('games-upload-btn').classList.remove('hidden');
+        loadGamesFiles();
+    };
+
+    window.goBackFromGames = function() {
+        triggerFlash();
+        gamesPage.style.transform = 'translateY(60%) scale(0.92)';
+        gamesPage.style.opacity = '0';
+        gamesPage.style.filter = 'blur(5px)';
+        gamesPage.style.pointerEvents = 'none';
+        homePage.classList.remove('slide-out-right');
+        homePage.classList.add('slide-in-from-right');
+        setTimeout(() => homePage.classList.remove('slide-in-from-right'), 700);
+        currentGamesLevel = null;
+    };
+
+    async function loadGamesFiles() {
+        if (!currentGamesLevel) return;
+        showProgress();
+        const box = document.getElementById('games-files-box');
+        box.innerHTML = `<p class="text-white/40 font-bold text-center py-4">⏳ جاري التحميل...</p>`;
+
+        const { data, error } = await supabase
+            .from('files').select('*')
+            .eq('level',   currentGamesLevel.levelId)
+            .eq('subject', 'games')
+            .eq('folder',  'games');
+
+        box.innerHTML = '';
+        if (error || !data || data.length === 0) {
+            box.innerHTML = `<p class="text-white/40 font-bold text-center py-6 text-lg">🎮 لا توجد ألعاب بعد لهذا المستوى</p>`;
+        } else {
+            data.forEach((file, i) => {
+                const deleteBtn = isAdmin
+                    ? `<button onclick="handleDeleteGame('${file.id}','${file.storage_path||''}')"
+                           class="bg-red-500/80 hover:bg-red-500 text-white px-3 py-2 rounded-xl text-sm font-bold">🗑 حذف</button>`
+                    : '';
+                box.innerHTML += `
+                    <div class="file-item bg-white/10 border border-white/15 rounded-xl px-5 py-3 flex justify-between items-center gap-3"
+                         style="animation-delay:${i*0.06}s">
+                        <p class="font-bold text-white text-sm overflow-hidden whitespace-nowrap text-ellipsis max-w-[55%]" title="${file.name}">
+                            🎮 ${file.name}
+                        </p>
+                        <div class="flex gap-2 flex-shrink-0">
+                            <a href="${file.url}" target="_blank" rel="noopener"
+                               class="bg-yellow-500 hover:bg-yellow-400 text-white px-4 py-2 rounded-xl text-sm font-bold">فتح</a>
+                            <a href="${file.url}" download="${file.name}" target="_blank" rel="noopener"
+                               class="bg-green-600 hover:bg-green-500 text-white px-4 py-2 rounded-xl text-sm font-bold">تحميل</a>
+                            ${deleteBtn}
+                        </div>
+                    </div>`;
+            });
+        }
+        finishProgress();
+    }
+
+    window.handleGamesUpload = async function() {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = '.pdf,.doc,.docx,.png,.jpg,.jpeg,.mp4,.html,.zip';
+        input.onchange = async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            const btn = document.getElementById('games-upload-btn');
+            btn.disabled = true; btn.innerText = '⏳ جاري الرفع...';
+            try {
+                const path = `${currentGamesLevel.levelId}/games/games/${Date.now()}-${file.name}`;
+                const { error: upErr } = await supabase.storage.from(BUCKET).upload(path, file, { upsert:true, contentType:file.type });
+                if (upErr) { alert('فشل الرفع: ' + upErr.message); return; }
+                const { data: urlData } = supabase.storage.from(BUCKET).getPublicUrl(path);
+                const { error: dbErr } = await supabase.from('files').insert([{
+                    name: file.name, url: urlData.publicUrl, storage_path: path,
+                    level: currentGamesLevel.levelId, subject: 'games', folder: 'games',
+                }]);
+                if (dbErr) { alert('خطأ: ' + dbErr.message); return; }
+                alert('✅ تم رفع اللعبة');
+                loadGamesFiles();
+            } catch(err) { console.error(err); alert('خطأ غير متوقع'); }
+            finally { btn.disabled = false; btn.innerText = '⬆ رفع لعبة'; }
+        };
+        input.click();
+    };
+
+    window.handleDeleteGame = async function(fileId, storagePath) {
+        if (!confirm('هل تريد حذف هذه اللعبة نهائيًا؟')) return;
+        if (storagePath) await supabase.storage.from(BUCKET).remove([storagePath]);
+        const { error } = await supabase.from('files').delete().eq('id', fileId);
+        if (error) { alert('فشل الحذف'); return; }
+        alert('✅ تم الحذف');
+        loadGamesFiles();
+    };
+
+    /* ══════════════════════════════
+       صفحة البحوث المدرسية
+    ══════════════════════════════ */
+    const researchPage = document.getElementById('research-page');
+    let currentResearchLevel = null;
+
+    window.handleOpenResearchPage = function() {
+        currentResearchLevel = { level: currentLevel, levelId: levelMap[currentLevel] };
+        document.getElementById('research-level-label').textContent = currentLevel;
+        triggerFlash();
+        homePage.classList.add('slide-out-right');
+        researchPage.style.pointerEvents = 'all';
+        researchPage.style.transform = 'translateY(0) scale(1)';
+        researchPage.style.opacity = '1';
+        researchPage.style.filter = 'blur(0px)';
+        if (isAdmin) document.getElementById('research-upload-btn').classList.remove('hidden');
+        loadResearchFiles();
+    };
+
+    window.goBackFromResearch = function() {
+        triggerFlash();
+        researchPage.style.transform = 'translateY(60%) scale(0.92)';
+        researchPage.style.opacity = '0';
+        researchPage.style.filter = 'blur(5px)';
+        researchPage.style.pointerEvents = 'none';
+        homePage.classList.remove('slide-out-right');
+        homePage.classList.add('slide-in-from-right');
+        setTimeout(() => homePage.classList.remove('slide-in-from-right'), 700);
+        currentResearchLevel = null;
+    };
+
+    async function loadResearchFiles() {
+        if (!currentResearchLevel) return;
+        showProgress();
+        const box = document.getElementById('research-files-box');
+        box.innerHTML = `<p class="text-white/40 font-bold text-center py-4">⏳ جاري التحميل...</p>`;
+
+        const { data, error } = await supabase
+            .from('files').select('*')
+            .eq('level',   currentResearchLevel.levelId)
+            .eq('subject', 'research')
+            .eq('folder',  'research');
+
+        box.innerHTML = '';
+        if (error || !data || data.length === 0) {
+            box.innerHTML = `<p class="text-white/40 font-bold text-center py-6 text-lg">🔬 لا توجد بحوث بعد لهذا المستوى</p>`;
+        } else {
+            data.forEach((file, i) => {
+                const deleteBtn = isAdmin
+                    ? `<button onclick="handleDeleteResearch('${file.id}','${file.storage_path||''}')"
+                           class="bg-red-500/80 hover:bg-red-500 text-white px-3 py-2 rounded-xl text-sm font-bold">🗑 حذف</button>`
+                    : '';
+                box.innerHTML += `
+                    <div class="file-item bg-white/10 border border-white/15 rounded-xl px-5 py-3 flex justify-between items-center gap-3"
+                         style="animation-delay:${i*0.06}s">
+                        <p class="font-bold text-white text-sm overflow-hidden whitespace-nowrap text-ellipsis max-w-[55%]" title="${file.name}">
+                            🔬 ${file.name}
+                        </p>
+                        <div class="flex gap-2 flex-shrink-0">
+                            <a href="${file.url}" target="_blank" rel="noopener"
+                               class="bg-red-600 hover:bg-red-500 text-white px-4 py-2 rounded-xl text-sm font-bold">فتح</a>
+                            <a href="${file.url}" download="${file.name}" target="_blank" rel="noopener"
+                               class="bg-green-600 hover:bg-green-500 text-white px-4 py-2 rounded-xl text-sm font-bold">تحميل</a>
+                            ${deleteBtn}
+                        </div>
+                    </div>`;
+            });
+        }
+        finishProgress();
+    }
+
+    window.handleResearchUpload = async function() {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = '.pdf,.doc,.docx,.png,.jpg,.jpeg,.mp4';
+        input.onchange = async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            const btn = document.getElementById('research-upload-btn');
+            btn.disabled = true; btn.innerText = '⏳ جاري الرفع...';
+            try {
+                const path = `${currentResearchLevel.levelId}/research/research/${Date.now()}-${file.name}`;
+                const { error: upErr } = await supabase.storage.from(BUCKET).upload(path, file, { upsert:true, contentType:file.type });
+                if (upErr) { alert('فشل الرفع: ' + upErr.message); return; }
+                const { data: urlData } = supabase.storage.from(BUCKET).getPublicUrl(path);
+                const { error: dbErr } = await supabase.from('files').insert([{
+                    name: file.name, url: urlData.publicUrl, storage_path: path,
+                    level: currentResearchLevel.levelId, subject: 'research', folder: 'research',
+                }]);
+                if (dbErr) { alert('خطأ: ' + dbErr.message); return; }
+                alert('✅ تم رفع البحث');
+                loadResearchFiles();
+            } catch(err) { console.error(err); alert('خطأ غير متوقع'); }
+            finally { btn.disabled = false; btn.innerText = '⬆ رفع بحث'; }
+        };
+        input.click();
+    };
+
+    window.handleDeleteResearch = async function(fileId, storagePath) {
+        if (!confirm('هل تريد حذف هذا البحث نهائيًا؟')) return;
+        if (storagePath) await supabase.storage.from(BUCKET).remove([storagePath]);
+        const { error } = await supabase.from('files').delete().eq('id', fileId);
+        if (error) { alert('فشل الحذف'); return; }
+        alert('✅ تم الحذف');
+        loadResearchFiles();
+    };
 
     /* ══════════════════════════════
        صفحة جميع المستويات (جديدة)
@@ -799,7 +1098,7 @@
                                 <div class="flex gap-2">
                                     <span class="bg-blue-50 text-blue-600 px-3 py-1 rounded-lg text-xs font-bold">📖 قصص</span>
                                     <span class="bg-yellow-50 text-yellow-600 px-3 py-1 rounded-lg text-xs font-bold">🎮 ألعاب</span>
-                                    <span class="bg-red-50 text-red-600 px-3 py-1 rounded-lg text-xs font-bold">🔬 أبحاث</span>
+                                    <span class="bg-red-50 text-red-600 px-3 py-1 rounded-lg text-xs font-bold">🔬 البحوث المدرسية</span>
                                 </div>
                                 <span class="text-blue-500 font-black">← دخول</span>
                             </div>
@@ -833,9 +1132,27 @@
                             بطريقة منظمة وسهلة الاستعمال.
                         </p>
                         <div class="mt-10 grid md:grid-cols-3 gap-6">
-                            <div class="bg-blue-50 p-6 rounded-3xl"><h2 class="text-3xl font-black text-blue-700 mb-4">📖 قصص</h2><p class="font-bold text-gray-600">قصص ممتعة مرتبة حسب المستويات والمواد.</p></div>
-                            <div class="bg-yellow-50 p-6 rounded-3xl"><h2 class="text-3xl font-black text-yellow-700 mb-4">🎮 ألعاب</h2><p class="font-bold text-gray-600">ألعاب تعليمية ممتعة لتثبيت المكتسبات.</p></div>
-                            <div class="bg-red-50 p-6 rounded-3xl"><h2 class="text-3xl font-black text-red-700 mb-4">🔬 أبحاث</h2><p class="font-bold text-gray-600">أبحاث للمراجعة والاستعداد الجيد.</p></div>
+                            <div onclick="handleOpenStoriesPage()" class="about-feature-card cursor-pointer bg-gradient-to-br from-blue-50 to-indigo-100 p-6 rounded-3xl border-2 border-blue-200 hover:border-blue-400 hover:shadow-xl transition-all duration-300 hover:-translate-y-2 active:scale-95 group"
+                                 style="animation: featureCardIn 0.5s cubic-bezier(.34,1.56,.64,1) both; animation-delay:0.1s">
+                                <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-blue-500 flex items-center justify-center text-3xl shadow-lg group-hover:scale-110 transition-transform duration-300">📖</div>
+                                <h2 class="text-2xl font-black text-blue-700 mb-3">قصص</h2>
+                                <p class="font-bold text-gray-600 text-sm leading-relaxed">قصص ممتعة مرتبة حسب المستويات والمواد.</p>
+                                <div class="mt-4 inline-flex items-center gap-1 text-blue-500 font-black text-sm group-hover:gap-3 transition-all duration-300">← انقر للدخول</div>
+                            </div>
+                            <div onclick="handleOpenGamesPage()" class="about-feature-card cursor-pointer bg-gradient-to-br from-yellow-50 to-orange-100 p-6 rounded-3xl border-2 border-yellow-200 hover:border-yellow-400 hover:shadow-xl transition-all duration-300 hover:-translate-y-2 active:scale-95 group"
+                                 style="animation: featureCardIn 0.5s cubic-bezier(.34,1.56,.64,1) both; animation-delay:0.25s">
+                                <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-yellow-500 flex items-center justify-center text-3xl shadow-lg group-hover:scale-110 transition-transform duration-300">🎮</div>
+                                <h2 class="text-2xl font-black text-yellow-700 mb-3">ألعاب</h2>
+                                <p class="font-bold text-gray-600 text-sm leading-relaxed">ألعاب تعليمية ممتعة لتثبيت المكتسبات.</p>
+                                <div class="mt-4 inline-flex items-center gap-1 text-yellow-500 font-black text-sm group-hover:gap-3 transition-all duration-300">← انقر للألعاب</div>
+                            </div>
+                            <div onclick="handleOpenResearchPage()" class="about-feature-card cursor-pointer bg-gradient-to-br from-red-50 to-rose-100 p-6 rounded-3xl border-2 border-red-200 hover:border-red-400 hover:shadow-xl transition-all duration-300 hover:-translate-y-2 active:scale-95 group"
+                                 style="animation: featureCardIn 0.5s cubic-bezier(.34,1.56,.64,1) both; animation-delay:0.4s">
+                                <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-red-500 flex items-center justify-center text-3xl shadow-lg group-hover:scale-110 transition-transform duration-300">🔬</div>
+                                <h2 class="text-2xl font-black text-red-700 mb-3">البحوث المدرسية</h2>
+                                <p class="font-bold text-gray-600 text-sm leading-relaxed">بحوث مدرسية منظمة للمراجعة والاستعداد الجيد.</p>
+                                <div class="mt-4 inline-flex items-center gap-1 text-red-500 font-black text-sm group-hover:gap-3 transition-all duration-300">← انقر للبحوث</div>
+                            </div>
                         </div>
                     </div>
                 </div>`;
