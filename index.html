@@ -16,7 +16,6 @@
             min-height: 100vh;
         }
 
-        /* ── CARD hover ── */
         .subject-card {
             cursor: pointer;
             transition: transform 0.3s cubic-bezier(.34,1.56,.64,1), box-shadow 0.3s ease;
@@ -27,7 +26,6 @@
         }
         .subject-card:active { transform: scale(0.97); }
 
-        /* ── scrollbar hide ── */
         .hidden-scroll::-webkit-scrollbar { display: none; }
 
         .level-btn   { transition: all 0.2s ease; }
@@ -35,18 +33,30 @@
         .sidebar-btn { transition: all 0.2s ease; }
         .sidebar-btn:hover { transform: scale(1.02); filter: brightness(1.1); }
 
-        /* ══════════════════════════════
-           PAGE TRANSITION SYSTEM
-        ══════════════════════════════ */
+        #current-level-btn {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        #current-level-btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.08), transparent);
+            pointer-events: none;
+        }
+        #current-level-btn:hover {
+            transform: scale(1.02);
+            background: rgba(255,255,255,0.18) !important;
+            border-color: rgba(255,255,255,0.4) !important;
+        }
 
-        /* ══ VERTICAL SLIDE SYSTEM ══ */
         #page-wrapper {
             position: relative;
             width: 100%;
             overflow: hidden;
         }
 
-        /* Home page */
         #home-page {
             width: 100%;
             transition: transform 0.6s cubic-bezier(.86,0,.07,1),
@@ -65,7 +75,6 @@
             filter: blur(0px);
         }
 
-        /* Subject page — starts from below */
         #subject-page {
             position: absolute;
             top: 0; left: 0;
@@ -91,7 +100,6 @@
             pointer-events: none;
         }
 
-        /* flash overlay */
         #flip-flash {
             position: fixed;
             inset: 0;
@@ -103,14 +111,12 @@
         }
         #flip-flash.active { opacity: 1; }
 
-        /* ── file item fade ── */
         @keyframes fileIn {
             from { opacity:0; transform: translateY(8px); }
             to   { opacity:1; transform: translateY(0); }
         }
         .file-item { animation: fileIn 0.35s ease both; }
 
-        /* ── section card bounce ── */
         @keyframes sectionIn {
             0%   { opacity:0; transform: translateY(20px) scale(.96); }
             60%  { transform: translateY(-4px) scale(1.01); }
@@ -123,7 +129,6 @@
         .section-card:nth-child(2) { animation-delay: 0.15s; }
         .section-card:nth-child(3) { animation-delay: 0.25s; }
 
-        /* ── subject card stagger ── */
         @keyframes cardIn {
             from { opacity:0; transform: translateY(24px) scale(.95); }
             to   { opacity:1; transform: translateY(0) scale(1); }
@@ -134,24 +139,20 @@
         .subject-card:nth-child(3) { animation-delay: 0.17s; }
         .subject-card:nth-child(4) { animation-delay: 0.24s; }
 
-        /* ── hero icon spin-in ── */
         @keyframes spinIn {
             from { opacity:0; transform: rotate(-15deg) scale(0.7); }
             to   { opacity:1; transform: rotate(0) scale(1); }
         }
         .icon-spin { animation: spinIn 0.5s cubic-bezier(.34,1.56,.64,1) both; }
 
-        /* ── upload btn pulse when active ── */
         .upload-btn:not(:disabled):hover { animation: none; filter: brightness(1.1); }
 
-        /* ── back button ── */
         #back-btn {
             transition: transform 0.2s ease, background 0.2s ease;
         }
         #back-btn:hover { transform: scale(1.05) translateX(-3px); }
         #back-btn:active { transform: scale(0.95); }
 
-        /* tab active indicator */
         .section-tab.active {
             background: #7c3aed;
             color: white;
@@ -160,20 +161,25 @@
         .section-tab { transition: all 0.2s ease; }
         .section-tab:hover:not(.active) { background: rgba(255,255,255,0.1); }
 
-        /* progress bar on load */
         #progress-bar {
             position: fixed; top:0; left:0; height:3px;
             background: linear-gradient(90deg, #3b82f6, #06b6d4, #10b981);
             transition: width 0.3s ease;
             z-index: 9999;
         }
+
+        /* level card colors */
+        .level-card-1 { background: linear-gradient(135deg, #6366f1, #8b5cf6); }
+        .level-card-2 { background: linear-gradient(135deg, #0ea5e9, #38bdf8); }
+        .level-card-3 { background: linear-gradient(135deg, #10b981, #34d399); }
+        .level-card-4 { background: linear-gradient(135deg, #f59e0b, #fbbf24); }
+        .level-card-5 { background: linear-gradient(135deg, #ef4444, #f87171); }
+        .level-card-6 { background: linear-gradient(135deg, #ec4899, #f472b6); }
     </style>
 </head>
 <body>
 
-<!-- progress bar -->
 <div id="progress-bar" style="width:0%"></div>
-<!-- flip flash overlay -->
 <div id="flip-flash"></div>
 
 <div class="w-full min-h-screen shadow-2xl overflow-hidden" style="background:transparent;">
@@ -188,9 +194,19 @@
                 <h1 class="text-4xl font-black text-blue-700 mt-5">نجم الدين همادي</h1>
                 <p class="text-red-500 font-bold mt-3">التعليم هو مفتاح المستقبل</p>
             </div>
-            <div class="mt-6 space-y-4">
+            <div class="mt-6 space-y-3">
                 <button onclick="handleOpenAboutPage()" class="sidebar-btn w-full bg-blue-600 text-white py-4 rounded-2xl font-black text-xl shadow-lg">🏠 الرئيسية</button>
-                <button onclick="handleOpenLogin()"     class="sidebar-btn w-full bg-purple-600 text-white py-4 rounded-2xl font-black text-xl shadow-lg">🔐 تسجيل الدخول</button>
+
+                <!-- زر المستوى الحالي -->
+                <button id="current-level-btn" onclick="handleOpenLevelsPage()"
+                    class="sidebar-btn w-full text-white py-3 rounded-2xl font-bold text-lg shadow-md flex items-center justify-center gap-2"
+                    style="background:rgba(255,255,255,0.12); border:2px solid rgba(255,255,255,0.25);">
+                    <span id="level-btn-icon">✨</span>
+                    <span id="level-btn-text">المستوى</span>
+                    <span class="text-white/50 text-base mr-1">▾</span>
+                </button>
+
+                <button onclick="handleOpenLogin()" class="sidebar-btn w-full bg-purple-600 text-white py-4 rounded-2xl font-black text-xl shadow-lg">🔐 تسجيل الدخول</button>
                 <button id="logout-btn" onclick="handleLogout()" class="hidden sidebar-btn w-full bg-red-600 text-white py-4 rounded-2xl font-black text-xl shadow-lg">🚪 تسجيل الخروج</button>
                 <div id="bg-btn-container" class="hidden mt-4">
                     <button id="changeBgBtn" class="sidebar-btn w-full bg-blue-600 text-white py-4 rounded-2xl font-black text-xl shadow-lg">🎨 تغيير الخلفية</button>
@@ -202,7 +218,6 @@
         <!-- ===== MAIN ===== -->
         <main class="p-6 relative overflow-hidden" style="background:transparent;">
 
-            <!-- PAGE WRAPPER -->
             <div id="page-wrapper">
 
                 <!-- ═══ HOME PAGE ═══ -->
@@ -214,14 +229,7 @@
                             class="w-full border-2 border-blue-200 rounded-2xl px-5 py-4 text-xl outline-none font-bold" />
                     </div>
 
-                    <div class="flex gap-4 overflow-x-auto hidden-scroll mb-10 pb-2">
-                        <button onclick="handleRenderSubjects('السنة الأولى',this)"   class="level-btn bg-green-600 text-white px-7 py-4 rounded-2xl font-black whitespace-nowrap">السنة الأولى</button>
-                        <button onclick="handleRenderSubjects('السنة الثانية',this)"  class="level-btn bg-white shadow px-7 py-4 rounded-2xl font-black whitespace-nowrap">السنة الثانية</button>
-                        <button onclick="handleRenderSubjects('السنة الثالثة',this)"  class="level-btn bg-white shadow px-7 py-4 rounded-2xl font-black whitespace-nowrap">السنة الثالثة</button>
-                        <button onclick="handleRenderSubjects('السنة الرابعة',this)"  class="level-btn bg-white shadow px-7 py-4 rounded-2xl font-black whitespace-nowrap">السنة الرابعة</button>
-                        <button onclick="handleRenderSubjects('السنة الخامسة',this)"  class="level-btn bg-white shadow px-7 py-4 rounded-2xl font-black whitespace-nowrap">السنة الخامسة</button>
-                        <button onclick="handleRenderSubjects('السنة السادسة',this)"  class="level-btn bg-white shadow px-7 py-4 rounded-2xl font-black whitespace-nowrap">السنة السادسة</button>
-                    </div>
+
 
                     <div id="subjects-container" class="grid md:grid-cols-2 xl:grid-cols-3 gap-8"></div>
                 </div>
@@ -229,7 +237,6 @@
                 <!-- ═══ SUBJECT DETAIL PAGE ═══ -->
                 <div id="subject-page">
 
-                    <!-- Header: back + title -->
                     <div id="subject-header" class="flex items-center gap-4 mb-6 flex-wrap">
                         <button id="back-btn" onclick="goBack()"
                             class="flex items-center gap-2 bg-white border-2 border-purple-300 text-purple-700 px-5 py-2 rounded-xl font-black text-base shadow-md">
@@ -244,7 +251,6 @@
                         </div>
                     </div>
 
-                    <!-- Tabs (small, top-right) + upload btn -->
                     <div class="flex justify-end items-center gap-3 mb-5">
                         <button class="upload-btn bg-purple-600 text-white px-4 py-2 rounded-xl font-bold text-sm hidden" data-folder="lessons" id="global-upload-btn">⬆ رفع ملف</button>
                         <div class="flex gap-2 bg-white/10 backdrop-blur-sm rounded-xl p-1 border border-white/20">
@@ -254,7 +260,6 @@
                         </div>
                     </div>
 
-                    <!-- Section panels -->
                     <div id="panel-lessons" class="section-panel">
                         <div class="section-card bg-white/10 border border-white/15 rounded-2xl p-5 shadow-lg">
                             <div class="flex justify-between items-center mb-4">
@@ -289,19 +294,14 @@
     </div>
 </div>
 
-<!-- ═══════════════════════════════════════
-     MAIN MODULE SCRIPT
-═══════════════════════════════════════ -->
 <script type="module">
     import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
 
-    /* ── Supabase ── */
     const SUPABASE_URL = 'https://wsrwidfvcrmppayfbqel.supabase.co';
     const SUPABASE_KEY = 'sb_publishable_ujQvwUEUXp7_-enFhO2awQ_hoJHa6Mg';
     const BUCKET       = 'school-files';
     const supabase     = createClient(SUPABASE_URL, SUPABASE_KEY);
 
-    /* ── DOM ── */
     const homePage          = document.getElementById('home-page');
     const subjectPage       = document.getElementById('subject-page');
     const subjectsContainer = document.getElementById('subjects-container');
@@ -309,13 +309,11 @@
     const searchInput       = document.getElementById('search-input');
     const progressBar       = document.getElementById('progress-bar');
 
-    /* ── State ── */
     let isAdmin      = false;
     let currentLevel = 'السنة الأولى';
-    let currentSubject = null;   // { id, title, level, levelId }
+    let currentSubject = null;
     let activeTab    = 'lessons';
 
-    /* ── Data ── */
     const subjectsByLevel = {
         'السنة الأولى':  [{title:'الرياضيات',id:'math'},{title:'اللغة العربية',id:'arabic'},{title:'الإيقاظ العلمي',id:'science'}],
         'السنة الثانية': [{title:'الرياضيات',id:'math'},{title:'اللغة العربية',id:'arabic'},{title:'الإيقاظ العلمي',id:'science'}],
@@ -328,6 +326,14 @@
         'السنة الأولى':'level1','السنة الثانية':'level2','السنة الثالثة':'level3',
         'السنة الرابعة':'level4','السنة الخامسة':'level5','السنة السادسة':'level6',
     };
+    const levelCardClass = {
+        'السنة الأولى':'level-card-1','السنة الثانية':'level-card-2','السنة الثالثة':'level-card-3',
+        'السنة الرابعة':'level-card-4','السنة الخامسة':'level-card-5','السنة السادسة':'level-card-6',
+    };
+    const levelEmoji = {
+        'السنة الأولى':'🌱','السنة الثانية':'🌿','السنة الثالثة':'🌳',
+        'السنة الرابعة':'⭐','السنة الخامسة':'🌟','السنة السادسة':'🏆',
+    };
     const colorMap = { math:'text-indigo-700', arabic:'text-green-700', science:'text-orange-700', french:'text-pink-700' };
     const bgColorMap = {
         math:    { from:'from-indigo-500', to:'to-blue-400',   light:'bg-indigo-50',  text:'text-indigo-700' },
@@ -337,9 +343,7 @@
     };
     const subjectIcons = { math:'🔢', arabic:'📖', science:'🔬', french:'🗼' };
 
-    /* ══════════════════════════════
-       PROGRESS BAR
-    ══════════════════════════════ */
+    /* ── Progress ── */
     function showProgress() {
         progressBar.style.width = '30%';
         setTimeout(() => progressBar.style.width = '70%', 200);
@@ -349,16 +353,22 @@
         setTimeout(() => { progressBar.style.width = '0%'; }, 400);
     }
 
-    /* ══════════════════════════════
-       PAGE TRANSITIONS  (Smooth Slide + Blur)
-    ══════════════════════════════ */
+    /* ── Flash ── */
     const flipFlash = document.getElementById('flip-flash');
-
     function triggerFlash() {
         flipFlash.classList.add('active');
         setTimeout(() => flipFlash.classList.remove('active'), 250);
     }
 
+    /* ── Update sidebar level button ── */
+    function updateLevelBtn(level) {
+        const iconEl = document.getElementById('level-btn-icon');
+        const textEl = document.getElementById('level-btn-text');
+        if (iconEl) iconEl.textContent = levelEmoji[level] || '✨';
+        if (textEl) textEl.textContent = 'المستوى';
+    }
+
+    /* ── Navigation ── */
     function navigateToSubject(subjectId, subjectTitle, level, levelId) {
         currentSubject = { id: subjectId, title: subjectTitle, level, levelId };
 
@@ -370,12 +380,10 @@
         nameEl.className   = `text-3xl font-black text-white`;
 
         switchTab('lessons', false);
-
         triggerFlash();
         homePage.classList.add('slide-out-right');
         subjectPage.classList.remove('slide-out-left');
         subjectPage.classList.add('slide-in');
-
         setTimeout(() => loadSubjectFiles(), 300);
     }
 
@@ -389,9 +397,7 @@
         currentSubject = null;
     };
 
-    /* ══════════════════════════════
-       TABS
-    ══════════════════════════════ */
+    /* ── Tabs ── */
     window.switchTab = function(tab, reload = true) {
         activeTab = tab;
         ['lessons','exercises','exams'].forEach(t => {
@@ -411,15 +417,12 @@
                 tabBtn.classList.add('text-white/60');
             }
         });
-        // sync global upload btn folder
         const uploadBtn = document.getElementById('global-upload-btn');
         if (uploadBtn) uploadBtn.dataset.folder = tab;
         if (reload && currentSubject) loadSubjectFiles();
     };
 
-    /* ══════════════════════════════
-       LOAD FILES (subject page)
-    ══════════════════════════════ */
+    /* ── Load Files ── */
     async function loadSubjectFiles() {
         if (!currentSubject) return;
         showProgress();
@@ -465,7 +468,6 @@
             }
         }
 
-        // show upload btns if admin
         if (isAdmin) {
             document.querySelectorAll('#subject-page .upload-btn').forEach(b => b.classList.remove('hidden'));
         }
@@ -473,9 +475,7 @@
         finishProgress();
     }
 
-    /* ══════════════════════════════
-       UPLOAD (subject page)
-    ══════════════════════════════ */
+    /* ── Upload ── */
     function attachSubjectUploadEvents() {
         document.querySelectorAll('#subject-page .upload-btn').forEach(button => {
             const freshBtn = button.cloneNode(true);
@@ -517,9 +517,7 @@
         });
     }
 
-    /* ══════════════════════════════
-       DELETE FILE
-    ══════════════════════════════ */
+    /* ── Delete ── */
     window.handleDeleteFile = async function(fileId, storagePath) {
         if (!confirm('هل تريد حذف هذا الملف نهائيًا؟')) return;
         if (storagePath) {
@@ -531,14 +529,15 @@
         loadSubjectFiles();
     };
 
-    /* ══════════════════════════════
-       RENDER SUBJECTS (home)
-    ══════════════════════════════ */
+    /* ── Render Subjects (home) ── */
     function renderSubjects(level, btn = null) {
         level = String(level).trim();
         currentLevel = level;
         levelTitle.innerText = `✨ ${level} ✨`;
         subjectsContainer.innerHTML = '';
+
+        // update sidebar button
+        updateLevelBtn(level);
 
         document.querySelectorAll('.level-btn').forEach(b => {
             b.classList.remove('bg-green-600','text-white');
@@ -589,10 +588,62 @@
     };
 
     /* ══════════════════════════════
-       ABOUT PAGE
+       صفحة جميع المستويات (جديدة)
     ══════════════════════════════ */
+    function openLevelsPage() {
+        if (currentSubject) goBack();
+        setTimeout(() => {
+            levelTitle.innerText = '🎓 جميع المستويات';
+            subjectsContainer.innerHTML = '';
+
+            const levels = Object.keys(subjectsByLevel);
+            levels.forEach((level, index) => {
+                const cardClass  = levelCardClass[level] || 'level-card-1';
+                const emoji      = levelEmoji[level] || '📚';
+                const count      = subjectsByLevel[level].length;
+                const subNames   = subjectsByLevel[level].map(s => s.title).join(' · ');
+
+                subjectsContainer.innerHTML += `
+                    <div class="subject-card bg-white rounded-[30px] overflow-hidden shadow-xl"
+                         style="animation-delay:${index * 0.07}s"
+                         onclick="handleGoToLevel('${level}')">
+                        <div class="${cardClass} p-6 flex items-center gap-4">
+                            <div class="w-16 h-16 rounded-2xl bg-white/20 flex items-center justify-center text-4xl flex-shrink-0">
+                                ${emoji}
+                            </div>
+                            <div>
+                                <h2 class="text-2xl font-black text-white">${level}</h2>
+                                <p class="text-white/80 font-bold text-sm">${count} مواد دراسية</p>
+                            </div>
+                        </div>
+                        <div class="p-5">
+                            <p class="text-gray-500 font-bold text-sm mb-4">${subNames}</p>
+                            <div class="flex justify-between items-center">
+                                <div class="flex gap-2">
+                                    <span class="bg-blue-50 text-blue-600 px-3 py-1 rounded-lg text-xs font-bold">📖 قصص</span>
+                                    <span class="bg-yellow-50 text-yellow-600 px-3 py-1 rounded-lg text-xs font-bold">🎮 ألعاب</span>
+                                    <span class="bg-red-50 text-red-600 px-3 py-1 rounded-lg text-xs font-bold">🔬 أبحاث</span>
+                                </div>
+                                <span class="text-blue-500 font-black">← دخول</span>
+                            </div>
+                        </div>
+                    </div>`;
+            });
+        }, currentSubject ? 600 : 0);
+    }
+
+    window.handleOpenLevelsPage = openLevelsPage;
+
+    window.handleGoToLevel = function(level) {
+        // find matching level-btn and simulate click
+        const btns = document.querySelectorAll('.level-btn');
+        let matchBtn = null;
+        btns.forEach(b => { if (b.textContent.trim() === level) matchBtn = b; });
+        renderSubjects(level, matchBtn);
+    };
+
+    /* ── About Page ── */
     function openAboutPage() {
-        // make sure we're on home page
         if (currentSubject) goBack();
         setTimeout(() => {
             levelTitle.innerText = '✨ مرحبًا بكم ✨';
@@ -607,18 +658,16 @@
                             بطريقة منظمة وسهلة الاستعمال.
                         </p>
                         <div class="mt-10 grid md:grid-cols-3 gap-6">
-                            <div class="bg-blue-50 p-6 rounded-3xl"><h2 class="text-3xl font-black text-blue-700 mb-4">📘 الدروس</h2><p class="font-bold text-gray-600">جميع الدروس مرتبة حسب المستويات والمواد.</p></div>
-                            <div class="bg-yellow-50 p-6 rounded-3xl"><h2 class="text-3xl font-black text-yellow-700 mb-4">📝 التمارين</h2><p class="font-bold text-gray-600">تمارين متنوعة لتثبيت المكتسبات.</p></div>
-                            <div class="bg-red-50 p-6 rounded-3xl"><h2 class="text-3xl font-black text-red-700 mb-4">📚 الاختبارات</h2><p class="font-bold text-gray-600">اختبارات للمراجعة والاستعداد الجيد.</p></div>
+                            <div class="bg-blue-50 p-6 rounded-3xl"><h2 class="text-3xl font-black text-blue-700 mb-4">📖 قصص</h2><p class="font-bold text-gray-600">قصص ممتعة مرتبة حسب المستويات والمواد.</p></div>
+                            <div class="bg-yellow-50 p-6 rounded-3xl"><h2 class="text-3xl font-black text-yellow-700 mb-4">🎮 ألعاب</h2><p class="font-bold text-gray-600">ألعاب تعليمية ممتعة لتثبيت المكتسبات.</p></div>
+                            <div class="bg-red-50 p-6 rounded-3xl"><h2 class="text-3xl font-black text-red-700 mb-4">🔬 أبحاث</h2><p class="font-bold text-gray-600">أبحاث للمراجعة والاستعداد الجيد.</p></div>
                         </div>
                     </div>
                 </div>`;
         }, currentSubject ? 600 : 0);
     }
 
-    /* ══════════════════════════════
-       AUTH
-    ══════════════════════════════ */
+    /* ── Auth ── */
     function openLogin() {
         if (currentSubject) goBack();
         setTimeout(() => {
@@ -662,19 +711,14 @@
         if (data.session) isAdmin = true;
     }
 
-    /* ── Expose globals ── */
-    window.handleOpenAboutPage   = openAboutPage;
-    window.handleOpenLogin       = openLogin;
-    window.handleLogin           = login;
-    window.handleLogout          = logout;
-    window.handleRenderSubjects  = renderSubjects;
+    window.handleOpenAboutPage  = openAboutPage;
+    window.handleOpenLogin      = openLogin;
+    window.handleLogin          = login;
+    window.handleLogout         = logout;
+    window.handleRenderSubjects = renderSubjects;
 
-    /* ── Search ── */
     searchInput.addEventListener('input', () => renderSubjects(currentLevel));
 
-    /* ══════════════════════════════
-       START
-    ══════════════════════════════ */
     async function startApp() {
         const savedBg = localStorage.getItem('siteBackground');
         if (savedBg) {
@@ -693,7 +737,6 @@
     startApp();
 </script>
 
-<!-- Background script -->
 <script>
     const changeBgBtn = document.getElementById('changeBgBtn');
     const bgInput     = document.getElementById('bgInput');
