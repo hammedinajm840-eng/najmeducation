@@ -1162,14 +1162,51 @@
     /* ── Auth ── */
     function openLogin() {
         closeStoriesIfOpen(() => {
-            levelTitle.innerText = '🔐 تسجيل الدخول';
-            subjectsContainer.innerHTML = `
+            levelTitle.innerText = isAdmin ? '⚙️ إدارة الحساب' : '🔐 تسجيل الدخول';
+            subjectsContainer.innerHTML = isAdmin ? `
+                <div class="col-span-full flex justify-center">
+                    <div class="bg-white p-8 rounded-[35px] shadow-2xl w-full max-w-md">
+                        <h1 class="text-4xl font-black text-center text-blue-700 mb-2">⚙️ إدارة الحساب</h1>
+                        <p class="text-center text-gray-400 font-bold mb-8 text-sm">تعديل بيانات المشرف</p>
+
+                        <!-- تغيير الايميل -->
+                        <div class="mb-6 bg-blue-50 rounded-2xl p-5 border-2 border-blue-100">
+                            <h2 class="text-lg font-black text-blue-700 mb-4 flex items-center gap-2">✉️ تغيير البريد الإلكتروني</h2>
+                            <input id="new-email" type="email" placeholder="البريد الجديد"
+                                class="w-full border-2 border-blue-200 rounded-2xl p-3 mb-3 font-bold text-sm outline-none focus:border-blue-400" />
+                            <button onclick="handleChangeEmail()"
+                                class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-2xl font-black text-base transition-colors">
+                                تحديث البريد
+                            </button>
+                        </div>
+
+                        <!-- تغيير كلمة المرور -->
+                        <div class="mb-6 bg-purple-50 rounded-2xl p-5 border-2 border-purple-100">
+                            <h2 class="text-lg font-black text-purple-700 mb-4 flex items-center gap-2">🔑 تغيير كلمة المرور</h2>
+                            <input id="new-password" type="password" placeholder="كلمة المرور الجديدة"
+                                class="w-full border-2 border-purple-200 rounded-2xl p-3 mb-3 font-bold text-sm outline-none focus:border-purple-400" />
+                            <input id="confirm-password" type="password" placeholder="تأكيد كلمة المرور"
+                                class="w-full border-2 border-purple-200 rounded-2xl p-3 mb-3 font-bold text-sm outline-none focus:border-purple-400" />
+                            <button onclick="handleChangePassword()"
+                                class="w-full bg-purple-600 hover:bg-purple-700 text-white py-3 rounded-2xl font-black text-base transition-colors">
+                                تحديث كلمة المرور
+                            </button>
+                        </div>
+
+                        <!-- تسجيل الخروج -->
+                        <button onclick="handleLogout()"
+                            class="w-full bg-red-500 hover:bg-red-600 text-white py-3 rounded-2xl font-black text-base transition-colors flex items-center justify-center gap-2">
+                            🚪 تسجيل الخروج
+                        </button>
+                    </div>
+                </div>` : `
                 <div class="col-span-full flex justify-center">
                     <div class="bg-white p-10 rounded-[35px] shadow-2xl w-full max-w-md">
                         <h1 class="text-5xl font-black text-center text-blue-700 mb-8">تسجيل الدخول</h1>
                         <input id="email" type="email" placeholder="البريد الإلكتروني" class="w-full border-2 border-blue-200 rounded-2xl p-4 mb-4 font-bold" />
                         <input id="password" type="password" placeholder="كلمة المرور" class="w-full border-2 border-blue-200 rounded-2xl p-4 mb-6 font-bold" />
                         <button onclick="handleLogin()" class="w-full bg-green-600 text-white py-4 rounded-2xl font-black text-xl hover:bg-green-700 transition-colors">دخول</button>
+                        <button onclick="handleForgotPassword()" class="w-full mt-3 text-blue-500 hover:text-blue-700 font-bold text-base transition-colors py-2">🔑 نسيت كلمة السر؟ — سيُرسل رابط للبريد</button>
                     </div>
                 </div>`;
         });
@@ -1187,6 +1224,51 @@
         alert('✅ تم تسجيل الدخول');
         renderSubjects('السنة الأولى');
     }
+
+    window.handleChangeEmail = async function() {
+        const newEmail = document.getElementById('new-email')?.value?.trim();
+        if (!newEmail) { alert('يرجى إدخال البريد الجديد'); return; }
+        const btn = event.target;
+        btn.disabled = true; btn.innerText = '⏳ جاري التحديث...';
+        const { error } = await supabase.auth.updateUser({ email: newEmail });
+        btn.disabled = false; btn.innerText = 'تحديث البريد';
+        if (error) { alert('فشل: ' + error.message); return; }
+        alert('✅ تم إرسال رابط التأكيد إلى البريد الجديد');
+        document.getElementById('new-email').value = '';
+    };
+
+    window.handleForgotPassword = async function() {
+        const emailEl = document.getElementById('email');
+        const email = emailEl?.value?.trim();
+        if (!email) {
+            alert('يرجى إدخال بريدك الإلكتروني أولاً ثم اضغط "نسيت كلمة السر"');
+            emailEl?.focus();
+            return;
+        }
+        const btn = document.querySelector('button[onclick="handleForgotPassword()"]');
+        if (btn) { btn.disabled = true; btn.innerText = '⏳ جاري الإرسال...'; }
+        const { error } = await supabase.auth.resetPasswordForEmail(email, {
+            redirectTo: window.location.href,
+        });
+        if (btn) { btn.disabled = false; btn.innerText = '🔑 نسيت كلمة السر؟'; }
+        if (error) { alert('فشل: ' + error.message); return; }
+        alert('✅ تم إرسال رابط إعادة تعيين كلمة السر إلى بريدك الإلكتروني');
+    };
+    window.handleChangePassword = async function() {
+        const newPass     = document.getElementById('new-password')?.value;
+        const confirmPass = document.getElementById('confirm-password')?.value;
+        if (!newPass || !confirmPass) { alert('يرجى ملء الحقلين'); return; }
+        if (newPass !== confirmPass)  { alert('❌ كلمتا المرور غير متطابقتين'); return; }
+        if (newPass.length < 6)       { alert('❌ كلمة المرور يجب أن تكون 6 أحرف على الأقل'); return; }
+        const btn = event.target;
+        btn.disabled = true; btn.innerText = '⏳ جاري التحديث...';
+        const { error } = await supabase.auth.updateUser({ password: newPass });
+        btn.disabled = false; btn.innerText = 'تحديث كلمة المرور';
+        if (error) { alert('فشل: ' + error.message); return; }
+        alert('✅ تم تغيير كلمة المرور بنجاح');
+        document.getElementById('new-password').value = '';
+        document.getElementById('confirm-password').value = '';
+    };
 
     async function logout() {
         await supabase.auth.signOut();
