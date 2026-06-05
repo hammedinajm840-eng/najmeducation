@@ -343,7 +343,49 @@
                         <button id="research-upload-btn" onclick="handleResearchUpload()" class="hidden mr-auto bg-red-600 text-white px-4 py-2 rounded-xl font-bold text-sm">⬆ رفع بحث</button>
                     </div>
 
+                    <!-- ══ AI RESEARCH ASSISTANT ══ -->
+                    <div class="bg-gradient-to-br from-indigo-900/60 to-purple-900/60 border border-indigo-400/30 rounded-2xl p-5 shadow-xl mb-4">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-xl shadow-lg">🤖</div>
+                            <div>
+                                <h3 class="font-black text-white text-lg">مساعد البحث بالذكاء الاصطناعي</h3>
+                                <p class="text-indigo-300 text-xs font-bold">اكتب موضوع بحثك وسيجمع لك المعلومات من الإنترنت</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-2 mb-3">
+                            <input id="ai-research-input" type="text" placeholder="مثال: الماء ودورته في الطبيعة..."
+                                class="flex-1 bg-white/10 border border-white/20 rounded-xl px-4 py-2.5 text-white font-bold text-sm outline-none focus:border-indigo-400 placeholder-white/30" />
+                            <button onclick="handleAIResearch()"
+                                class="bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-400 hover:to-purple-500 text-white px-5 py-2.5 rounded-xl font-black text-sm shadow-lg transition-all hover:scale-105 active:scale-95 flex items-center gap-2 flex-shrink-0">
+                                <span id="ai-search-icon">🔍</span>
+                                <span id="ai-search-label">بحث</span>
+                            </button>
+                        </div>
+                        <!-- Result box -->
+                        <div id="ai-research-result" class="hidden">
+                            <div class="border-t border-white/10 pt-4">
+                                <div class="flex justify-between items-center mb-3">
+                                    <h4 id="ai-result-title" class="text-indigo-200 font-black text-sm"></h4>
+                                    <button onclick="copyAIResult()" class="bg-white/10 hover:bg-white/20 text-white px-3 py-1 rounded-lg text-xs font-bold transition-colors">📋 نسخ</button>
+                                </div>
+                                <div id="ai-result-content" class="bg-black/20 rounded-xl p-4 text-white/90 text-sm font-bold leading-relaxed whitespace-pre-wrap max-h-80 overflow-y-auto"></div>
+                            </div>
+                        </div>
+                        <!-- Loading -->
+                        <div id="ai-research-loading" class="hidden text-center py-4">
+                            <div class="inline-flex items-center gap-3 text-indigo-300 font-bold">
+                                <svg class="animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+                                </svg>
+                                جاري البحث في الإنترنت...
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Uploaded research files -->
                     <div class="bg-white/10 border border-white/15 rounded-2xl p-5 shadow-lg">
+                        <h3 class="font-black text-white text-base mb-3">📁 البحوث المرفوعة</h3>
                         <div id="research-files-box" class="space-y-3">
                             <p class="text-white/40 font-bold text-center py-6 text-lg">⏳ جاري التحميل...</p>
                         </div>
@@ -1325,6 +1367,73 @@
         openAboutPage();
     }
     startApp();
+
+    /* ══ AI RESEARCH ASSISTANT ══ */
+    window.handleAIResearch = async function() {
+        const input   = document.getElementById('ai-research-input');
+        const topic   = input.value.trim();
+        if (!topic) { input.focus(); return; }
+
+        const resultBox  = document.getElementById('ai-research-result');
+        const loadingBox = document.getElementById('ai-research-loading');
+        const searchIcon = document.getElementById('ai-search-icon');
+        const searchLabel= document.getElementById('ai-search-label');
+        const content    = document.getElementById('ai-result-content');
+        const titleEl    = document.getElementById('ai-result-title');
+
+        // show loading
+        resultBox.classList.add('hidden');
+        loadingBox.classList.remove('hidden');
+        searchIcon.textContent  = '⏳';
+        searchLabel.textContent = 'جاري...';
+
+        try {
+            const response = await fetch('https://api.anthropic.com/v1/messages', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    model: 'claude-sonnet-4-20250514',
+                    max_tokens: 1000,
+                    tools: [{ type: 'web_search_20250305', name: 'web_search' }],
+                    system: `أنت مساعد تعليمي للأطفال في المرحلة الابتدائية. عند البحث عن موضوع، ابحث في الإنترنت واجمع معلومات مفيدة وبسيطة مناسبة للأطفال. قدّم المعلومات بالعربية بشكل واضح ومنظم مع نقاط. لا تذكر المصادر بالتفصيل، فقط قدّم المعلومات بأسلوب بسيط وممتع.`,
+                    messages: [{ role: 'user', content: `ابحث في الإنترنت عن: "${topic}" وقدّم لي معلومات مفيدة وبسيطة مناسبة لتلميذ ابتدائي.` }]
+                })
+            });
+
+            const data = await response.json();
+            const text = (data.content || [])
+                .filter(b => b.type === 'text')
+                .map(b => b.text)
+                .join('\n');
+
+            titleEl.textContent = `🔍 نتائج البحث عن: ${topic}`;
+            content.textContent = text || 'لم يتم العثور على نتائج.';
+            resultBox.classList.remove('hidden');
+
+        } catch(err) {
+            content.textContent = '❌ حدث خطأ أثناء البحث. تأكد من الاتصال بالإنترنت.';
+            titleEl.textContent = 'خطأ';
+            resultBox.classList.remove('hidden');
+        } finally {
+            loadingBox.classList.add('hidden');
+            searchIcon.textContent  = '🔍';
+            searchLabel.textContent = 'بحث';
+        }
+    };
+
+    window.copyAIResult = function() {
+        const text = document.getElementById('ai-result-content').textContent;
+        navigator.clipboard.writeText(text).then(() => {
+            const btn = event.target;
+            btn.textContent = '✅ تم النسخ';
+            setTimeout(() => btn.textContent = '📋 نسخ', 2000);
+        });
+    };
+
+    // Allow Enter key to trigger search
+    document.getElementById('ai-research-input').addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') handleAIResearch();
+    });
 </script>
 
 <script>
