@@ -173,6 +173,7 @@
 
                 <button onclick="handleOpenLogin()" class="sidebar-btn w-full bg-purple-600 text-white py-3 rounded-2xl font-black text-base shadow-lg">🔐 تسجيل الدخول</button>
                 <button id="logout-btn" onclick="handleLogout()" class="hidden sidebar-btn w-full bg-red-600 text-white py-3 rounded-2xl font-black text-base shadow-lg">🚪 تسجيل الخروج</button>
+                <button id="teachers-btn" onclick="handleOpenTeachersPage()" class="hidden sidebar-btn w-full bg-green-600 text-white py-3 rounded-2xl font-black text-base shadow-lg">👩‍🏫 ركن المعلمين</button>
                 <div id="bg-btn-container" class="hidden mt-2">
                     <button id="changeBgBtn" class="sidebar-btn w-full bg-blue-600 text-white py-3 rounded-2xl font-black text-base shadow-lg">🎨 تغيير الخلفية</button>
                     <input type="file" id="bgInput" accept="image/*" hidden>
@@ -280,6 +281,49 @@
                                 <span>🔍</span> بحث
                             </button>
                         </div>
+                    </div>
+                </div>
+
+                <!-- ═══ TEACHERS PAGE ═══ -->
+                <div id="teachers-page"
+                     style="position:absolute;top:0;left:0;width:100%;transform:translateY(60%) scale(0.92);opacity:0;filter:blur(5px);transition:transform 0.6s cubic-bezier(.86,0,.07,1),opacity 0.5s ease,filter 0.5s ease;pointer-events:none;">
+
+                    <div class="flex items-center gap-4 mb-6 flex-wrap">
+                        <button onclick="goBackFromTeachers()"
+                            class="flex items-center gap-2 bg-white border-2 border-green-300 text-green-700 px-5 py-2 rounded-xl font-black text-base shadow-md transition-transform hover:scale-105">
+                            ➜ رجوع
+                        </button>
+                        <div class="flex items-center gap-3">
+                            <span class="text-5xl">👩‍🏫</span>
+                            <div>
+                                <p class="text-green-300 font-bold text-sm">خاص بالمعلمين</p>
+                                <h2 class="text-3xl font-black text-white">ركن المعلمين</h2>
+                            </div>
+                        </div>
+                        <button id="teachers-upload-btn" onclick="handleTeachersUpload()"
+                            class="mr-auto bg-green-600 text-white px-4 py-2 rounded-xl font-bold text-sm">⬆ رفع ملف</button>
+                    </div>
+
+                    <!-- فلتر المستوى -->
+                    <div class="flex gap-2 mb-4 flex-wrap">
+                        <button onclick="filterTeachers('all')" id="tf-all"
+                            class="teacher-filter-btn bg-green-600 text-white px-4 py-2 rounded-xl font-bold text-sm">الكل</button>
+                        <button onclick="filterTeachers('1')" id="tf-1"
+                            class="teacher-filter-btn bg-white/10 text-white px-4 py-2 rounded-xl font-bold text-sm">السنة 1</button>
+                        <button onclick="filterTeachers('2')" id="tf-2"
+                            class="teacher-filter-btn bg-white/10 text-white px-4 py-2 rounded-xl font-bold text-sm">السنة 2</button>
+                        <button onclick="filterTeachers('3')" id="tf-3"
+                            class="teacher-filter-btn bg-white/10 text-white px-4 py-2 rounded-xl font-bold text-sm">السنة 3</button>
+                        <button onclick="filterTeachers('4')" id="tf-4"
+                            class="teacher-filter-btn bg-white/10 text-white px-4 py-2 rounded-xl font-bold text-sm">السنة 4</button>
+                        <button onclick="filterTeachers('5')" id="tf-5"
+                            class="teacher-filter-btn bg-white/10 text-white px-4 py-2 rounded-xl font-bold text-sm">السنة 5</button>
+                        <button onclick="filterTeachers('6')" id="tf-6"
+                            class="teacher-filter-btn bg-white/10 text-white px-4 py-2 rounded-xl font-bold text-sm">السنة 6</button>
+                    </div>
+
+                    <div class="bg-white/10 border border-white/15 rounded-2xl p-5 shadow-lg">
+                        <div id="teachers-files-box" class="space-y-3"></div>
                     </div>
                 </div>
 
@@ -736,6 +780,12 @@
             researchPage.style.pointerEvents = 'none';
             currentResearchLevel = null;
         }
+        if (teachersPage && teachersPage.style.opacity === '1') {
+            teachersPage.style.transform = 'translateY(60%) scale(0.92)';
+            teachersPage.style.opacity = '0';
+            teachersPage.style.filter = 'blur(5px)';
+            teachersPage.style.pointerEvents = 'none';
+        }
     }
 
     window.handleOpenStoriesPage = function() {
@@ -1083,6 +1133,129 @@
     };
 
     /* ══════════════════════════════
+       ركن المعلمين
+    ══════════════════════════════ */
+    const teachersPage = document.getElementById('teachers-page');
+    let allTeachersFiles = [];
+    let currentTeachersFilter = 'all';
+
+    window.handleOpenTeachersPage = function() {
+        if (!isAdmin) { alert('هذا القسم للمعلمين فقط'); return; }
+        closeAllSubPages();
+        triggerFlash();
+        homePage.classList.add('slide-out-right');
+        teachersPage.style.pointerEvents = 'all';
+        teachersPage.style.transform = 'translateY(0) scale(1)';
+        teachersPage.style.opacity = '1';
+        teachersPage.style.filter = 'blur(0px)';
+        loadTeachersFiles();
+    };
+
+    window.goBackFromTeachers = function() {
+        triggerFlash();
+        teachersPage.style.transform = 'translateY(60%) scale(0.92)';
+        teachersPage.style.opacity = '0';
+        teachersPage.style.filter = 'blur(5px)';
+        teachersPage.style.pointerEvents = 'none';
+        homePage.classList.remove('slide-out-right');
+        homePage.classList.add('slide-in-from-right');
+        setTimeout(() => homePage.classList.remove('slide-in-from-right'), 700);
+    };
+
+    async function loadTeachersFiles() {
+        showProgress();
+        const box = document.getElementById('teachers-files-box');
+        box.innerHTML = `<p class="text-white/40 font-bold text-center py-4">⏳ جاري التحميل...</p>`;
+        const { data, error } = await supabase.from('files').select('*')
+            .eq('subject', 'teachers').order('created_at', { ascending: false });
+        allTeachersFiles = data || [];
+        renderTeachersFiles();
+        finishProgress();
+    }
+
+    function renderTeachersFiles() {
+        const box = document.getElementById('teachers-files-box');
+        const filtered = currentTeachersFilter === 'all'
+            ? allTeachersFiles
+            : allTeachersFiles.filter(f => f.level === currentTeachersFilter);
+        box.innerHTML = '';
+        if (!filtered.length) {
+            box.innerHTML = `<p class="text-white/40 font-bold text-center py-6 text-lg">👩‍🏫 لا توجد ملفات بعد</p>`;
+            return;
+        }
+        filtered.forEach((file, i) => {
+            const levelLabel = Object.keys(levelMap).find(k => levelMap[k] === file.level) || file.level || '';
+            box.innerHTML += `
+                <div class="file-item bg-white/10 border border-white/15 rounded-xl px-5 py-3 flex justify-between items-center gap-3" style="animation-delay:${i*0.05}s">
+                    <div class="overflow-hidden">
+                        <p class="font-black text-white text-sm whitespace-nowrap text-ellipsis overflow-hidden max-w-[200px]" title="${file.name}">👩‍🏫 ${file.name}</p>
+                        ${levelLabel ? `<span class="text-xs text-green-300 font-bold">${levelLabel}</span>` : ''}
+                    </div>
+                    <div class="flex gap-2 flex-shrink-0">
+                        <a href="${file.url}" target="_blank" rel="noopener" class="bg-green-600 hover:bg-green-500 text-white px-4 py-2 rounded-xl text-sm font-bold">فتح</a>
+                        <a href="${file.url}" download="${file.name}" target="_blank" rel="noopener" class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-xl text-sm font-bold">تحميل</a>
+                        <button onclick="handleDeleteTeacher('${file.id}','${file.storage_path||''}')"
+                            class="bg-red-500/80 hover:bg-red-500 text-white px-3 py-2 rounded-xl text-sm font-bold">🗑</button>
+                    </div>
+                </div>`;
+        });
+    }
+
+    window.filterTeachers = function(level) {
+        currentTeachersFilter = level;
+        document.querySelectorAll('.teacher-filter-btn').forEach(b => {
+            b.className = 'teacher-filter-btn bg-white/10 text-white px-4 py-2 rounded-xl font-bold text-sm';
+        });
+        const active = document.getElementById('tf-' + level);
+        if (active) active.className = 'teacher-filter-btn bg-green-600 text-white px-4 py-2 rounded-xl font-bold text-sm';
+        renderTeachersFiles();
+    };
+
+    window.handleTeachersUpload = async function() {
+        const levelKeys = Object.keys(levelMap);
+        const levelChoice = prompt(`اختر المستوى (اكتب الرقم):\n${levelKeys.map((k,i)=>`${i+1}. ${k}`).join('\n')}`);
+        if (!levelChoice) return;
+        const idx = parseInt(levelChoice) - 1;
+        const chosenLevel = levelKeys[idx];
+        if (!chosenLevel) { alert('مستوى غير صحيح'); return; }
+        const levelId = levelMap[chosenLevel];
+
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = '.pdf,.doc,.docx,.png,.jpg,.jpeg,.ppt,.pptx,.mp4,.zip';
+        input.onchange = async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            const btn = document.getElementById('teachers-upload-btn');
+            btn.disabled = true; btn.innerText = '⏳ جاري الرفع...';
+            try {
+                const path = `teachers/${levelId}/${Date.now()}-${file.name}`;
+                const { error: upErr } = await supabase.storage.from(BUCKET).upload(path, file, { upsert:true, contentType:file.type });
+                if (upErr) { alert('فشل الرفع: ' + upErr.message); return; }
+                const { data: urlData } = supabase.storage.from(BUCKET).getPublicUrl(path);
+                const { error: dbErr } = await supabase.from('files').insert([{
+                    name: file.name, url: urlData.publicUrl, storage_path: path,
+                    level: levelId, subject: 'teachers', folder: 'teachers',
+                }]);
+                if (dbErr) { alert('خطأ: ' + dbErr.message); return; }
+                alert('✅ تم رفع الملف');
+                loadTeachersFiles();
+            } catch(err) { console.error(err); alert('خطأ غير متوقع'); }
+            finally { btn.disabled = false; btn.innerText = '⬆ رفع ملف'; }
+        };
+        input.click();
+    };
+
+    window.handleDeleteTeacher = async function(fileId, storagePath) {
+        if (!confirm('هل تريد حذف هذا الملف نهائيًا؟')) return;
+        if (storagePath) await supabase.storage.from(BUCKET).remove([storagePath]);
+        const { error } = await supabase.from('files').delete().eq('id', fileId);
+        if (error) { alert('فشل الحذف'); return; }
+        alert('✅ تم الحذف');
+        loadTeachersFiles();
+    };
+
+    /* ══════════════════════════════
        صفحة جميع المستويات (جديدة)
     ══════════════════════════════ */
     function openLevelsPage() {
@@ -1238,6 +1411,7 @@
         if (error) { alert('فشل: ' + error.message); return; }
         isAdmin = true;
         document.getElementById('logout-btn').classList.remove('hidden');
+        document.getElementById('teachers-btn').classList.remove('hidden');
         document.getElementById('bg-btn-container').classList.remove('hidden');
         alert('✅ تم تسجيل الدخول');
         renderSubjects('السنة الأولى');
@@ -1292,6 +1466,7 @@
         await supabase.auth.signOut();
         isAdmin = false;
         document.getElementById('logout-btn').classList.add('hidden');
+        document.getElementById('teachers-btn').classList.add('hidden');
         document.getElementById('bg-btn-container').classList.add('hidden');
         if (currentSubject) goBack();
         setTimeout(() => renderSubjects('السنة الأولى'), 600);
@@ -1321,6 +1496,7 @@
         await checkUser();
         if (isAdmin) {
             document.getElementById('logout-btn').classList.remove('hidden');
+        document.getElementById('teachers-btn').classList.remove('hidden');
             document.getElementById('bg-btn-container').classList.remove('hidden');
         }
         openAboutPage();
