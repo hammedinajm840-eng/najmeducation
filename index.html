@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نجم الدين همادي - منصة تعليمية</title>
+    <title>العلم نور - منصة تعليمية</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     <style>
@@ -16,27 +16,11 @@
             min-height: 100vh;
         }
 
-        /* ── NO-SCROLL HOME: shrink content to fit viewport ── */
-        #home-page {
-            display: flex;
-            flex-direction: column;
-            /* fill exactly the main viewport minus padding */
-            height: calc(100vh - 3rem); /* main has p-6 = 1.5rem×2 */
-            overflow: hidden;
-        }
-        #subjects-container {
-            flex: 1;
-            overflow-y: auto;
-            min-height: 0;
-        }
-        #subjects-container::-webkit-scrollbar { width: 4px; }
-        #subjects-container::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 2px; }
-
         .subject-card {
             cursor: pointer;
             transition: transform 0.3s cubic-bezier(.34,1.56,.64,1), box-shadow 0.3s ease;
         }
-        .subject-card:hover { transform: translateY(-4px) scale(1.01); box-shadow: 0 16px 32px rgba(0,0,0,0.18); }
+        .subject-card:hover { transform: translateY(-6px) scale(1.02); box-shadow: 0 20px 40px rgba(0,0,0,0.14); }
         .subject-card:active { transform: scale(0.97); }
 
         .hidden-scroll::-webkit-scrollbar { display: none; }
@@ -48,25 +32,15 @@
         #current-level-btn::before { content:''; position:absolute; inset:0; background:linear-gradient(135deg,rgba(255,255,255,0.08),transparent); pointer-events:none; }
         #current-level-btn:hover { transform:scale(1.02); background:rgba(255,255,255,0.18)!important; border-color:rgba(255,255,255,0.4)!important; }
 
-        /* ── SIDEBAR COMPACT ── */
-        #desktop-sidebar {
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-        #desktop-sidebar .sidebar-profile {
-            flex-shrink: 0;
-        }
-
         /* ── MOBILE NAV ── */
-        #mobile-nav { display: none; }
+        #mobile-nav {
+            display: none;
+        }
         @media (max-width: 1023px) {
             #desktop-sidebar { display: none !important; }
             #mobile-nav { display: flex !important; }
             main { padding-bottom: 90px !important; }
             .grid { grid-template-columns: 1fr !important; }
-            #home-page { height: auto; overflow: visible; }
-            #subjects-container { overflow: visible; }
         }
 
         .mob-nav-btn { transition: all 0.2s ease; }
@@ -74,9 +48,23 @@
         .mob-nav-btn.active span { color: white !important; }
 
         @media (max-width: 640px) {
-            #level-title { font-size: 1.3rem !important; margin-bottom: 0.4rem !important; }
-            #subjects-container { grid-template-columns: 1fr !important; gap: 0.5rem !important; }
-            #subjects-container .subject-card { padding: 0.7rem !important; }
+            #level-title { font-size: 1.5rem !important; margin-bottom: 0.6rem !important; }
+            #subjects-container { grid-template-columns: 1fr !important; gap: 0.75rem !important; }
+            #subjects-container .subject-card { padding: 0.9rem !important; }
+            #subjects-container .w-20 { width: 3rem !important; height: 3rem !important; font-size: 1.6rem !important; }
+            #subjects-container h2.text-3xl { font-size: 1.1rem !important; }
+            #subjects-container .flex.gap-3 { flex-wrap: wrap; gap: 0.4rem !important; }
+            #subject-header { gap: 0.5rem; }
+            #subject-header button { font-size: 0.8rem; padding: 0.35rem 0.75rem; }
+            #subject-icon { font-size: 2rem !important; }
+            #subject-name { font-size: 1.2rem !important; }
+            #subject-page .flex.justify-end { flex-wrap: wrap; gap: 0.5rem; }
+            #subject-page .flex.gap-2.bg-white\/10 { flex-wrap: wrap; }
+            .file-item { flex-direction: column; align-items: flex-start !important; }
+            .file-item .flex.gap-2 { flex-wrap: wrap; }
+            #subjects-container h1.text-6xl { font-size: 1.6rem !important; }
+            #subjects-container p.text-2xl { font-size: 0.95rem !important; }
+            #home-page .text-2xl { font-size: 1rem !important; }
         }
 
         @media (min-width: 641px) and (max-width: 1023px) {
@@ -122,9 +110,9 @@
         .section-card:nth-child(2){animation-delay:.15s}
         .section-card:nth-child(3){animation-delay:.25s}
 
-        @keyframes cardIn { from{opacity:0;transform:translateY(20px) scale(.95)} to{opacity:1;transform:translateY(0) scale(1)} }
+        @keyframes cardIn { from{opacity:0;transform:translateY(24px) scale(.95)} to{opacity:1;transform:translateY(0) scale(1)} }
         @keyframes featureCardIn { from{opacity:0;transform:translateY(30px) scale(.9)} to{opacity:1;transform:translateY(0) scale(1)} }
-        .subject-card { animation: cardIn 0.4s cubic-bezier(.34,1.56,.64,1) both; }
+        .subject-card { animation: cardIn 0.45s cubic-bezier(.34,1.56,.64,1) both; }
         .subject-card:nth-child(1){animation-delay:.03s}
         .subject-card:nth-child(2){animation-delay:.1s}
         .subject-card:nth-child(3){animation-delay:.17s}
@@ -154,35 +142,6 @@
         .level-card-5{background:linear-gradient(135deg,#ef4444,#f87171)}
         .level-card-6{background:linear-gradient(135deg,#ec4899,#f472b6)}
 
-        /* ── COMPACT SUBJECT CARDS ── */
-        .subject-card-compact {
-            padding: 0.75rem 1rem !important;
-        }
-        .subject-card-compact .card-icon {
-            width: 2.75rem !important;
-            height: 2.75rem !important;
-            font-size: 1.4rem !important;
-        }
-        .subject-card-compact h2 {
-            font-size: 1rem !important;
-        }
-        .subject-card-compact p {
-            font-size: 0.65rem !important;
-        }
-        .subject-card-compact .tab-chip {
-            font-size: 0.6rem !important;
-            padding: 0.2rem 0.5rem !important;
-        }
-        .subject-card-compact .enter-arrow {
-            font-size: 0.7rem !important;
-        }
-
-        /* ── ABOUT PAGE in no-scroll home ── */
-        #home-page .about-scroll {
-            overflow-y: auto;
-            flex: 1;
-            min-height: 0;
-        }
     </style>
 </head>
 <body>
@@ -191,116 +150,98 @@
 <div id="flip-flash"></div>
 
 <div class="w-full min-h-screen shadow-2xl overflow-hidden" style="background:transparent;">
-    <div class="grid lg:grid-cols-[260px_1fr] min-h-screen">
+    <div class="grid lg:grid-cols-[280px_1fr] min-h-screen">
 
         <!-- ===== SIDEBAR ===== -->
-        <aside id="desktop-sidebar" class="p-3 border-l flex flex-col" style="background:#1a0930;border-color:#3b1a6e; height:100vh; overflow:hidden;">
-            <!-- Profile card — compact -->
-            <div class="sidebar-profile bg-white rounded-[20px] p-3 shadow-lg text-center flex-shrink-0">
-                <div class="w-16 h-16 mx-auto rounded-full overflow-hidden border-[4px] border-yellow-300 shadow-lg">
-                    <img src="./images/logo.png.png" class="w-full h-full object-contain" alt="شعار">
+        <aside id="desktop-sidebar" class="p-4 border-l flex flex-col" style="background:#1a0930;border-color:#3b1a6e;">
+            <div class="bg-white rounded-[25px] p-4 shadow-lg text-center">
+                <div class="w-24 h-24 mx-auto rounded-full overflow-hidden border-[5px] border-yellow-300 shadow-lg flex items-center justify-center" style="background:linear-gradient(135deg,#1a0930,#3b1a6e)">
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="w-16 h-16">
+                        <!-- كتاب مفتوح -->
+                        <path d="M15 30 Q50 20 85 30 L85 75 Q50 65 15 75 Z" fill="#fff" opacity="0.15"/>
+                        <path d="M15 30 Q32 22 50 30 L50 75 Q32 67 15 75 Z" fill="#a78bfa"/>
+                        <path d="M50 30 Q68 22 85 30 L85 75 Q68 67 50 75 Z" fill="#818cf8"/>
+                        <line x1="50" y1="30" x2="50" y2="75" stroke="#fff" stroke-width="2"/>
+                        <!-- نجمة علم -->
+                        <circle cx="50" cy="14" r="7" fill="#fbbf24"/>
+                        <polygon points="50,5 52,11 58,11 53,15 55,21 50,17 45,21 47,15 42,11 48,11" fill="#f59e0b"/>
+                        <!-- خطوط الكتاب -->
+                        <line x1="22" y1="42" x2="46" y2="38" stroke="#fff" stroke-width="1.5" opacity="0.7"/>
+                        <line x1="22" y1="50" x2="46" y2="46" stroke="#fff" stroke-width="1.5" opacity="0.7"/>
+                        <line x1="22" y1="58" x2="46" y2="54" stroke="#fff" stroke-width="1.5" opacity="0.7"/>
+                        <line x1="54" y1="38" x2="78" y2="42" stroke="#fff" stroke-width="1.5" opacity="0.7"/>
+                        <line x1="54" y1="46" x2="78" y2="50" stroke="#fff" stroke-width="1.5" opacity="0.7"/>
+                        <line x1="54" y1="54" x2="78" y2="58" stroke="#fff" stroke-width="1.5" opacity="0.7"/>
+                    </svg>
                 </div>
-                <h1 class="text-lg font-black text-blue-700 mt-2 leading-tight">نجم الدين همادي</h1>
-                <p class="text-red-500 font-bold text-xs mt-0.5">التعليم هو مفتاح المستقبل</p>
+                <h1 class="text-2xl font-black text-blue-700 mt-3">العلم نور</h1>
+                <p class="text-red-500 font-bold text-sm mt-1">التعليم هو مفتاح المستقبل</p>
             </div>
+            <div class="mt-4 space-y-2">
+                <button onclick="handleOpenAboutPage()" class="sidebar-btn w-full bg-blue-600 text-white py-3 rounded-2xl font-black text-base shadow-lg">🏠 الرئيسية</button>
 
-            <!-- Buttons -->
-            <div class="mt-3 space-y-2 flex-1 overflow-y-auto">
-                <button onclick="handleOpenAboutPage()" class="sidebar-btn w-full bg-blue-600 text-white py-2.5 rounded-2xl font-black text-sm shadow-lg">🏠 الرئيسية</button>
+                <!-- زر المستوى الحالي -->
                 <button id="current-level-btn" onclick="handleOpenLevelsPage()"
-                    class="sidebar-btn w-full text-white py-2 rounded-2xl font-bold text-sm shadow-md flex items-center justify-center gap-2"
+                    class="sidebar-btn w-full text-white py-2.5 rounded-2xl font-bold text-base shadow-md flex items-center justify-center gap-2"
                     style="background:rgba(255,255,255,0.12); border:2px solid rgba(255,255,255,0.25);">
                     <span id="level-btn-icon">✨</span>
                     <span id="level-btn-text">المستوى</span>
-                    <span class="text-white/50 text-xs mr-1">▾</span>
+                    <span class="text-white/50 text-sm mr-1">▾</span>
                 </button>
-                <button onclick="handleOpenLogin()" class="sidebar-btn w-full bg-purple-600 text-white py-2.5 rounded-2xl font-black text-sm shadow-lg">🔐 تسجيل الدخول</button>
-                <button id="logout-btn" onclick="handleLogout()" class="hidden sidebar-btn w-full bg-red-600 text-white py-2.5 rounded-2xl font-black text-sm shadow-lg">🚪 تسجيل الخروج</button>
-                <div id="bg-btn-container" class="hidden">
-                    <button id="changeBgBtn" class="sidebar-btn w-full bg-blue-600 text-white py-2.5 rounded-2xl font-black text-sm shadow-lg">🎨 تغيير الخلفية</button>
+
+                <button onclick="handleOpenLogin()" class="sidebar-btn w-full bg-purple-600 text-white py-3 rounded-2xl font-black text-base shadow-lg">🔐 تسجيل الدخول</button>
+                <button id="logout-btn" onclick="handleLogout()" class="hidden sidebar-btn w-full bg-red-600 text-white py-3 rounded-2xl font-black text-base shadow-lg">🚪 تسجيل الخروج</button>
+                <div id="bg-btn-container" class="hidden mt-2">
+                    <button id="changeBgBtn" class="sidebar-btn w-full bg-blue-600 text-white py-3 rounded-2xl font-black text-base shadow-lg">🎨 تغيير الخلفية</button>
                     <input type="file" id="bgInput" accept="image/*" hidden>
                 </div>
             </div>
         </aside>
 
         <!-- ===== MAIN ===== -->
-        <main class="p-6 relative" style="background:transparent; height:100vh; overflow:hidden;">
+        <main class="p-6 relative overflow-hidden" style="background:transparent;">
 
-            <div id="page-wrapper" style="height:100%; position:relative;">
+            <div id="page-wrapper">
 
                 <!-- ═══ HOME PAGE ═══ -->
                 <div id="home-page">
+                    <h1 id="level-title" class="text-center text-4xl font-black text-green-700 mb-4">✨ السنة الأولى ✨</h1>
 
-                    <!-- Title — very compact -->
-                    <h1 id="level-title" class="text-center text-2xl font-black text-green-400 mb-2 flex-shrink-0">✨ السنة الأولى ✨</h1>
-
-                    <!-- Search -->
-                    <div class="bg-white rounded-[18px] shadow-lg px-3 py-2 mb-2 flex-shrink-0">
+                    <div class="bg-white rounded-[25px] shadow-lg p-3 mb-4">
                         <input id="search-input" type="text" placeholder="🔍 ابحث عن مادة..."
-                            class="w-full border-2 border-blue-200 rounded-xl px-3 py-2 text-sm outline-none font-bold" />
+                            class="w-full border-2 border-blue-200 rounded-2xl px-4 py-3 text-base outline-none font-bold" />
                     </div>
 
-                    <!-- Quick buttons: Stories / Games / Research — compact row -->
-                    <div class="mb-2 grid grid-cols-3 gap-2 flex-shrink-0">
-                        <button onclick="handleOpenStoriesPage()"
-                            class="w-full bg-gradient-to-r from-purple-600 to-pink-500 text-white py-2 rounded-[14px] font-black text-xs shadow-lg flex items-center justify-center gap-1.5 transition-transform hover:scale-[1.02] active:scale-[0.98]">
-                            <span class="text-lg">📖</span>
-                            <div class="text-right">
-                                <div>القصص</div>
-                                <div class="bg-white/20 px-1.5 rounded text-[10px] font-bold" id="stories-level-badge">السنة الأولى</div>
-                            </div>
-                        </button>
-                        <button onclick="handleOpenGamesPage()"
-                            class="w-full bg-gradient-to-r from-yellow-500 to-orange-500 text-white py-2 rounded-[14px] font-black text-xs shadow-lg flex items-center justify-center gap-1.5 transition-transform hover:scale-[1.02] active:scale-[0.98]">
-                            <span class="text-lg">🎮</span>
-                            <div class="text-right">
-                                <div>الألعاب</div>
-                                <div class="bg-white/20 px-1.5 rounded text-[10px] font-bold" id="games-level-badge">السنة الأولى</div>
-                            </div>
-                        </button>
-                        <button onclick="handleOpenResearchPage()"
-                            class="w-full bg-gradient-to-r from-red-600 to-rose-500 text-white py-2 rounded-[14px] font-black text-xs shadow-lg flex items-center justify-center gap-1.5 transition-transform hover:scale-[1.02] active:scale-[0.98]">
-                            <span class="text-lg">🔬</span>
-                            <div class="text-right">
-                                <div>البحوث</div>
-                                <div class="bg-white/20 px-1.5 rounded text-[10px] font-bold" id="research-level-badge">السنة الأولى</div>
-                            </div>
-                        </button>
-                    </div>
-
-                    <!-- Subjects grid — scrollable -->
-                    <div id="subjects-container" class="grid md:grid-cols-2 xl:grid-cols-3 gap-3"></div>
+                    <div id="subjects-container" class="grid md:grid-cols-2 xl:grid-cols-3 gap-5"></div>
                 </div>
 
                 <!-- ═══ STORIES PAGE ═══ -->
                 <div id="stories-page"
-                     style="position:absolute;top:0;left:0;width:100%;height:100%;overflow-y:auto;transform:translateY(60%) scale(0.92);opacity:0;filter:blur(5px);transition:transform 0.6s cubic-bezier(.86,0,.07,1),opacity 0.5s ease,filter 0.5s ease;pointer-events:none;">
+                     style="position:absolute;top:0;left:0;width:100%;transform:translateY(60%) scale(0.92);opacity:0;filter:blur(5px);transition:transform 0.6s cubic-bezier(.86,0,.07,1),opacity 0.5s ease,filter 0.5s ease;pointer-events:none;">
 
-                    <div class="flex items-center gap-4 mb-6 flex-wrap">
+                    <div class="flex items-center gap-4 mb-6">
                         <button onclick="goBackFromStories()"
                             class="flex items-center gap-2 bg-white border-2 border-purple-300 text-purple-700 px-5 py-2 rounded-xl font-black text-base shadow-md transition-transform hover:scale-105">
                             ➜ رجوع
                         </button>
                         <div class="flex items-center gap-3">
-                            <span class="text-4xl">📖</span>
+                            <span class="text-5xl">📖</span>
                             <div>
                                 <p id="stories-level-label" class="text-purple-300 font-bold text-sm"></p>
-                                <h2 class="text-2xl font-black text-white">مكتبة القصص</h2>
+                                <h2 class="text-3xl font-black text-white">مكتبة القصص</h2>
                             </div>
                         </div>
                         <button id="stories-upload-btn" onclick="handleStoriesUpload()" class="hidden mr-auto bg-purple-600 text-white px-4 py-2 rounded-xl font-bold text-sm">⬆ رفع قصة</button>
                     </div>
 
                     <div class="bg-white/10 border border-white/15 rounded-2xl p-5 shadow-lg">
-                        <div id="stories-files-box" class="space-y-3">
-                            <p class="text-white/40 font-bold text-center py-6 text-lg">⏳ جاري التحميل...</p>
-                        </div>
+                        <div id="stories-files-box" class="space-y-3"></div>
                     </div>
                 </div>
 
                 <!-- ═══ GAMES PAGE ═══ -->
                 <div id="games-page"
-                     style="position:absolute;top:0;left:0;width:100%;height:100%;overflow-y:auto;transform:translateY(60%) scale(0.92);opacity:0;filter:blur(5px);transition:transform 0.6s cubic-bezier(.86,0,.07,1),opacity 0.5s ease,filter 0.5s ease;pointer-events:none;">
+                     style="position:absolute;top:0;left:0;width:100%;transform:translateY(60%) scale(0.92);opacity:0;filter:blur(5px);transition:transform 0.6s cubic-bezier(.86,0,.07,1),opacity 0.5s ease,filter 0.5s ease;pointer-events:none;">
 
                     <div class="flex items-center gap-4 mb-6 flex-wrap">
                         <button onclick="goBackFromGames()"
@@ -308,25 +249,23 @@
                             ➜ رجوع
                         </button>
                         <div class="flex items-center gap-3">
-                            <span class="text-4xl">🎮</span>
+                            <span class="text-5xl">🎮</span>
                             <div>
                                 <p id="games-level-label" class="text-yellow-300 font-bold text-sm"></p>
-                                <h2 class="text-2xl font-black text-white">ألعاب تعليمية</h2>
+                                <h2 class="text-3xl font-black text-white">ألعاب تعليمية</h2>
                             </div>
                         </div>
                         <button id="games-upload-btn" onclick="handleGamesUpload()" class="hidden mr-auto bg-yellow-500 text-white px-4 py-2 rounded-xl font-bold text-sm">⬆ رفع لعبة</button>
                     </div>
 
                     <div class="bg-white/10 border border-white/15 rounded-2xl p-5 shadow-lg">
-                        <div id="games-files-box" class="space-y-3">
-                            <p class="text-white/40 font-bold text-center py-6 text-lg">⏳ جاري التحميل...</p>
-                        </div>
+                        <div id="games-files-box" class="space-y-3"></div>
                     </div>
                 </div>
 
                 <!-- ═══ RESEARCH PAGE ═══ -->
                 <div id="research-page"
-                     style="position:absolute;top:0;left:0;width:100%;height:100%;overflow-y:auto;transform:translateY(60%) scale(0.92);opacity:0;filter:blur(5px);transition:transform 0.6s cubic-bezier(.86,0,.07,1),opacity 0.5s ease,filter 0.5s ease;pointer-events:none;">
+                     style="position:absolute;top:0;left:0;width:100%;transform:translateY(60%) scale(0.92);opacity:0;filter:blur(5px);transition:transform 0.6s cubic-bezier(.86,0,.07,1),opacity 0.5s ease,filter 0.5s ease;pointer-events:none;">
 
                     <div class="flex items-center gap-4 mb-6 flex-wrap">
                         <button onclick="goBackFromResearch()"
@@ -334,112 +273,68 @@
                             ➜ رجوع
                         </button>
                         <div class="flex items-center gap-3">
-                            <span class="text-4xl">🔬</span>
+                            <span class="text-5xl">🔬</span>
                             <div>
                                 <p id="research-level-label" class="text-red-300 font-bold text-sm"></p>
-                                <h2 class="text-2xl font-black text-white">البحوث المدرسية</h2>
+                                <h2 class="text-3xl font-black text-white">البحوث المدرسية</h2>
                             </div>
                         </div>
                         <button id="research-upload-btn" onclick="handleResearchUpload()" class="hidden mr-auto bg-red-600 text-white px-4 py-2 rounded-xl font-bold text-sm">⬆ رفع بحث</button>
                     </div>
 
-                    <!-- ══ AI RESEARCH ASSISTANT ══ -->
-                    <div class="bg-gradient-to-br from-indigo-900/60 to-purple-900/60 border border-indigo-400/30 rounded-2xl p-5 shadow-xl mb-4">
-                        <div class="flex items-center gap-3 mb-4">
-                            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-xl shadow-lg">🤖</div>
-                            <div>
-                                <h3 class="font-black text-white text-lg">مساعد البحث بالذكاء الاصطناعي</h3>
-                                <p class="text-indigo-300 text-xs font-bold">اكتب موضوع بحثك وسيجمع لك المعلومات من الإنترنت</p>
-                            </div>
-                        </div>
-                        <div class="flex gap-2 mb-3">
-                            <input id="ai-research-input" type="text" placeholder="مثال: الماء ودورته في الطبيعة..."
-                                class="flex-1 bg-white/10 border border-white/20 rounded-xl px-4 py-2.5 text-white font-bold text-sm outline-none focus:border-indigo-400 placeholder-white/30" />
-                            <button onclick="handleAIResearch()"
-                                class="bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-400 hover:to-purple-500 text-white px-5 py-2.5 rounded-xl font-black text-sm shadow-lg transition-all hover:scale-105 active:scale-95 flex items-center gap-2 flex-shrink-0">
-                                <span id="ai-search-icon">🔍</span>
-                                <span id="ai-search-label">بحث</span>
-                            </button>
-                        </div>
-                        <!-- Result box -->
-                        <div id="ai-research-result" class="hidden">
-                            <div class="border-t border-white/10 pt-4">
-                                <div class="flex justify-between items-center mb-3">
-                                    <h4 id="ai-result-title" class="text-indigo-200 font-black text-sm"></h4>
-                                    <button onclick="copyAIResult()" class="bg-white/10 hover:bg-white/20 text-white px-3 py-1 rounded-lg text-xs font-bold transition-colors">📋 نسخ</button>
-                                </div>
-                                <div id="ai-result-content" class="bg-black/20 rounded-xl p-4 text-white/90 text-sm font-bold leading-relaxed whitespace-pre-wrap max-h-80 overflow-y-auto"></div>
-                            </div>
-                        </div>
-                        <!-- Loading -->
-                        <div id="ai-research-loading" class="hidden text-center py-4">
-                            <div class="inline-flex items-center gap-3 text-indigo-300 font-bold">
-                                <svg class="animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24">
-                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
-                                </svg>
-                                جاري البحث في الإنترنت...
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Uploaded research files -->
                     <div class="bg-white/10 border border-white/15 rounded-2xl p-5 shadow-lg">
-                        <h3 class="font-black text-white text-base mb-3">📁 البحوث المرفوعة</h3>
-                        <div id="research-files-box" class="space-y-3">
-                            <p class="text-white/40 font-bold text-center py-6 text-lg">⏳ جاري التحميل...</p>
-                        </div>
+                        <div id="research-files-box" class="space-y-3"></div>
                     </div>
                 </div>
 
                 <!-- ═══ SUBJECT DETAIL PAGE ═══ -->
-                <div id="subject-page" style="overflow-y:auto; height:100%;">
+                <div id="subject-page">
 
-                    <div id="subject-header" class="flex items-center gap-4 mb-4 flex-wrap">
+                    <div id="subject-header" class="flex items-center gap-4 mb-6 flex-wrap">
                         <button id="back-btn" onclick="goBack()"
-                            class="flex items-center gap-2 bg-white border-2 border-purple-300 text-purple-700 px-4 py-2 rounded-xl font-black text-sm shadow-md">
+                            class="flex items-center gap-2 bg-white border-2 border-purple-300 text-purple-700 px-5 py-2 rounded-xl font-black text-base shadow-md">
                             ➜ المستوى السابق
                         </button>
                         <div id="subject-title-area" class="flex items-center gap-3">
-                            <span id="subject-icon" class="text-4xl icon-spin">📘</span>
+                            <span id="subject-icon" class="text-5xl icon-spin">📘</span>
                             <div>
-                                <p id="subject-level-label" class="text-purple-300 font-bold text-xs"></p>
-                                <h2 id="subject-name" class="text-2xl font-black text-white"></h2>
+                                <p id="subject-level-label" class="text-purple-300 font-bold text-sm"></p>
+                                <h2 id="subject-name" class="text-3xl font-black text-white"></h2>
                             </div>
                         </div>
                     </div>
 
-                    <div class="flex justify-end items-center gap-3 mb-4">
+                    <div class="flex justify-end items-center gap-3 mb-5">
                         <button class="upload-btn bg-purple-600 text-white px-4 py-2 rounded-xl font-bold text-sm hidden" data-folder="lessons" id="global-upload-btn">⬆ رفع ملف</button>
                         <div class="flex gap-2 bg-white/10 backdrop-blur-sm rounded-xl p-1 border border-white/20">
-                            <button id="tab-lessons"   onclick="switchTab('lessons')"   class="section-tab active px-3 py-1.5 rounded-lg font-bold text-sm text-white">📘 الدروس</button>
-                            <button id="tab-exercises" onclick="switchTab('exercises')" class="section-tab px-3 py-1.5 rounded-lg font-bold text-sm text-white/60">📝 التمارين</button>
-                            <button id="tab-exams"     onclick="switchTab('exams')"     class="section-tab px-3 py-1.5 rounded-lg font-bold text-sm text-white/60">📚 الاختبارات</button>
+                            <button id="tab-lessons"   onclick="switchTab('lessons')"   class="section-tab active px-4 py-2 rounded-lg font-bold text-sm text-white">📘 الدروس</button>
+                            <button id="tab-exercises" onclick="switchTab('exercises')" class="section-tab px-4 py-2 rounded-lg font-bold text-sm text-white/60">📝 التمارين</button>
+                            <button id="tab-exams"     onclick="switchTab('exams')"     class="section-tab px-4 py-2 rounded-lg font-bold text-sm text-white/60">📚 الاختبارات</button>
                         </div>
                     </div>
 
                     <div id="panel-lessons" class="section-panel">
-                        <div class="section-card bg-white/10 border border-white/15 rounded-2xl p-4 shadow-lg">
-                            <div class="flex justify-between items-center mb-3">
-                                <h3 class="font-black text-white text-lg">📘 الدروس</h3>
+                        <div class="section-card bg-white/10 border border-white/15 rounded-2xl p-5 shadow-lg">
+                            <div class="flex justify-between items-center mb-4">
+                                <h3 class="font-black text-white text-xl">📘 الدروس</h3>
                             </div>
                             <div class="files-box space-y-3"></div>
                         </div>
                     </div>
 
                     <div id="panel-exercises" class="section-panel hidden">
-                        <div class="section-card bg-white/10 border border-white/15 rounded-2xl p-4 shadow-lg">
-                            <div class="flex justify-between items-center mb-3">
-                                <h3 class="font-black text-white text-lg">📝 التمارين</h3>
+                        <div class="section-card bg-white/10 border border-white/15 rounded-2xl p-5 shadow-lg">
+                            <div class="flex justify-between items-center mb-4">
+                                <h3 class="font-black text-white text-xl">📝 التمارين</h3>
                             </div>
                             <div class="files-box space-y-3"></div>
                         </div>
                     </div>
 
                     <div id="panel-exams" class="section-panel hidden">
-                        <div class="section-card bg-white/10 border border-white/15 rounded-2xl p-4 shadow-lg">
-                            <div class="flex justify-between items-center mb-3">
-                                <h3 class="font-black text-white text-lg">📚 الاختبارات</h3>
+                        <div class="section-card bg-white/10 border border-white/15 rounded-2xl p-5 shadow-lg">
+                            <div class="flex justify-between items-center mb-4">
+                                <h3 class="font-black text-white text-xl">📚 الاختبارات</h3>
                             </div>
                             <div class="files-box space-y-3"></div>
                         </div>
@@ -536,6 +431,7 @@
     };
     const subjectIcons = { math:'🔢', arabic:'📖', science:'🔬', french:'🗼' };
 
+    /* ── Progress ── */
     function showProgress() {
         progressBar.style.width = '30%';
         setTimeout(() => progressBar.style.width = '70%', 200);
@@ -545,12 +441,14 @@
         setTimeout(() => { progressBar.style.width = '0%'; }, 400);
     }
 
+    /* ── Flash ── */
     const flipFlash = document.getElementById('flip-flash');
     function triggerFlash() {
         flipFlash.classList.add('active');
         setTimeout(() => flipFlash.classList.remove('active'), 250);
     }
 
+    /* ── Update sidebar level button ── */
     function updateLevelBtn(level) {
         const iconEl = document.getElementById('level-btn-icon');
         const textEl = document.getElementById('level-btn-text');
@@ -567,6 +465,7 @@
     }
     window._setMobActive = setMobActive;
 
+    /* ── Navigation ── */
     function navigateToSubject(subjectId, subjectTitle, level, levelId) {
         currentSubject = { id: subjectId, title: subjectTitle, level, levelId };
 
@@ -575,7 +474,7 @@
         document.getElementById('back-btn').innerHTML = `➜ ${level}`;
         const nameEl = document.getElementById('subject-name');
         nameEl.textContent = subjectTitle;
-        nameEl.className   = `text-2xl font-black text-white`;
+        nameEl.className   = `text-3xl font-black text-white`;
 
         switchTab('lessons', false);
         triggerFlash();
@@ -595,6 +494,7 @@
         currentSubject = null;
     };
 
+    /* ── Tabs ── */
     window.switchTab = function(tab, reload = true) {
         activeTab = tab;
         ['lessons','exercises','exams'].forEach(t => {
@@ -619,6 +519,7 @@
         if (reload && currentSubject) loadSubjectFiles();
     };
 
+    /* ── Load Files ── */
     async function loadSubjectFiles() {
         if (!currentSubject) return;
         showProgress();
@@ -671,6 +572,7 @@
         finishProgress();
     }
 
+    /* ── Upload ── */
     function attachSubjectUploadEvents() {
         document.querySelectorAll('#subject-page .upload-btn').forEach(button => {
             const freshBtn = button.cloneNode(true);
@@ -712,6 +614,7 @@
         });
     }
 
+    /* ── Delete ── */
     window.handleDeleteFile = async function(fileId, storagePath) {
         if (!confirm('هل تريد حذف هذا الملف نهائيًا؟')) return;
         if (storagePath) {
@@ -723,14 +626,17 @@
         loadSubjectFiles();
     };
 
+    /* ── Render Subjects (home) ── */
     function renderSubjects(level, btn = null) {
         level = String(level).trim();
         currentLevel = level;
         levelTitle.innerText = `✨ ${level} ✨`;
         subjectsContainer.innerHTML = '';
 
+        // update sidebar button
         updateLevelBtn(level);
 
+        // update stories badge
         const badge = document.getElementById('stories-level-badge');
         if (badge) badge.textContent = level;
         const gamesBadge = document.getElementById('games-level-badge');
@@ -748,7 +654,7 @@
         const subjects = (subjectsByLevel[level]||[]).filter(s => s.title.includes(search));
 
         if (!subjects.length) {
-            subjectsContainer.innerHTML = `<div class="col-span-full text-center"><h2 class="text-3xl font-black text-red-500">لا توجد مواد</h2></div>`;
+            subjectsContainer.innerHTML = `<div class="col-span-full text-center"><h2 class="text-4xl font-black text-red-500">لا توجد مواد</h2></div>`;
             return;
         }
 
@@ -759,25 +665,27 @@
             const levelId = levelMap[level];
 
             subjectsContainer.innerHTML += `
-                <div class="subject-card subject-card-compact bg-white rounded-[20px] shadow-xl"
+                <div class="subject-card bg-white rounded-[25px] p-5 shadow-xl"
                      onclick="handleOpenSubject('${subject.id}','${subject.title}','${level}','${levelId}')">
-                    <div class="flex items-center gap-3 mb-2">
-                        <div class="card-icon w-11 h-11 rounded-xl bg-gradient-to-br ${sc.from||'from-blue-500'} ${sc.to||'to-blue-400'} flex items-center justify-center text-2xl shadow-md flex-shrink-0">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-14 h-14 rounded-2xl bg-gradient-to-br ${sc.from||'from-blue-500'} ${sc.to||'to-blue-400'} flex items-center justify-center text-3xl shadow-lg flex-shrink-0">
                             ${icon}
                         </div>
                         <div>
-                            <p class="text-gray-400 font-bold text-[10px]">${level}</p>
-                            <h2 class="text-base font-black ${color}">${subject.title}</h2>
+                            <p class="text-gray-400 font-bold text-xs">${level}</p>
+                            <h2 class="text-xl font-black ${color}">${subject.title}</h2>
                         </div>
                     </div>
-                    <div class="flex gap-1.5 flex-wrap">
+                    <div class="flex gap-2 mt-1 flex-wrap">
                         <span onclick="event.stopPropagation();handleOpenSubjectTab('${subject.id}','${subject.title}','${level}','${levelId}','lessons')"
-                              class="tab-chip cursor-pointer bg-blue-50 hover:bg-blue-100 text-blue-600 px-2 py-1 rounded-lg text-[11px] font-bold transition-colors">📘 الدروس</span>
+                              class="cursor-pointer bg-blue-50 hover:bg-blue-100 text-blue-600 px-3 py-1.5 rounded-xl text-xs font-bold transition-colors">📘 الدروس</span>
                         <span onclick="event.stopPropagation();handleOpenSubjectTab('${subject.id}','${subject.title}','${level}','${levelId}','exercises')"
-                              class="tab-chip cursor-pointer bg-yellow-50 hover:bg-yellow-100 text-yellow-600 px-2 py-1 rounded-lg text-[11px] font-bold transition-colors">📝 التمارين</span>
+                              class="cursor-pointer bg-yellow-50 hover:bg-yellow-100 text-yellow-600 px-3 py-1.5 rounded-xl text-xs font-bold transition-colors">📝 التمارين</span>
                         <span onclick="event.stopPropagation();handleOpenSubjectTab('${subject.id}','${subject.title}','${level}','${levelId}','exams')"
-                              class="tab-chip cursor-pointer bg-red-50 hover:bg-red-100 text-red-600 px-2 py-1 rounded-lg text-[11px] font-bold transition-colors">📚 الاختبارات</span>
-                        <span class="enter-arrow mr-auto text-blue-500 font-black text-xs self-center">← دخول</span>
+                              class="cursor-pointer bg-red-50 hover:bg-red-100 text-red-600 px-3 py-1.5 rounded-xl text-xs font-bold transition-colors">📚 الاختبارات</span>
+                    </div>
+                    <div class="mt-3 flex justify-end">
+                        <span class="text-blue-500 font-black text-sm">← انقر للدخول</span>
                     </div>
                 </div>`;
         });
@@ -794,7 +702,7 @@
         document.getElementById('back-btn').innerHTML = `➜ ${level}`;
         const nameEl = document.getElementById('subject-name');
         nameEl.textContent = title;
-        nameEl.className = `text-2xl font-black text-white`;
+        nameEl.className = `text-3xl font-black text-white`;
         switchTab(tab, false);
         triggerFlash();
         homePage.classList.add('slide-out-right');
@@ -803,11 +711,39 @@
         setTimeout(() => loadSubjectFiles(), 300);
     };
 
-    /* ══ STORIES ══ */
+    /* ══════════════════════════════
+       صفحة مكتبة القصص
+    ══════════════════════════════ */
     const storiesPage = document.getElementById('stories-page');
     let currentStoriesLevel = null;
 
+    /* ── إغلاق كل الصفحات المفتوحة ── */
+    function closeAllSubPages() {
+        if (currentStoriesLevel) {
+            storiesPage.style.transform = 'translateY(60%) scale(0.92)';
+            storiesPage.style.opacity = '0';
+            storiesPage.style.filter = 'blur(5px)';
+            storiesPage.style.pointerEvents = 'none';
+            currentStoriesLevel = null;
+        }
+        if (currentGamesLevel) {
+            gamesPage.style.transform = 'translateY(60%) scale(0.92)';
+            gamesPage.style.opacity = '0';
+            gamesPage.style.filter = 'blur(5px)';
+            gamesPage.style.pointerEvents = 'none';
+            currentGamesLevel = null;
+        }
+        if (currentResearchLevel) {
+            researchPage.style.transform = 'translateY(60%) scale(0.92)';
+            researchPage.style.opacity = '0';
+            researchPage.style.filter = 'blur(5px)';
+            researchPage.style.pointerEvents = 'none';
+            currentResearchLevel = null;
+        }
+    }
+
     window.handleOpenStoriesPage = function() {
+        closeAllSubPages();
         currentStoriesLevel = { level: currentLevel, levelId: levelMap[currentLevel] };
         document.getElementById('stories-level-label').textContent = currentLevel;
         triggerFlash();
@@ -926,11 +862,14 @@
         }
     }
 
-    /* ══ GAMES ══ */
+    /* ══════════════════════════════
+       صفحة الألعاب التعليمية
+    ══════════════════════════════ */
     const gamesPage = document.getElementById('games-page');
     let currentGamesLevel = null;
 
     window.handleOpenGamesPage = function() {
+        closeAllSubPages();
         currentGamesLevel = { level: currentLevel, levelId: levelMap[currentLevel] };
         document.getElementById('games-level-label').textContent = currentLevel;
         triggerFlash();
@@ -1031,11 +970,14 @@
         loadGamesFiles();
     };
 
-    /* ══ RESEARCH ══ */
+    /* ══════════════════════════════
+       صفحة البحوث المدرسية
+    ══════════════════════════════ */
     const researchPage = document.getElementById('research-page');
     let currentResearchLevel = null;
 
     window.handleOpenResearchPage = function() {
+        closeAllSubPages();
         currentResearchLevel = { level: currentLevel, levelId: levelMap[currentLevel] };
         document.getElementById('research-level-label').textContent = currentLevel;
         triggerFlash();
@@ -1136,7 +1078,9 @@
         loadResearchFiles();
     };
 
-    /* ══ LEVELS PAGE ══ */
+    /* ══════════════════════════════
+       صفحة جميع المستويات (جديدة)
+    ══════════════════════════════ */
     function openLevelsPage() {
         closeStoriesIfOpen(() => {
             levelTitle.innerText = '🎓 جميع المستويات';
@@ -1150,27 +1094,27 @@
                 const subNames   = subjectsByLevel[level].map(s => s.title).join(' · ');
 
                 subjectsContainer.innerHTML += `
-                    <div class="subject-card bg-white rounded-[24px] overflow-hidden shadow-xl"
+                    <div class="subject-card bg-white rounded-[30px] overflow-hidden shadow-xl"
                          style="animation-delay:${index * 0.07}s"
                          onclick="handleGoToLevel('${level}')">
-                        <div class="${cardClass} p-4 flex items-center gap-3">
-                            <div class="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center text-3xl flex-shrink-0">
+                        <div class="${cardClass} p-6 flex items-center gap-4">
+                            <div class="w-16 h-16 rounded-2xl bg-white/20 flex items-center justify-center text-4xl flex-shrink-0">
                                 ${emoji}
                             </div>
                             <div>
-                                <h2 class="text-xl font-black text-white">${level}</h2>
-                                <p class="text-white/80 font-bold text-xs">${count} مواد دراسية</p>
+                                <h2 class="text-2xl font-black text-white">${level}</h2>
+                                <p class="text-white/80 font-bold text-sm">${count} مواد دراسية</p>
                             </div>
                         </div>
-                        <div class="p-4">
-                            <p class="text-gray-500 font-bold text-xs mb-3">${subNames}</p>
+                        <div class="p-5">
+                            <p class="text-gray-500 font-bold text-sm mb-4">${subNames}</p>
                             <div class="flex justify-between items-center">
-                                <div class="flex gap-1.5">
-                                    <span class="bg-blue-50 text-blue-600 px-2 py-0.5 rounded-lg text-[10px] font-bold">📖 قصص</span>
-                                    <span class="bg-yellow-50 text-yellow-600 px-2 py-0.5 rounded-lg text-[10px] font-bold">🎮 ألعاب</span>
-                                    <span class="bg-red-50 text-red-600 px-2 py-0.5 rounded-lg text-[10px] font-bold">🔬 بحوث</span>
+                                <div class="flex gap-2">
+                                    <span class="bg-blue-50 text-blue-600 px-3 py-1 rounded-lg text-xs font-bold">📖 قصص</span>
+                                    <span class="bg-yellow-50 text-yellow-600 px-3 py-1 rounded-lg text-xs font-bold">🎮 ألعاب</span>
+                                    <span class="bg-red-50 text-red-600 px-3 py-1 rounded-lg text-xs font-bold">🔬 البحوث المدرسية</span>
                                 </div>
-                                <span class="text-blue-500 font-black text-sm">← دخول</span>
+                                <span class="text-blue-500 font-black">← دخول</span>
                             </div>
                         </div>
                     </div>`;
@@ -1187,41 +1131,55 @@
         renderSubjects(level, matchBtn);
     };
 
-    /* ══ ABOUT PAGE ══ */
+    /* ── About Page ── */
     function openAboutPage() {
         closeStoriesIfOpen(() => {
             levelTitle.innerText = '✨ مرحبًا بكم ✨';
             subjectsContainer.innerHTML = `
                 <div class="col-span-full">
-                    <div class="bg-white rounded-[28px] p-6 shadow-2xl text-center">
-                        <img src="./images/logo.png.png" class="w-28 h-28 mx-auto mb-3 object-contain" alt="شعار" />
-                        <h1 class="text-3xl font-black text-blue-700 mb-3">منصة نجم الدين همادي</h1>
-                        <p class="text-base font-bold text-gray-700 leading-relaxed">
+                    <div class="bg-white rounded-[35px] p-10 shadow-2xl text-center">
+                        <div class="w-56 h-56 mx-auto mb-6 rounded-full flex items-center justify-center border-[8px] border-yellow-300 shadow-2xl" style="background:linear-gradient(135deg,#1a0930,#3b1a6e)">
+                            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="w-36 h-36">
+                                <path d="M15 30 Q32 22 50 30 L50 75 Q32 67 15 75 Z" fill="#a78bfa"/>
+                                <path d="M50 30 Q68 22 85 30 L85 75 Q68 67 50 75 Z" fill="#818cf8"/>
+                                <line x1="50" y1="30" x2="50" y2="75" stroke="#fff" stroke-width="2"/>
+                                <circle cx="50" cy="14" r="8" fill="#fbbf24"/>
+                                <polygon points="50,4 52.5,11 60,11 54,16 56,23 50,18 44,23 46,16 40,11 47.5,11" fill="#f59e0b"/>
+                                <line x1="22" y1="42" x2="46" y2="38" stroke="#fff" stroke-width="2" opacity="0.8"/>
+                                <line x1="22" y1="51" x2="46" y2="47" stroke="#fff" stroke-width="2" opacity="0.8"/>
+                                <line x1="22" y1="60" x2="46" y2="56" stroke="#fff" stroke-width="2" opacity="0.8"/>
+                                <line x1="54" y1="38" x2="78" y2="42" stroke="#fff" stroke-width="2" opacity="0.8"/>
+                                <line x1="54" y1="47" x2="78" y2="51" stroke="#fff" stroke-width="2" opacity="0.8"/>
+                                <line x1="54" y1="56" x2="78" y2="60" stroke="#fff" stroke-width="2" opacity="0.8"/>
+                            </svg>
+                        </div>
+                        <h1 class="text-6xl font-black text-blue-700 mb-6">منصة العلم نور</h1>
+                        <p class="text-2xl font-bold text-gray-700 leading-loose">
                             منصة تعليمية مخصصة لتلاميذ المرحلة الابتدائية،
                             تهدف إلى تسهيل الوصول إلى الدروس والتمارين والاختبارات
                             بطريقة منظمة وسهلة الاستعمال.
                         </p>
-                        <div class="mt-5 grid md:grid-cols-3 gap-4">
-                            <div onclick="handleOpenStoriesPage()" class="cursor-pointer bg-gradient-to-br from-blue-50 to-indigo-100 p-4 rounded-2xl border-2 border-blue-200 hover:border-blue-400 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 active:scale-95 group"
+                        <div class="mt-10 grid md:grid-cols-3 gap-6">
+                            <div onclick="handleOpenStoriesPage()" class="about-feature-card cursor-pointer bg-gradient-to-br from-blue-50 to-indigo-100 p-6 rounded-3xl border-2 border-blue-200 hover:border-blue-400 hover:shadow-xl transition-all duration-300 hover:-translate-y-2 active:scale-95 group"
                                  style="animation: featureCardIn 0.5s cubic-bezier(.34,1.56,.64,1) both; animation-delay:0.1s">
-                                <div class="w-12 h-12 mx-auto mb-2 rounded-xl bg-blue-500 flex items-center justify-center text-2xl shadow-md group-hover:scale-110 transition-transform duration-300">📖</div>
-                                <h2 class="text-lg font-black text-blue-700 mb-1">قصص</h2>
-                                <p class="font-bold text-gray-600 text-xs leading-relaxed">قصص ممتعة مرتبة حسب المستويات.</p>
-                                <div class="mt-2 text-blue-500 font-black text-xs">← انقر للدخول</div>
+                                <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-blue-500 flex items-center justify-center text-3xl shadow-lg group-hover:scale-110 transition-transform duration-300">📖</div>
+                                <h2 class="text-2xl font-black text-blue-700 mb-3">قصص</h2>
+                                <p class="font-bold text-gray-600 text-sm leading-relaxed">قصص ممتعة مرتبة حسب المستويات والمواد.</p>
+                                <div class="mt-4 inline-flex items-center gap-1 text-blue-500 font-black text-sm group-hover:gap-3 transition-all duration-300">← انقر للدخول</div>
                             </div>
-                            <div onclick="handleOpenGamesPage()" class="cursor-pointer bg-gradient-to-br from-yellow-50 to-orange-100 p-4 rounded-2xl border-2 border-yellow-200 hover:border-yellow-400 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 active:scale-95 group"
+                            <div onclick="handleOpenGamesPage()" class="about-feature-card cursor-pointer bg-gradient-to-br from-yellow-50 to-orange-100 p-6 rounded-3xl border-2 border-yellow-200 hover:border-yellow-400 hover:shadow-xl transition-all duration-300 hover:-translate-y-2 active:scale-95 group"
                                  style="animation: featureCardIn 0.5s cubic-bezier(.34,1.56,.64,1) both; animation-delay:0.25s">
-                                <div class="w-12 h-12 mx-auto mb-2 rounded-xl bg-yellow-500 flex items-center justify-center text-2xl shadow-md group-hover:scale-110 transition-transform duration-300">🎮</div>
-                                <h2 class="text-lg font-black text-yellow-700 mb-1">ألعاب</h2>
-                                <p class="font-bold text-gray-600 text-xs leading-relaxed">ألعاب تعليمية لتثبيت المكتسبات.</p>
-                                <div class="mt-2 text-yellow-500 font-black text-xs">← انقر للألعاب</div>
+                                <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-yellow-500 flex items-center justify-center text-3xl shadow-lg group-hover:scale-110 transition-transform duration-300">🎮</div>
+                                <h2 class="text-2xl font-black text-yellow-700 mb-3">ألعاب</h2>
+                                <p class="font-bold text-gray-600 text-sm leading-relaxed">ألعاب تعليمية ممتعة لتثبيت المكتسبات.</p>
+                                <div class="mt-4 inline-flex items-center gap-1 text-yellow-500 font-black text-sm group-hover:gap-3 transition-all duration-300">← انقر للألعاب</div>
                             </div>
-                            <div onclick="handleOpenResearchPage()" class="cursor-pointer bg-gradient-to-br from-red-50 to-rose-100 p-4 rounded-2xl border-2 border-red-200 hover:border-red-400 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 active:scale-95 group"
+                            <div onclick="handleOpenResearchPage()" class="about-feature-card cursor-pointer bg-gradient-to-br from-red-50 to-rose-100 p-6 rounded-3xl border-2 border-red-200 hover:border-red-400 hover:shadow-xl transition-all duration-300 hover:-translate-y-2 active:scale-95 group"
                                  style="animation: featureCardIn 0.5s cubic-bezier(.34,1.56,.64,1) both; animation-delay:0.4s">
-                                <div class="w-12 h-12 mx-auto mb-2 rounded-xl bg-red-500 flex items-center justify-center text-2xl shadow-md group-hover:scale-110 transition-transform duration-300">🔬</div>
-                                <h2 class="text-lg font-black text-red-700 mb-1">البحوث المدرسية</h2>
-                                <p class="font-bold text-gray-600 text-xs leading-relaxed">بحوث منظمة للمراجعة والاستعداد.</p>
-                                <div class="mt-2 text-red-500 font-black text-xs">← انقر للبحوث</div>
+                                <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-red-500 flex items-center justify-center text-3xl shadow-lg group-hover:scale-110 transition-transform duration-300">🔬</div>
+                                <h2 class="text-2xl font-black text-red-700 mb-3">البحوث المدرسية</h2>
+                                <p class="font-bold text-gray-600 text-sm leading-relaxed">بحوث مدرسية منظمة للمراجعة والاستعداد الجيد.</p>
+                                <div class="mt-4 inline-flex items-center gap-1 text-red-500 font-black text-sm group-hover:gap-3 transition-all duration-300">← انقر للبحوث</div>
                             </div>
                         </div>
                     </div>
@@ -1229,48 +1187,54 @@
         });
     }
 
-    /* ══ AUTH ══ */
+    /* ── Auth ── */
     function openLogin() {
         closeStoriesIfOpen(() => {
             levelTitle.innerText = isAdmin ? '⚙️ إدارة الحساب' : '🔐 تسجيل الدخول';
             subjectsContainer.innerHTML = isAdmin ? `
                 <div class="col-span-full flex justify-center">
-                    <div class="bg-white p-6 rounded-[28px] shadow-2xl w-full max-w-md">
-                        <h1 class="text-3xl font-black text-center text-blue-700 mb-2">⚙️ إدارة الحساب</h1>
-                        <p class="text-center text-gray-400 font-bold mb-6 text-sm">تعديل بيانات المشرف</p>
-                        <div class="mb-4 bg-blue-50 rounded-2xl p-4 border-2 border-blue-100">
-                            <h2 class="text-base font-black text-blue-700 mb-3">✉️ تغيير البريد الإلكتروني</h2>
+                    <div class="bg-white p-8 rounded-[35px] shadow-2xl w-full max-w-md">
+                        <h1 class="text-4xl font-black text-center text-blue-700 mb-2">⚙️ إدارة الحساب</h1>
+                        <p class="text-center text-gray-400 font-bold mb-8 text-sm">تعديل بيانات المشرف</p>
+
+                        <!-- تغيير الايميل -->
+                        <div class="mb-6 bg-blue-50 rounded-2xl p-5 border-2 border-blue-100">
+                            <h2 class="text-lg font-black text-blue-700 mb-4 flex items-center gap-2">✉️ تغيير البريد الإلكتروني</h2>
                             <input id="new-email" type="email" placeholder="البريد الجديد"
                                 class="w-full border-2 border-blue-200 rounded-2xl p-3 mb-3 font-bold text-sm outline-none focus:border-blue-400" />
                             <button onclick="handleChangeEmail()"
-                                class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2.5 rounded-2xl font-black text-sm transition-colors">
+                                class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-2xl font-black text-base transition-colors">
                                 تحديث البريد
                             </button>
                         </div>
-                        <div class="mb-4 bg-purple-50 rounded-2xl p-4 border-2 border-purple-100">
-                            <h2 class="text-base font-black text-purple-700 mb-3">🔑 تغيير كلمة المرور</h2>
+
+                        <!-- تغيير كلمة المرور -->
+                        <div class="mb-6 bg-purple-50 rounded-2xl p-5 border-2 border-purple-100">
+                            <h2 class="text-lg font-black text-purple-700 mb-4 flex items-center gap-2">🔑 تغيير كلمة المرور</h2>
                             <input id="new-password" type="password" placeholder="كلمة المرور الجديدة"
                                 class="w-full border-2 border-purple-200 rounded-2xl p-3 mb-3 font-bold text-sm outline-none focus:border-purple-400" />
                             <input id="confirm-password" type="password" placeholder="تأكيد كلمة المرور"
                                 class="w-full border-2 border-purple-200 rounded-2xl p-3 mb-3 font-bold text-sm outline-none focus:border-purple-400" />
                             <button onclick="handleChangePassword()"
-                                class="w-full bg-purple-600 hover:bg-purple-700 text-white py-2.5 rounded-2xl font-black text-sm transition-colors">
+                                class="w-full bg-purple-600 hover:bg-purple-700 text-white py-3 rounded-2xl font-black text-base transition-colors">
                                 تحديث كلمة المرور
                             </button>
                         </div>
+
+                        <!-- تسجيل الخروج -->
                         <button onclick="handleLogout()"
-                            class="w-full bg-red-500 hover:bg-red-600 text-white py-2.5 rounded-2xl font-black text-sm transition-colors flex items-center justify-center gap-2">
+                            class="w-full bg-red-500 hover:bg-red-600 text-white py-3 rounded-2xl font-black text-base transition-colors flex items-center justify-center gap-2">
                             🚪 تسجيل الخروج
                         </button>
                     </div>
                 </div>` : `
                 <div class="col-span-full flex justify-center">
-                    <div class="bg-white p-8 rounded-[28px] shadow-2xl w-full max-w-md">
-                        <h1 class="text-4xl font-black text-center text-blue-700 mb-6">تسجيل الدخول</h1>
-                        <input id="email" type="email" placeholder="البريد الإلكتروني" class="w-full border-2 border-blue-200 rounded-2xl p-3 mb-3 font-bold text-sm" />
-                        <input id="password" type="password" placeholder="كلمة المرور" class="w-full border-2 border-blue-200 rounded-2xl p-3 mb-4 font-bold text-sm" />
-                        <button onclick="handleLogin()" class="w-full bg-green-600 text-white py-3 rounded-2xl font-black text-lg hover:bg-green-700 transition-colors">دخول</button>
-                        <button onclick="handleForgotPassword()" class="w-full mt-3 text-blue-500 hover:text-blue-700 font-bold text-sm transition-colors py-2">🔑 نسيت كلمة السر؟</button>
+                    <div class="bg-white p-10 rounded-[35px] shadow-2xl w-full max-w-md">
+                        <h1 class="text-5xl font-black text-center text-blue-700 mb-8">تسجيل الدخول</h1>
+                        <input id="email" type="email" placeholder="البريد الإلكتروني" class="w-full border-2 border-blue-200 rounded-2xl p-4 mb-4 font-bold" />
+                        <input id="password" type="password" placeholder="كلمة المرور" class="w-full border-2 border-blue-200 rounded-2xl p-4 mb-6 font-bold" />
+                        <button onclick="handleLogin()" class="w-full bg-green-600 text-white py-4 rounded-2xl font-black text-xl hover:bg-green-700 transition-colors">دخول</button>
+                        <button onclick="handleForgotPassword()" class="w-full mt-3 text-blue-500 hover:text-blue-700 font-bold text-base transition-colors py-2">🔑 نسيت كلمة السر؟ — سيُرسل رابط للبريد</button>
                     </div>
                 </div>`;
         });
@@ -1304,15 +1268,20 @@
     window.handleForgotPassword = async function() {
         const emailEl = document.getElementById('email');
         const email = emailEl?.value?.trim();
-        if (!email) { alert('يرجى إدخال بريدك الإلكتروني أولاً'); emailEl?.focus(); return; }
+        if (!email) {
+            alert('يرجى إدخال بريدك الإلكتروني أولاً ثم اضغط "نسيت كلمة السر"');
+            emailEl?.focus();
+            return;
+        }
         const btn = document.querySelector('button[onclick="handleForgotPassword()"]');
         if (btn) { btn.disabled = true; btn.innerText = '⏳ جاري الإرسال...'; }
-        const { error } = await supabase.auth.resetPasswordForEmail(email, { redirectTo: window.location.href });
+        const { error } = await supabase.auth.resetPasswordForEmail(email, {
+            redirectTo: window.location.href,
+        });
         if (btn) { btn.disabled = false; btn.innerText = '🔑 نسيت كلمة السر؟'; }
         if (error) { alert('فشل: ' + error.message); return; }
-        alert('✅ تم إرسال رابط إعادة تعيين كلمة السر');
+        alert('✅ تم إرسال رابط إعادة تعيين كلمة السر إلى بريدك الإلكتروني');
     };
-
     window.handleChangePassword = async function() {
         const newPass     = document.getElementById('new-password')?.value;
         const confirmPass = document.getElementById('confirm-password')?.value;
@@ -1364,120 +1333,9 @@
             document.getElementById('logout-btn').classList.remove('hidden');
             document.getElementById('bg-btn-container').classList.remove('hidden');
         }
-        openAboutPage();
+        renderSubjects('السنة الأولى');
     }
     startApp();
-
-    /* ══ AI RESEARCH ASSISTANT — Wikipedia API (no CORS) ══ */
-    window.handleAIResearch = async function() {
-        const input      = document.getElementById('ai-research-input');
-        const topic      = input.value.trim();
-        if (!topic) { input.focus(); return; }
-
-        const resultBox  = document.getElementById('ai-research-result');
-        const loadingBox = document.getElementById('ai-research-loading');
-        const searchIcon = document.getElementById('ai-search-icon');
-        const searchLabel= document.getElementById('ai-search-label');
-        const contentEl  = document.getElementById('ai-result-content');
-        const titleEl    = document.getElementById('ai-result-title');
-
-        resultBox.classList.add('hidden');
-        loadingBox.classList.remove('hidden');
-        searchIcon.textContent  = '⏳';
-        searchLabel.textContent = 'جاري...';
-
-        try {
-            // Step 1: Search Arabic Wikipedia
-            const searchRes = await fetch(
-                `https://ar.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(topic)}&format=json&origin=*&srlimit=3`
-            );
-            const searchData = await searchRes.json();
-            const results    = searchData?.query?.search || [];
-
-            if (!results.length) {
-                titleEl.textContent   = `🔍 نتائج البحث عن: "${topic}"`;
-                contentEl.textContent = 'لم يتم العثور على معلومات. جرّب كلمات بحث مختلفة.';
-                resultBox.classList.remove('hidden');
-                return;
-            }
-
-            // Step 2: Get full extract for top result
-            const pageTitle  = results[0].title;
-            const extractRes = await fetch(
-                `https://ar.wikipedia.org/w/api.php?action=query&titles=${encodeURIComponent(pageTitle)}&prop=extracts&exintro=true&explaintext=true&exchars=2000&format=json&origin=*`
-            );
-            const extractData = await extractRes.json();
-            const pages   = extractData?.query?.pages || {};
-            const page    = Object.values(pages)[0];
-            const extract = page?.extract || '';
-
-            // Step 3: Get short summaries of other results
-            let extraHTML = '';
-            if (results.length > 1) {
-                const titles2 = results.slice(1, 3).map(r => encodeURIComponent(r.title)).join('|');
-                const res2    = await fetch(
-                    `https://ar.wikipedia.org/w/api.php?action=query&titles=${titles2}&prop=extracts&exintro=true&explaintext=true&exchars=300&format=json&origin=*`
-                );
-                const data2   = await res2.json();
-                const pages2  = data2?.query?.pages || {};
-                Object.values(pages2).forEach(p => {
-                    if (p.extract && p.title !== '–1') {
-                        extraHTML += `<div style="margin-top:10px;padding:10px;background:rgba(255,255,255,0.05);border-radius:10px;">
-                            <span style="color:#86efac;font-weight:900;font-size:0.85rem;">📌 ${p.title}</span>
-                            <p style="margin-top:5px;font-size:0.82rem;color:rgba(255,255,255,0.75);line-height:1.7;">${p.extract.substring(0,280)}...</p>
-                        </div>`;
-                    }
-                });
-            }
-
-            // Step 4: Build HTML output
-            const paras = extract.split('\n').filter(p => p.trim().length > 40).slice(0, 5);
-            let html = `<div style="margin-bottom:10px;">
-                <span style="font-size:1rem;font-weight:900;color:#a5b4fc;">📚 ${pageTitle}</span>
-            </div>`;
-            paras.forEach(p => {
-                html += `<p style="margin-bottom:10px;line-height:1.8;">${p.trim()}</p>`;
-            });
-            if (extraHTML) {
-                html += `<div style="margin-top:14px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.1);">
-                    <span style="font-size:0.85rem;font-weight:900;color:#fbbf24;">🔗 مواضيع ذات صلة:</span>
-                    ${extraHTML}
-                </div>`;
-            }
-            html += `<div style="margin-top:14px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.1);">
-                <a href="https://ar.wikipedia.org/wiki/${encodeURIComponent(pageTitle)}" target="_blank" rel="noopener"
-                   style="color:#93c5fd;font-size:0.8rem;font-weight:bold;">🌐 اقرأ المزيد في ويكيبيديا العربية ←</a>
-            </div>`;
-
-            titleEl.textContent   = `🔍 نتائج البحث عن: "${topic}"`;
-            contentEl.innerHTML   = html;
-            resultBox.classList.remove('hidden');
-
-        } catch(err) {
-            console.error(err);
-            titleEl.textContent   = 'خطأ في البحث';
-            contentEl.textContent = '❌ حدث خطأ. تأكد من الاتصال بالإنترنت وحاول مرة أخرى.';
-            resultBox.classList.remove('hidden');
-        } finally {
-            loadingBox.classList.add('hidden');
-            searchIcon.textContent  = '🔍';
-            searchLabel.textContent = 'بحث';
-        }
-    };
-
-    window.copyAIResult = function() {
-        const text = document.getElementById('ai-result-content').textContent;
-        navigator.clipboard.writeText(text).then(() => {
-            const btn = event.target;
-            btn.textContent = '✅ تم النسخ';
-            setTimeout(() => btn.textContent = '📋 نسخ', 2000);
-        });
-    };
-
-    // Allow Enter key to trigger search
-    document.getElementById('ai-research-input').addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') handleAIResearch();
-    });
 </script>
 
 <script>
