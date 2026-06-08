@@ -1170,7 +1170,13 @@
         box.innerHTML = `<p class="text-white/40 font-bold text-center py-4">⏳ جاري التحميل...</p>`;
         const { data, error } = await supabase.from('files').select('*')
             .eq('subject', 'teachers').order('created_at', { ascending: false });
+        console.log('teachers data:', data, 'error:', error);
+        if (error) {
+            box.innerHTML = `<p class="text-red-400 font-bold text-center py-4">❌ خطأ: ${error.message}</p>`;
+            finishProgress(); return;
+        }
         allTeachersFiles = data || [];
+        console.log('allTeachersFiles count:', allTeachersFiles.length);
         renderTeachersFiles();
         finishProgress();
     }
