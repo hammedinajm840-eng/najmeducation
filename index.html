@@ -387,6 +387,25 @@
     </div>
 </div>
 
+<!-- ===== LEVEL PICKER MODAL ===== -->
+<div id="level-picker-modal" class="fixed inset-0 z-[100] flex items-center justify-center p-4"
+     style="display:none!important; background:rgba(0,0,0,0.7); backdrop-filter:blur(4px);">
+    <div class="bg-white rounded-[30px] shadow-2xl w-full max-w-sm p-6 text-center"
+         style="animation:featureCardIn 0.3s cubic-bezier(.34,1.56,.64,1) both">
+        <p id="level-picker-subtitle" class="text-gray-400 font-bold text-sm mb-1">اختر المستوى للدخول</p>
+        <h2 id="level-picker-title" class="text-2xl font-black text-blue-700 mb-5">📖 القصص</h2>
+        <div class="grid grid-cols-2 gap-3">
+            <button onclick="pickLevel('السنة الأولى')"   class="level-pick-btn py-3 rounded-2xl font-black text-base bg-gradient-to-br from-green-400 to-emerald-500 text-white shadow hover:scale-105 transition-transform">🌱 السنة الأولى</button>
+            <button onclick="pickLevel('السنة الثانية')"  class="level-pick-btn py-3 rounded-2xl font-black text-base bg-gradient-to-br from-teal-400 to-cyan-500 text-white shadow hover:scale-105 transition-transform">🌿 السنة الثانية</button>
+            <button onclick="pickLevel('السنة الثالثة')"  class="level-pick-btn py-3 rounded-2xl font-black text-base bg-gradient-to-br from-blue-400 to-indigo-500 text-white shadow hover:scale-105 transition-transform">🌳 السنة الثالثة</button>
+            <button onclick="pickLevel('السنة الرابعة')"  class="level-pick-btn py-3 rounded-2xl font-black text-base bg-gradient-to-br from-yellow-400 to-orange-500 text-white shadow hover:scale-105 transition-transform">⭐ السنة الرابعة</button>
+            <button onclick="pickLevel('السنة الخامسة')"  class="level-pick-btn py-3 rounded-2xl font-black text-base bg-gradient-to-br from-orange-400 to-red-500 text-white shadow hover:scale-105 transition-transform">🌟 السنة الخامسة</button>
+            <button onclick="pickLevel('السنة السادسة')"  class="level-pick-btn py-3 rounded-2xl font-black text-base bg-gradient-to-br from-purple-500 to-pink-500 text-white shadow hover:scale-105 transition-transform">🏆 السنة السادسة</button>
+        </div>
+        <button onclick="closeLevelPicker()" class="mt-4 text-gray-400 hover:text-gray-600 font-bold text-sm">✕ إلغاء</button>
+    </div>
+</div>
+
 <!-- ===== MOBILE BOTTOM NAV ===== -->
 <nav id="mobile-nav" class="fixed bottom-0 left-0 right-0 z-50 flex items-center justify-around px-2 py-2 border-t"
      style="background:#1a0930;border-color:#3b1a6e;display:none;">
@@ -1331,26 +1350,26 @@
                             بطريقة منظمة وسهلة الاستعمال.
                         </p>
                         <div class="mt-10 grid md:grid-cols-3 gap-6">
-                            <div onclick="handleOpenStoriesPage()" class="about-feature-card cursor-pointer bg-gradient-to-br from-blue-50 to-indigo-100 p-6 rounded-3xl border-2 border-blue-200 hover:border-blue-400 hover:shadow-xl transition-all duration-300 hover:-translate-y-2 active:scale-95 group"
+                            <div onclick="openLevelPicker('stories')" class="about-feature-card cursor-pointer bg-gradient-to-br from-blue-50 to-indigo-100 p-6 rounded-3xl border-2 border-blue-200 hover:border-blue-400 hover:shadow-xl transition-all duration-300 hover:-translate-y-2 active:scale-95 group"
                                  style="animation: featureCardIn 0.5s cubic-bezier(.34,1.56,.64,1) both; animation-delay:0.1s">
                                 <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-blue-500 flex items-center justify-center text-3xl shadow-lg group-hover:scale-110 transition-transform duration-300">📖</div>
                                 <h2 class="text-2xl font-black text-blue-700 mb-3">قصص</h2>
                                 <p class="font-bold text-gray-600 text-sm leading-relaxed">قصص ممتعة مرتبة حسب المستويات والمواد.</p>
-                                <div class="mt-4 inline-flex items-center gap-1 text-blue-500 font-black text-sm group-hover:gap-3 transition-all duration-300">← انقر للدخول</div>
+                                <div class="mt-4 inline-flex items-center gap-1 text-blue-500 font-black text-sm group-hover:gap-3 transition-all duration-300">← اختر المستوى</div>
                             </div>
-                            <div onclick="handleOpenGamesPage()" class="about-feature-card cursor-pointer bg-gradient-to-br from-yellow-50 to-orange-100 p-6 rounded-3xl border-2 border-yellow-200 hover:border-yellow-400 hover:shadow-xl transition-all duration-300 hover:-translate-y-2 active:scale-95 group"
+                            <div onclick="openLevelPicker('games')" class="about-feature-card cursor-pointer bg-gradient-to-br from-yellow-50 to-orange-100 p-6 rounded-3xl border-2 border-yellow-200 hover:border-yellow-400 hover:shadow-xl transition-all duration-300 hover:-translate-y-2 active:scale-95 group"
                                  style="animation: featureCardIn 0.5s cubic-bezier(.34,1.56,.64,1) both; animation-delay:0.25s">
                                 <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-yellow-500 flex items-center justify-center text-3xl shadow-lg group-hover:scale-110 transition-transform duration-300">🎮</div>
                                 <h2 class="text-2xl font-black text-yellow-700 mb-3">ألعاب</h2>
                                 <p class="font-bold text-gray-600 text-sm leading-relaxed">ألعاب تعليمية ممتعة لتثبيت المكتسبات.</p>
-                                <div class="mt-4 inline-flex items-center gap-1 text-yellow-500 font-black text-sm group-hover:gap-3 transition-all duration-300">← انقر للألعاب</div>
+                                <div class="mt-4 inline-flex items-center gap-1 text-yellow-500 font-black text-sm group-hover:gap-3 transition-all duration-300">← اختر المستوى</div>
                             </div>
-                            <div onclick="handleOpenResearchPage()" class="about-feature-card cursor-pointer bg-gradient-to-br from-red-50 to-rose-100 p-6 rounded-3xl border-2 border-red-200 hover:border-red-400 hover:shadow-xl transition-all duration-300 hover:-translate-y-2 active:scale-95 group"
+                            <div onclick="openLevelPicker('research')" class="about-feature-card cursor-pointer bg-gradient-to-br from-red-50 to-rose-100 p-6 rounded-3xl border-2 border-red-200 hover:border-red-400 hover:shadow-xl transition-all duration-300 hover:-translate-y-2 active:scale-95 group"
                                  style="animation: featureCardIn 0.5s cubic-bezier(.34,1.56,.64,1) both; animation-delay:0.4s">
                                 <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-red-500 flex items-center justify-center text-3xl shadow-lg group-hover:scale-110 transition-transform duration-300">🔬</div>
                                 <h2 class="text-2xl font-black text-red-700 mb-3">البحوث المدرسية</h2>
                                 <p class="font-bold text-gray-600 text-sm leading-relaxed">بحوث مدرسية منظمة للمراجعة والاستعداد الجيد.</p>
-                                <div class="mt-4 inline-flex items-center gap-1 text-red-500 font-black text-sm group-hover:gap-3 transition-all duration-300">← انقر للبحوث</div>
+                                <div class="mt-4 inline-flex items-center gap-1 text-red-500 font-black text-sm group-hover:gap-3 transition-all duration-300">← اختر المستوى</div>
                             </div>
                         </div>
                     </div>
@@ -1484,6 +1503,50 @@
     }
 
     window.handleOpenAboutPage  = openAboutPage;
+
+    /* ── Level Picker Modal ── */
+    const levelPickerModal = document.getElementById('level-picker-modal');
+    let pendingPageType = null;
+
+    const pickerTitles = {
+        stories:  { emoji:'📖', label:'القصص',          color:'text-blue-700'   },
+        games:    { emoji:'🎮', label:'الألعاب',         color:'text-yellow-700' },
+        research: { emoji:'🔬', label:'البحوث المدرسية', color:'text-red-700'    },
+    };
+
+    window.openLevelPicker = function(type) {
+        pendingPageType = type;
+        const t = pickerTitles[type];
+        document.getElementById('level-picker-title').textContent = `${t.emoji} ${t.label}`;
+        levelPickerModal.style.setProperty('display','flex','important');
+    };
+
+    window.closeLevelPicker = function() {
+        levelPickerModal.style.setProperty('display','none','important');
+        pendingPageType = null;
+    };
+
+    window.pickLevel = function(level) {
+        closeLevelPicker();
+        // غيّر المستوى الحالي أولاً
+        currentLevel = level;
+        const badge1 = document.getElementById('stories-level-badge');
+        const badge2 = document.getElementById('games-level-badge');
+        const badge3 = document.getElementById('research-level-badge');
+        if (badge1) badge1.textContent = level;
+        if (badge2) badge2.textContent = level;
+        if (badge3) badge3.textContent = level;
+        updateLevelBtn(level);
+        // ثم افتح الصفحة المطلوبة
+        if (pendingPageType === 'stories')  handleOpenStoriesPage();
+        if (pendingPageType === 'games')    handleOpenGamesPage();
+        if (pendingPageType === 'research') handleOpenResearchPage();
+    };
+
+    // إغلاق عند النقر خارج الـ modal
+    levelPickerModal.addEventListener('click', function(e) {
+        if (e.target === levelPickerModal) closeLevelPicker();
+    });
     window.handleOpenLogin      = openLogin;
     window.handleLogin          = login;
     window.handleLogout         = logout;
