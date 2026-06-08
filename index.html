@@ -1527,8 +1527,9 @@
     };
 
     window.pickLevel = function(level) {
+        const type = pendingPageType; // احفظ النوع قبل الإغلاق
         closeLevelPicker();
-        // غيّر المستوى الحالي أولاً
+        // غيّر المستوى الحالي
         currentLevel = level;
         const badge1 = document.getElementById('stories-level-badge');
         const badge2 = document.getElementById('games-level-badge');
@@ -1537,10 +1538,10 @@
         if (badge2) badge2.textContent = level;
         if (badge3) badge3.textContent = level;
         updateLevelBtn(level);
-        // ثم افتح الصفحة المطلوبة
-        if (pendingPageType === 'stories')  handleOpenStoriesPage();
-        if (pendingPageType === 'games')    handleOpenGamesPage();
-        if (pendingPageType === 'research') handleOpenResearchPage();
+        // افتح الصفحة المطلوبة
+        if (type === 'stories')  handleOpenStoriesPage();
+        if (type === 'games')    handleOpenGamesPage();
+        if (type === 'research') handleOpenResearchPage();
     };
 
     // إغلاق عند النقر خارج الـ modal
