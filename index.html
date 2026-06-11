@@ -1201,33 +1201,34 @@
     }
 
     function renderTeachersFiles() {
-        const box = document.getElementById('teachers-files-box');
-        const filtered = currentTeachersFilter === 'all'
-            ? allTeachersFiles
-            : allTeachersFiles.filter(f => f.level === `level${currentTeachersFilter}`);
-        box.innerHTML = '';
-        if (!filtered.length) {
-            box.innerHTML = `<p class="text-white/40 font-bold text-center py-6 text-lg">👩‍🏫 لا توجد ملفات بعد</p>`;
-            return;
-        }
-        filtered.forEach((file, i) => {
-            const levelLabel = Object.keys(levelMap).find(k => levelMap[k] === file.level) || file.level || '';
-            box.innerHTML += `
-                <div class="file-item bg-white/10 border border-white/15 rounded-xl px-5 py-3 flex justify-between items-center gap-3" style="animation-delay:${i*0.05}s">
-                    <div class="overflow-hidden">
-                        <p class="font-bold text-white text-sm overflow-hidden whitespace-nowrap text-ellipsis max-w-[200px]" title="${file.name}">
-                        ${levelLabel ? `<span class="text-xs text-green-300 font-bold">${levelLabel}</span>` : ''}
-                    </div>
-                    <div class="flex gap-2 flex-shrink-0">
-                        <a href="${file.url}" target="_blank" rel="noopener" class="bg-green-600 hover:bg-green-500 text-white px-4 py-2 rounded-xl text-sm font-bold">فتح</a>
-                        <a href="${file.url}" download="${file.name}" target="_blank" rel="noopener" class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-xl text-sm font-bold">تحميل</a>
-                        ${isAdmin ? `<button onclick="handleDeleteTeacher('${file.id}','${file.storage_path||''}')"
-                            class="bg-red-500/80 hover:bg-red-500 text-white px-3 py-2 rounded-xl text-sm font-bold">🗑</button>` : ''}
-                    </div>
-                </div>`;
-        });
+    const box = document.getElementById('teachers-files-box');
+    const filtered = currentTeachersFilter === 'all'
+        ? allTeachersFiles
+        : allTeachersFiles.filter(f => f.level === `level${currentTeachersFilter}`);
+    box.innerHTML = '';
+    if (!filtered.length) {
+        box.innerHTML = `<p class="text-white/40 font-bold text-center py-6 text-lg">👩‍🏫 لا توجد ملفات بعد</p>`;
+        return;
     }
-
+    filtered.forEach((file, i) => {
+        const levelLabel = Object.keys(levelMap).find(k => levelMap[k] === file.level) || file.level || '';
+        box.innerHTML += `
+            <div class="file-item bg-white/10 border border-white/15 rounded-xl px-5 py-3 flex justify-between items-center gap-3" style="animation-delay:${i*0.05}s">
+                <div class="overflow-hidden flex-1">
+                    <p class="text-xs text-green-300 font-bold mb-1">${levelLabel}</p>
+                    <p class="font-bold text-white text-sm overflow-hidden whitespace-nowrap text-ellipsis" title="${file.name}">
+                        📄 ${file.name}
+                    </p>
+                </div>
+                <div class="flex gap-2 flex-shrink-0">
+                    <a href="${file.url}" target="_blank" rel="noopener" class="bg-green-600 hover:bg-green-500 text-white px-4 py-2 rounded-xl text-sm font-bold">فتح</a>
+                    <a href="${file.url}" download="${file.name}" target="_blank" rel="noopener" class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-xl text-sm font-bold">تحميل</a>
+                    ${isAdmin ? `<button onclick="handleDeleteTeacher('${file.id}','${file.storage_path||''}')"
+                        class="bg-red-500/80 hover:bg-red-500 text-white px-3 py-2 rounded-xl text-sm font-bold">🗑</button>` : ''}
+                </div>
+            </div>`;
+    });
+}
     window.filterTeachers = function(level) {
         currentTeachersFilter = level;
         document.querySelectorAll('.teacher-filter-btn').forEach(b => {
