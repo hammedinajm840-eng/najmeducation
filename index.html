@@ -19,11 +19,6 @@
         .subject-card {
             cursor: pointer;
             transition: transform 0.3s cubic-bezier(.34,1.56,.64,1), box-shadow 0.3s ease;
-            .subject-card{
-    background: rgba(255,255,255,0.05) !important;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255,255,255,0.15);
 }
         .subject-card:hover { transform: translateY(-6px) scale(1.02); box-shadow: 0 20px 40px rgba(0,0,0,0.14); }
         .subject-card:active { transform: scale(0.97); }
@@ -734,7 +729,7 @@
             const levelId = levelMap[level];
 
             subjectsContainer.innerHTML += `
-   <div class="subject-card rounded-[25px] p-5 shadow-xl"
+   <div class="subject-card bg-white rounded-[25px] p-5 shadow-xl"
                      onclick="handleOpenSubject('${subject.id}','${subject.title}','${level}','${levelId}')">
                     <div class="flex items-center gap-4 mb-4">
                         <div class="w-14 h-14 rounded-2xl bg-gradient-to-br ${sc.from||'from-blue-500'} ${sc.to||'to-blue-400'} flex items-center justify-center text-3xl shadow-lg flex-shrink-0">
