@@ -518,10 +518,12 @@ async function getVisitorCount() {
     return data ? data.count : 0;
 }
 
-trackVisitor();
-getVisitorCount().then(count => {
+async function initVisitor() {
+    await trackVisitor();
+    const count = await getVisitorCount();
     document.getElementById('visitor-count').innerText = count.toLocaleString('ar');
-});
+}
+initVisitor();
     const homePage          = document.getElementById('home-page');
     const subjectPage       = document.getElementById('subject-page');
     const subjectsContainer = document.getElementById('subjects-container');
