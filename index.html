@@ -621,7 +621,7 @@
     };
 
     /* ── Load Files ── */
-    async function loadSubjectFiles() {
+   async function loadSubjectFiles() {
         if (!currentSubject) return;
         showProgress();
 
@@ -637,35 +637,37 @@
                 .eq('subject', currentSubject.id)
                 .eq('folder',  folder);
 
+            console.log(folder, data); // ← مؤقت للتشخيص
+
             if (error) { console.error(error); continue; }
 
             filesBox.innerHTML = '';
             if (!data || data.length === 0) {
                 filesBox.innerHTML = `<p class="text-white/40 font-bold text-center py-6 text-lg">لا توجد ملفات بعد</p>`;
-           } else {
-    let html = '';
-    data.forEach((file, i) => {
-        const deleteBtn = isAdmin
-            ? `<button onclick="handleDeleteFile('${file.id}','${file.storage_path||''}')"
-                   class="bg-red-500/80 hover:bg-red-500 text-white px-3 py-2 rounded-xl text-sm font-bold transition-colors">🗑 حذف</button>`
-            : '';
-        html += `
-            <div class="file-item bg-white/10 border border-white/15 rounded-xl px-5 py-3 flex justify-between items-center gap-3"
-                 style="animation-delay:${i*0.06}s">
-                <p class="font-bold text-white text-sm overflow-hidden whitespace-nowrap text-ellipsis max-w-[55%]" title="${file.name}">
-                    📄 ${file.name}
-                </p>
-                <div class="flex gap-2 flex-shrink-0">
-                    <a href="${file.url}" target="_blank" rel="noopener"
-                       class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-xl text-sm font-bold transition-colors">فتح</a>
-                    <a href="${file.url}" download="${file.name}" target="_blank" rel="noopener"
-                       class="bg-green-600 hover:bg-green-500 text-white px-4 py-2 rounded-xl text-sm font-bold transition-colors">تحميل</a>
-                    ${deleteBtn}
-                </div>
-            </div>`;
-    });
-    filesBox.innerHTML = html;
-}
+            } else {
+                let html = '';
+                data.forEach((file, i) => {
+                    const deleteBtn = isAdmin
+                        ? `<button onclick="handleDeleteFile('${file.id}','${file.storage_path||''}')"
+                               class="bg-red-500/80 hover:bg-red-500 text-white px-3 py-2 rounded-xl text-sm font-bold transition-colors">🗑 حذف</button>`
+                        : '';
+                    html += `
+                        <div class="file-item bg-white/10 border border-white/15 rounded-xl px-5 py-3 flex justify-between items-center gap-3"
+                             style="animation-delay:${i*0.06}s">
+                            <p class="font-bold text-white text-sm overflow-hidden whitespace-nowrap text-ellipsis max-w-[55%]" title="${file.name}">
+                                📄 ${file.name}
+                            </p>
+                            <div class="flex gap-2 flex-shrink-0">
+                                <a href="${file.url}" target="_blank" rel="noopener"
+                                   class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-xl text-sm font-bold transition-colors">فتح</a>
+                                <a href="${file.url}" download="${file.name}" target="_blank" rel="noopener"
+                                   class="bg-green-600 hover:bg-green-500 text-white px-4 py-2 rounded-xl text-sm font-bold transition-colors">تحميل</a>
+                                ${deleteBtn}
+                            </div>
+                        </div>`;
+                });
+                filesBox.innerHTML = html;
+            }
         }
 
         if (isAdmin) {
@@ -674,7 +676,6 @@
         attachSubjectUploadEvents();
         finishProgress();
     }
-
     /* ── Upload ── */
     function attachSubjectUploadEvents() {
         document.querySelectorAll('#subject-page .upload-btn').forEach(button => {
