@@ -518,11 +518,24 @@ async function getVisitorCount() {
     return data ? data.count : 0;
 }
 
+async function showEstimatedProfit() {
+    const { data } = await supabase
+        .from('visitors')
+        .select('count')
+        .single();
+    if (data) {
+        const profit = data.count * 1;
+        document.getElementById('estimated-profit').innerText = profit.toLocaleString('ar');
+    }
+}
+
 async function initVisitor() {
     await trackVisitor();
     const count = await getVisitorCount();
     document.getElementById('visitor-count').innerText = count.toLocaleString('ar');
+    await showEstimatedProfit();
 }
+
 initVisitor();
     const homePage          = document.getElementById('home-page');
     const subjectPage       = document.getElementById('subject-page');
