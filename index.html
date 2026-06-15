@@ -496,6 +496,32 @@
     const BUCKET       = 'school-files';
     const supabase     = createClient(SUPABASE_URL, SUPABASE_KEY);
 
+// ── عداد الزوار ──
+async function trackVisitor() {
+    const { data } = await supabase
+        .from('visitors')
+        .select('id, count')
+        .single();
+    if (data) {
+        await supabase
+            .from('visitors')
+            .update({ count: data.count + 1 })
+            .eq('id', data.id);
+    }
+}
+
+async function getVisitorCount() {
+    const { data } = await supabase
+        .from('visitors')
+        .select('count')
+        .single();
+    return data ? data.count : 0;
+}
+
+trackVisitor();
+getVisitorCount().then(count => {
+    document.getElementById('visitor-count').innerText = count.toLocaleString('ar');
+});
     const homePage          = document.getElementById('home-page');
     const subjectPage       = document.getElementById('subject-page');
     const subjectsContainer = document.getElementById('subjects-container');
